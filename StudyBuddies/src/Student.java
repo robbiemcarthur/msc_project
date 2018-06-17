@@ -1,10 +1,10 @@
-
+import java.util.ArrayList;
 
 /**
  * @author Robbie McArthur - 2098323m
  *
  * Base class for 'Students' to be recommended as study buddies
- * Will act as template for Law, Software, Politics students etc
+ * Will act as template for students of all disciplines
  * 
  */
 
@@ -12,14 +12,14 @@ public abstract class Student {
 	protected String name;
 	protected String course;
 	protected String [] modules;
-	protected String concept;
+	protected ArrayList<String> concepts = new ArrayList();
 	protected int id; 
-	protected int [] conceptScore;
+	protected ArrayList<Integer> conceptScore = new ArrayList();
 
-	public Student(String n, String c, String [] m, String con, int i, int [] cs) {
+	public Student(String n, String c, String [] m, ArrayList<String> con, int i, ArrayList<Integer> cs) {
 		this.course = c;
 		this.modules = m;
-		this.concept = con;
+		this.concepts = con;
 		this.id = i;
 		this.conceptScore = cs;
 	}
@@ -28,9 +28,7 @@ public abstract class Student {
 		name = "";
 		course = "";
 		modules = new String[9];
-		concept = "";
 		id = 0;
-		conceptScore = new int [9];
 	}
 
 	// SETTERS
@@ -44,13 +42,13 @@ public abstract class Student {
 	public void setModule(String [] m) {
 		this.modules = m;
 	}
-	public void setConcept(String con) {
-		this.concept = con;
+	public void setConcept(ArrayList<String> con) {
+		this.concepts = con;
 	}
 	public void setID(int i) {
 		this.id = i;
 	}
-	public void setConceptScore(int [] cs) {
+	public void setConceptScore(ArrayList<Integer> cs) {
 		this.conceptScore = cs;
 	}
 
@@ -73,8 +71,8 @@ public abstract class Student {
 		}
 	}
 	
-	public String getConcept() {
-		return this.concept;
+	public ArrayList<String> getConcept() {
+		return this.concepts;
 	}
 	
 	public int getID() {
@@ -83,7 +81,7 @@ public abstract class Student {
 	
 	// will probably be better to make double in future so 
 	// as to increase accuracy and effectiveness of recommendations 
-	public int [] getConceptScore() {
+	public ArrayList<Integer> getConceptScore() {
 		return this.conceptScore;
 	}
 }
