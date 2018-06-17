@@ -6,7 +6,7 @@ public class StudentGenerator {
 	private ArrayList<Student> students;
 	private Random rand;
 	private NameGenerator ng;
-	private SDStudent s;
+	private Student s;
 	private int index, id;
 
 	public StudentGenerator() {
@@ -16,14 +16,12 @@ public class StudentGenerator {
 		ng.loadNames(200);
 		index = 0;
 		id = 2098323;
-		rand = new Random();
 	}
 
 	public Student makeStudent() {
 		s = new SDStudent();
 		s.id = generateID();
 		s.name = ng.GenerateName();
-		s.loadStudentScores();
 		return s;
 	}
 

@@ -18,7 +18,6 @@ public class Test {
 			SDStudent s = (SDStudent) sg.makeStudent();
 			System.out.println("Student: " + s.getName());
 			System.out.println("Course: " + s.getCourse());
-			System.out.println("Module: Programming");
 			System.out.println("Concept scores: " + s.getScores());
 		}
 	}

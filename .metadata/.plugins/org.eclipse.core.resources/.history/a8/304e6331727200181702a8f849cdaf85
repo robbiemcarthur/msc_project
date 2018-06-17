@@ -29,7 +29,6 @@ public class NameGenerator {
 		_femaleFirst = new File(femaleFirst);
 		_all = new File(all);
 		index = 0;
-		rand = new Random();
 	}
 	
 	public String GenerateName() {

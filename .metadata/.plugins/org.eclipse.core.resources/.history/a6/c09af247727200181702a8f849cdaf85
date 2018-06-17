@@ -7,7 +7,7 @@ public class SDStudent extends Student {
 			"Advanced Programming", "Algorithms and Data Structures", "Software Project Management",
 			"Software Engineering", "Systems and Networks", "Enterprise Cyber Security", 
 			"Database Theory and Application"};
-	protected HashMap<String, Integer> conceptKnowledge = new HashMap();
+	protected HashMap<String, Integer> conceptKnowledge;
 	protected ArrayList<String> programmingConcepts = new ArrayList();
 	protected int score;
 	protected Random rand;
@@ -16,7 +16,6 @@ public class SDStudent extends Student {
 		super.course = "Software Development";
 		super.modules = this.modules;
 		score = 0;
-		rand = new Random();
 	}
 	
 	public void loadStudentScores() {

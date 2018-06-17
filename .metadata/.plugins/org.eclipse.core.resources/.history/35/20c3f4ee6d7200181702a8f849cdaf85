@@ -29,7 +29,6 @@ public class NameGenerator {
 		_femaleFirst = new File(femaleFirst);
 		_all = new File(all);
 		index = 0;
-		rand = new Random();
 	}
 	
 	public String GenerateName() {
@@ -65,7 +64,6 @@ public class NameGenerator {
 				firstNames.add(name);
 				i++;
 			}
-			s.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Can't find male file");
@@ -84,7 +82,6 @@ public class NameGenerator {
 				firstNames.add(name);
 				i++;
 			}
-			s.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Can't find female file");
@@ -107,7 +104,6 @@ public class NameGenerator {
 				lastNames.add(name);
 				i++;
 			}
-			s.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Can't find last name file");
