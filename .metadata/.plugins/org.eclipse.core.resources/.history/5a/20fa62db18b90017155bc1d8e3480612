@@ -1,0 +1,80 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+
+/*
+ * Ensure comments throughout project code, every class should have a description before it
+ * multi line
+ * like this
+ * DO NOT FORGET!!!!!!!
+ */
+public class LWMGUI extends JFrame
+{
+	// components as instance variables
+	private JPanel top, middle, bottom;
+	private JTextField nameField, quantityField, priceField, 
+	transactionField, balanceField;
+	private JButton saleButton, returnButton;
+	private JLabel wineLabel;
+
+	//create JFrame GUI
+	public LWMGUI() 
+	{
+		// set initial layout and contents of JFrame
+		JFrame frame = new JFrame();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1000,1000);
+		frame.setLocation(100,100);
+		frame.setTitle("Lilybank Wine Merchants");
+		frame.setVisible(true);
+
+		// set layout of GUI
+		setLayout();
+	}
+
+	private void setLayout()
+	{
+		top = new JPanel();
+		top.setBackground(Color.gray);
+
+		// create first set of textfields to get product info from user
+		// position on top panel
+
+		nameField = new JTextField("Enter wine name");
+		top.add(nameField);
+		quantityField = new JTextField("Enter quantity");
+		top.add(quantityField);
+		priceField = new JTextField("Enter price");
+		top.add(priceField);
+		add(top, BorderLayout.NORTH);
+
+		// create buttons for sales/returns
+		//position on middle
+
+		// buttons for sales/returns
+		saleButton = new JButton ("Process Sale");
+		saleButton.setSize(10,10);
+		saleButton.setEnabled(true);
+
+		returnButton = new JButton ("Process Return");
+		returnButton.setSize(10,10);
+		returnButton.setEnabled(true);
+
+		// add label
+
+		// add second jtextfields
+	}
+}
+
+
+
+
+// label
+
+
+// textfields2
+
+
+
+

@@ -1,0 +1,11 @@
+
+public class NameGenerator {
+	private String name, first, last;
+	
+	public NameGenerator() {
+		name = "";
+		first = "";
+		last = "";
+	}
+}
+

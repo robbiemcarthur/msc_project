@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'net.saliman:gradle-cobertura-plugin:2.3.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+        classpath 'org.ajoberstar:gradle-git:0.12.0'
+        classpath 'org.kordamp.gradle:stats-gradle-plugin:0.1.3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0"
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'build-dashboard'
+apply plugin: 'org.kordamp.gradle.stats'
+apply plugin: 'com.github.ben-manes.versions'
+apply from: 'gradle/publishing.gradle'
+apply from: 'gradle/code-coverage.gradle'
+apply from: 'gradle/code-quality.gradle'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-core:2.0.43-beta'
+}
+
+task sourcesJar(type: Jar) {
+    group 'Build'
+    description 'An archive of the source code'
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+jar.finalizedBy sourcesJar
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+gradle.taskGraph.whenReady {
+    def createIfNotExists = { File dir ->
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+    }
+
+    String sourceSetName = project.plugins.hasPlugin('groovy') ? 'groovy' : 'java'
+    sourceSets.main[sourceSetName].srcDirs.each(createIfNotExists)
+    sourceSets.test[sourceSetName].srcDirs.each(createIfNotExists)
+    sourceSets.main.resources.srcDirs.each(createIfNotExists)
+    sourceSets.test.resources.srcDirs.each(createIfNotExists)
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

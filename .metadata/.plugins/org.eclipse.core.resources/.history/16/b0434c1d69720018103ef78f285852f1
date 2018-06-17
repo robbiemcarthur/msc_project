@@ -1,0 +1,99 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class NameGenerator {
+	private String name, first, last;
+	private final String femaleFirst = "C:/prog/StudyBuddies/src/dist.female.first.txt", maleFirst = "C:/prog/StudyBuddies/src/dist.male.first.txt", all = "C:/prog/StudyBuddies/src/dist.all.last.txt";
+	private final File _maleFirst, _femaleFirst, _all;
+	private ArrayList<String> firstNames = new ArrayList();
+	private ArrayList<String> lastNames = new ArrayList(); 
+	private Random rand;
+	
+	public NameGenerator() {
+		name = "";
+		first = "";
+		last = "";
+		_maleFirst = new File(maleFirst);
+		_femaleFirst = new File(femaleFirst);
+		_all = new File(all);
+	}
+	
+	public String GenerateName() {
+		readFirst();
+		readLast();
+		name = first + " " + last;
+		return name;
+	}
+	
+	public void readFirst() {
+		first = firstNames.get(0);
+	}
+	
+	public void readLast() {
+		last = lastNames.get(0);
+	}
+	
+	public void loadNames(int num) {
+		loadMale(num/2);
+		loadFemale(num/2);
+		loadLast(num);
+	}
+	
+	public void loadMale(int num) {
+		String name = "";
+		int i = 0;
+		try {
+			Scanner s = new Scanner(_maleFirst);
+			while(s.hasNext() && i<num) {
+				name = s.next();
+				s.nextLine();
+				firstNames.add(name);
+				i++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Can't find male file");
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadFemale(int num) {
+		int i = 0;
+		String name = "";
+		try {
+			Scanner s = new Scanner(_femaleFirst);
+			while(s.hasNext() && i<num) {
+				name = s.next();
+				s.nextLine();
+				firstNames.add(name);
+				i++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Can't find female file");
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadLast(int num) {
+		int i = 0;
+		String name = "";
+		try {
+			Scanner s = new Scanner(_all);
+			while(s.hasNext() && i<num) {
+				name = s.next();
+				s.nextLine();
+				lastNames.add(name);
+				i++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Can't find last name file");
+			e.printStackTrace();
+		}
+	}
+}
+

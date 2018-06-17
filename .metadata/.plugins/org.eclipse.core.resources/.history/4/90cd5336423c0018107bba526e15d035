@@ -1,0 +1,25 @@
+// past paper 2017 multiple choice
+public class pp {
+
+	public static void main(String [] args) {
+		// TODO Auto-generated method stub
+		Double a = 3.5;
+		Double b = a;
+		b*=2;
+		System.out.println("a: " + a + ", b: " + b);
+		
+		System.out.println("\nQ1 a)");
+		int sum = 0;
+		int count = 1;
+		int number = 1;
+		while(count<100) {
+			System.out.println("Printing out " + number + "+" + number++);
+			sum = count + count++;
+			System.out.println(sum);
+			count++;
+		}
+		System.out.println("\nQ1 b)");
+		System.out.println("\nQ1 c)");
+	}
+
+}

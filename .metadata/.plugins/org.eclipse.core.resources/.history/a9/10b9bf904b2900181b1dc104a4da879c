@@ -1,0 +1,156 @@
+
+
+import java.util.Iterator;
+
+public class BSTBag<E extends Comparable<E>> implements Bag {
+
+	/**
+	 * Inner class
+	 */
+	private static class Node <E extends Comparable<E>>
+	{
+		protected E element;
+		protected Node<E> left, right;
+
+		protected Node(E elem) 
+		{
+			element = elem;
+			left = null; right = null;
+		}
+	}
+	private Node<CountedElement<E>> root;
+	private int size;
+
+	public BSTBag() 
+	{
+		root = null;
+		size = 0;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		if(root==null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
+
+	@Override
+	public boolean contains(Object element) {
+	Node curr = root;
+
+		for(;;) {
+			if(curr == null) 
+			{
+				return false;
+			}
+			else if(curr == element) 
+			{
+				return true;
+			}
+//			else if(curr > element) 
+//			{
+//				curr = curr.left;
+//			}
+//			else if(curr < element) 
+//			{
+//				curr = curr.right;
+//			}
+		}
+	}
+
+	@Override
+	public boolean equals(Bag that) {
+		if(this==that)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	@Override
+	public void clear() {
+		{
+
+		}
+	}
+
+	public void add(E element) {
+		size++;
+		int direction = 0;
+		Node parent = null, curr = root;
+		for(;;)
+		{
+			if(curr==null)
+			{
+				Node<CountedElement<E>> add = new Node<CountedElement<E>>((CountedElement<E>) element);
+				if(root==null)
+				{
+					root = add;
+				}
+				else if(direction<0)
+				{
+					parent.left = add;
+				}
+				else
+				{
+					parent.right = add;
+				}
+			}
+		}
+	}
+
+	public void remove(E element) {
+		size--;
+		int direction = 0;
+		Node parent = null; 
+		Node<CountedElement<E>> curr = root;
+		for(;;)
+		{
+			if(curr==null)
+			{
+				return;
+			}
+			direction = element.compareTo((E) curr.element);
+			if(direction == 0)
+			{
+//				Node<E> del = curr.deleteTopMost();
+			}
+		}
+	}
+
+	@Override
+	public Iterator iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void print() {
+		System.out.print(root);
+	}
+
+	@Override
+	public void add(Object element) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Object element) {
+		// TODO Auto-generated method stub
+		
+	}
+}
+

@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class LWMGUI extends JFrame 
+{
+	//create JFrame GUI
+	public LWMGUI() 
+	{
+		// set initial layout and contents of JFrame
+		JFrame frame = new JFrame();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1000,1000);
+		frame.setLocation(100,100);
+		frame.setTitle("Lilybank Wine Merchants");
+		frame.setVisible(true);
+		
+		// create JPanel
+		JPanel panel1 = new JPanel();
+		panel1.setBackground(Color.gray);
+		
+		// add buttons
+		panel1.add(button1);
+		panel1.add(button2);
+		frame.add(panel1);
+		
+		// add labels
+	}
+	
+	// create buttons
+	private JButton button1, button2;
+	{
+		button1 = new JButton ("Process Sale");
+		button1.setSize(10,10);
+		button1.setEnabled(true);
+
+		button2 = new JButton ("Process Return");
+		button2.setSize(10,10);
+		button2.setEnabled(true);
+	}
+	
+	//create textfield objects
+	
+	
+}
+

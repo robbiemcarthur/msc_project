@@ -1,0 +1,35 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class LWMGUI extends JFrame 
+{
+	//create JFrame GUI
+	public LWMGUI() 
+	{
+		// set initial layout and contents of JFrame
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(500,500);
+		setLocation(100,100);
+		setTitle("Lilybank Wine Merchants");
+		
+		// add JPanel
+		JPanel panel1 = new JPanel();
+		panel1.setBackground(Color.gray);
+		panel1.add(button1);
+	}
+	
+	// add buttons
+	private JButton button1, button2;
+	{
+		button1 = new JButton ("Process Sale");
+		button1.setSize(10,10);
+		button1.setEnabled(true);
+
+		button2 = new JButton ("Process Return");
+		button2.setSize(10,10);
+		this.add(button2, BorderLayout.EAST);
+		button2.setEnabled(true);
+	}
+	
+}
+

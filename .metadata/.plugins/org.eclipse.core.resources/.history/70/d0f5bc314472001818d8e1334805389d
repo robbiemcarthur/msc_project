@@ -1,0 +1,14 @@
+
+public class StudentGenerator {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SDStudent robbie = new SDStudent();
+		robbie.setName("Robbie");
+		robbie.setID(2098323);
+		System.out.print("Student: " + robbie.getName() + " - " + robbie.getID() + 
+				"\n\nCourse: " + robbie.getCourse() + " \n\n"
+						+ "Modules: ");
+	}
+
+}

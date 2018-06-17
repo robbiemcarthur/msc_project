@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+public class StudentGenerator {
+	private ArrayList<Student> students = new ArrayList();
+	private Random rand;
+	private int index;
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SDStudent robbie = new SDStudent();
+		robbie.setName("Robbie");
+		robbie.setID(2098323);
+		System.out.print("Student: " + robbie.getName() + " - " + robbie.getID() + 
+				"\n\nCourse: " + robbie.getCourse() + " \n\n"
+				+ "Modules: ");
+		for (String i: robbie.modules) {
+			System.out.print(i + ", ");
+		}
+	}
+
+}

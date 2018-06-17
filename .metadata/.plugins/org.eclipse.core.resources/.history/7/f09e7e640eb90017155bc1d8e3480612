@@ -1,0 +1,95 @@
+import javax.swing.*;
+import java.awt.*;
+
+/*
+ * Ensure comments throughout project code, every class should have a description before it
+ * multi line
+ * like this
+ * DO NOT FORGET!!!!!!!
+ */
+public class LWMGUI extends JFrame 
+{
+	//create JFrame GUI
+	public LWMGUI() 
+	{
+		// set initial layout and contents of JFrame
+		JFrame frame = new JFrame();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1000,1000);
+		frame.setLocation(100,100);
+		frame.setTitle("Lilybank Wine Merchants");
+		frame.setVisible(true);
+		
+		// create textfield JPanel
+		JPanel textPanel1 = new JPanel();
+		textPanel1.setBackground(Color.gray);
+		textPanel1.setVisible(true);
+		
+		//adding components to JPanel
+		
+		// add first jtextfields
+		textPanel1.add(name);
+		textPanel1.add(quantity);
+		textPanel1.add(price);
+		
+		// create button JPanel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.gray);
+		buttonPanel.setVisible(true);
+		
+		// add buttons for sales/return processing
+		buttonPanel.add(button1);
+		buttonPanel.add(button2);
+		
+		// add label
+		
+		// add second jtextfields
+
+		// add jpanel to frame
+		frame.add(buttonPanel);
+		frame.add(textPanel1);
+		
+	}
+	
+	//CREATING COMPONENTS
+	
+	// buttons for sales/returns
+	private JButton button1, button2;
+	{
+		button1 = new JButton ("Process Sale");
+		button1.setSize(10,10);
+		button1.setEnabled(true);
+
+		button2 = new JButton ("Process Return");
+		button2.setSize(10,10);
+		button2.setEnabled(true);
+	}
+	
+	// textfields1 to get user to input product info
+	private JTextField name, quantity, price;
+	{
+		name = new JTextField("Name: ", 1);
+		name.setText("Enter wine name");
+		name.getText();
+		name.setEnabled(true);
+		
+		quantity = new JTextField("Quantity: ", 1);
+		quantity.setText("Enter quantity");
+		quantity.getText();
+		quantity.setEnabled(true);
+		
+		price = new JTextField("Price: ", 1);
+		price.setText("Enter price");
+		price.getText();
+		price.setEnabled(true);
+	}
+	
+	// label
+	
+	
+	// textfields2
+	
+	
+	
+}
+

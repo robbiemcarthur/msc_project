@@ -1,0 +1,36 @@
+// a model class
+/*
+ * Wine class to store details of wine including the name, price
+ * and quantity
+ */
+public class Wine 
+{
+	// instance variables
+	private double price;
+	private int quantity;
+
+	public Wine()
+	{
+		// constructor method to initialise instance variables
+		name = "wine";
+		price = 0;
+		quantity = 0;
+	}
+	
+	// method to return wine name
+	public String getName()
+	{
+		return name;
+	}
+	// method to return wine price
+	public double getPrice()
+	{
+		return price;
+	}
+	//method to return wine quantity
+	public int getQuantity()
+	{
+		return quantity;
+	}
+	
+}

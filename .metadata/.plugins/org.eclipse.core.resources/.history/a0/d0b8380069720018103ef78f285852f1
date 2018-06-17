@@ -1,0 +1,12 @@
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		NameGenerator ng = new NameGenerator();
+		ng.loadNames(50);
+		String name = ng.GenerateName();
+		System.out.print(name);
+	}
+
+}

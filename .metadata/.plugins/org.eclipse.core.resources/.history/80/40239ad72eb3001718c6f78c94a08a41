@@ -1,0 +1,16 @@
+package FormatIO;
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Console con = new Console ("Date Tester");
+		MyDate date = new MyDate("40291");
+		con.println("The date is: " + date.getDate());
+		
+		MyDate day = new MyDate(4);
+		con.print("The day is: " + day.getDay());
+	}
+
+}
