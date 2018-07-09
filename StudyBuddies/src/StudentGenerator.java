@@ -1,6 +1,9 @@
+
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.Random;
+
+import StudentGraph.Student;
 
 public class StudentGenerator {
 	private ArrayList<Student> students;

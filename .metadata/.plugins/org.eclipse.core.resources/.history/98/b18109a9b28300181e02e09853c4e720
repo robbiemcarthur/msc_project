@@ -1,0 +1,26 @@
+package KnowledgeGraph;
+
+import java.util.Iterator;
+
+public interface Digraph<E,A> extends Graph<E,A> {
+	// Each Digraph<E,A> object is a directed graph
+	// whose elements are of type E and whose edge
+	// attributes are of type A.
+	
+	//////////// Accessor ////////////
+	
+	public int outDegree (Node node);
+	// Return the number of out-edges of node in this
+	// graph.
+	
+	////////////Iterators ////////////
+	
+	public Iterator<Node> successors(Node node);
+	// return an iterator visiting all successors of node
+	// in this directed graph in no particular order
+	
+	public Iterator<Edge> outEdges(Node node);
+	// return iterator visiting all out-edges of node in this
+	// directed graph, in no particular order
+	
+}

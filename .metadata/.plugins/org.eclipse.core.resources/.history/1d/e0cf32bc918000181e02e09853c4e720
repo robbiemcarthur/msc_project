@@ -1,0 +1,26 @@
+package KnowledgeGraph;
+
+public class Test {
+
+	public Test() {
+
+	}
+	public static void main(String[] args) {
+		
+		DLL d = new DLL();
+		d.insert("Cow ", null);
+		d.insert("duck ", null);
+		d.insert("mouse ", null);
+		d.insert("Cat ", null);
+		d.insert("Fish ", null);
+		d.insert("Deer ", null);
+		d.insert("Dog ", null);
+		d.insert("Bird ", null);
+		d.insert("Elephant ", null);
+		d.insert("Tiger ", null);
+		
+		d.printFirstToLast();
+		System.out.println("");
+		d.printLastToFirst();
+	}
+}

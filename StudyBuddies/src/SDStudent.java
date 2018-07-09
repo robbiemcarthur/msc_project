@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import StudentGraph.Student;
+
 public class SDStudent extends Student {
 	protected final String[] modules = new String [] {"Internet Technology", "HCI", "Programming", 
 			"Advanced Programming", "Algorithms and Data Structures", "Software Project Management",

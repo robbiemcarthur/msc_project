@@ -1,0 +1,46 @@
+package KnowledgeGraph;
+
+public interface Graph {
+// directed/undirected graph objects with element and edge attributes
+
+	public interface Node {
+	
+	} 
+	
+	public interface Edge {
+
+	}
+	////////// Accessors ///////////
+
+	public int size ();
+	// return number of nodes in graph
+	
+	public int degree (Graph.Node node);
+	// return number of edges connecting node in this graph 
+	
+	public boolean containsEdge (Graph.Node node0, Graph.Node node1);
+	// Return true if edge connecting node0 and node1 in this graph
+	
+	////////// Transformers ///////////
+	
+	public void clear();
+	// make graph empty
+	
+	public Graph.Node addNode(Object elem);
+	// add a new node to the graph containing elem, but with no
+	// connecting edges and return new node
+	
+	public Graph.Edge addEdge (Graph.Node node0, Graph.Node node1);
+	// add new edge connecting node0 and node1, but containing no attribute
+	// return new edge
+	
+	public void removeNode (Graph.Node node);
+	// remove node from graph, including connecting edges
+	
+	public void removeEdge (Graph.Edge edge);
+	// remove edge from graph
+	
+	///////// Iterators /////////
+	
+	
+}

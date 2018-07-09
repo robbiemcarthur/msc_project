@@ -1,0 +1,13 @@
+package KnowledgeGraph;
+
+import KnowledgeGraph.DLL.Node;
+
+public class DLLNode {
+	private Object element;
+	private Node pred, next;
+
+	public DLLNode(Object elem, Node pred, Node next) {
+		this.element = elem;
+		this.pred = pred;
+		this.next = next;
+}

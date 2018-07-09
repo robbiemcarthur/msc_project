@@ -1,0 +1,104 @@
+package KnowledgeGraph;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class ESDigraph implements Digraph {
+
+    // Each ESDigraph object is a directed graph whose elements and
+    // edge attributes are arbitrary objects.
+
+    // This directed graph is represented by a node set and edge set as follows.
+    // firstNode is a link to the first node in a DLL of ESDigraphNode
+    // objects, each of which contains an element. firstEdge is a link to the
+    // first node in a DLL of ESDigraphEdge objects, each of which
+    // contains an attribute and is linked to the edge's source and destination
+    // nodes. size contains the graph's size.
+
+    private ESDigraph.Node firstNode;
+    private ESDigraph.Edge firstEdge;
+    private int size;
+
+    //////////// Constructor ////////////
+
+    public ESDigraph () {
+    // Construct a directed graph, initially empty.
+        firstNode = null;
+        firstEdge = null;
+        size = 0;
+    }
+
+    //////////// Accessors ////////////
+
+    public int size () {
+    // Return the number of nodes in this graph.
+        return this.size;
+    }
+
+    public int degree (Graph.Node node) {
+    // Return the number of edges connecting node in this graph.
+        int numEdges = 0;
+        for (ESDigraph.Edge e = firstEdge; e != null; e = e.nextEdge) {
+            if (e.source == node || e.dest == node)
+                numEdges++;
+        }
+        return numEdges;
+    }
+
+    public boolean containsEdge (Graph.Node node0, Graph.Node node1) {
+    // Return true if and only if there is an edge connecting node0 and
+    // node1 in this graph. (If the graph is directed, node0 is the edge's
+    // source and node1 is the destination.)
+        for (ESDigraph.Edge e = firstEdge; e != null; e = e.nextEdge) {
+            if (e.source == node0 && e.dest == node1)
+                return true;
+        }
+        return false;
+    }
+
+    public int outDegree (Graph.Node node) {
+    // Return the number of out-edges of node in this directed graph.
+        return ((ESDigraph.Node) node).outDegree;
+    }
+
+    //////////// Transformers ////////////
+
+    public void clear () {
+    // Make this graph empty.
+        this.firstNode = null;
+        this.firstEdge = null;
+        this.size = 0;
+    }
+
+    public Graph.Node addNode (Object elem) {
+    // Add to this graph a new node containing element elem, but with no
+    // connecting edges, and return the new node.
+        ESDigraph.Node node = new ESDigraph.Node(elem);
+        node.prevNode = null;
+        node.nextNode = firstNode;
+        firstNode = node;
+        size++;
+        return node;
+    }
+
+    public Graph.Edge addEdge (Graph.Node node0, Graph.Node node1) {
+    // Add to this graph a new edge connecting node0 and node1, but
+    // containing no attribute, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+        return addEdge(node0, node1, null);
+    }
+
+    public Graph.Edge addEdge (Graph.Node node0, Graph.Node node1,
+            Object attr) {
+    // Add to this graph a new edge connecting node0 and node1, and
+    // containing attribute attr, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+        ESDigraph.Node source = (ESDigraph.Node) node0;
+        ESDigraph.Node dest = (ESDigraph.Node) node1;
+        ESDigraph.Edge edge = new ESDigraph.Edge(source, dest, attr);
+        edge.prevEdge = null;
+        edge.nextEdge = firstEdge;
+        firstEdge = edge;
+        source.outDegree++;
+        return edge;
+    }

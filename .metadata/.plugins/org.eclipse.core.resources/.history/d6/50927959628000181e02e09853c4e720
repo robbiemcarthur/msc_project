@@ -1,0 +1,22 @@
+package KnowledgeGraph;
+
+import java.util.Iterator;
+
+public interface DirectedGraph extends Graph {
+	/**
+	 * each DirectedGraph object is a directed graph whose elements and edge
+	 * attributes are arbitrary objects
+	 */
+	
+	/////////// Accessor ///////////
+	
+	public int outDegree(Graph.Node node);
+	// return number of outer edges of node in this directed graph 
+	
+	public Iterator successors (Graph.Node node);
+	// return iterator visiting all successors of node in this directed graph,
+	// in no particular order
+	
+	public Iterator outEdges(Graph.Node node);
+	// return iterator that will visit all out-edges of node in no particular order
+}

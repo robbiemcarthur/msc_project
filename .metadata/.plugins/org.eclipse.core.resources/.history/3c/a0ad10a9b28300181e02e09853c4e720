@@ -1,0 +1,105 @@
+package KnowledgeGraph;
+
+import java.util.Iterator;
+
+public interface Graph<E,A> {
+
+    // Each Graph object is a (directed or undirected) 
+	// whose elements are of type E and edge attributes
+	// of type A
+
+    //////////// Accessors ////////////
+
+    public int size ();
+    // Return the number of nodes in this graph 
+    
+    public int degree (Node node);
+    // Return the number of edges connecting node in this graph.
+
+    public boolean containsEdge (Node node0, Node node1);
+    // Return true if and only if there is an edge connecting node0 and
+    // node1 in this graph. (If the graph is directed, node0 is the edge's
+    // source and node1 is the destination.)
+
+    //////////// Transformers ////////////
+
+    public void clear ();
+    // Make this graph empty.
+
+    public Node addNode (Object elem);
+    // Add to this graph a new node containing element elem, but with no
+    // connecting edges, and return the new node.
+
+    public Edge addEdge (Node node0, Node node1);
+    // Add to this graph a new edge connecting node0 and node1, but
+    // containing no attribute, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+
+    public Edge addEdge (Node node0, Node node1, A attr);
+    // Add to this graph a new edge connecting node0 and node1, and
+    // containing attribute attr, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+
+    public void removeNode (Node node);
+    // Remove node from this graph, together with all connecting edges.
+
+    public void removeEdge (Edge edge);
+    // Remove edge from this graph.
+
+    //////////// Iterators ////////////
+
+    public Iterator<Node> nodes ();
+    // Return an iterator that will visit all nodes of this graph, in no
+    // particular order.
+
+    public Iterator<Edge> edges ();
+    // Return an iterator that will visit all edges of this graph, in no
+    // particular order.
+
+    public Iterator<Node> neighbors (Node node);
+    // Return an iterator that will visit all the neighbors of node in this
+    // graph, in no particular order.
+
+    public Iterator<Edge> connectingEdges (Node node);
+    // Return an iterator that will visit all connecting edges of node in this
+    // graph, in no particular order.
+
+    //////////// Inner interfaces ////////////
+
+    public interface Node<E> {
+
+    // Each Node object is a directed graph node, and contains a
+    // single element.
+
+        public E getElement ();
+        // Return the element contained in this node.
+
+        public void setElement (E elem);
+        // Change the element contained in this node to elem.
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    public interface Edge<A> {
+
+    // Each Edge object is a directed graph edge, and optionally
+    // contains an attribute.
+
+	// Constants for the array inidices used for the source and destination
+	// nodes returned by getNodes.
+	// Use getNodes()[Graph.Edge.SOURCE] and getNodes()[Graph.Edge.DEST]
+        public static final int SOURCE = 0, DEST = 1;
+
+        public Node[] getNodes ();
+        // Return an array containing the two nodes connected by this edge.
+        // (If the graph is directed, the array will contain the edge's source
+        // and destination, in that order.)
+
+        public A getAttribute ();
+        // Return the attribute contained in this edge, or null if there is
+        // none.
+
+        public void setAttribute (A attr);
+        // Change the attribute contained in this edge to attr.
+    }
+}
