@@ -1,5 +1,6 @@
 package StudentGraph;
 import java.util.ArrayList;
+import NameGenerator.NameGenerator;
 
 /**
  * @author Robbie McArthur - 2098323m
@@ -9,7 +10,8 @@ import java.util.ArrayList;
  * 
  */
 
-public abstract class Student {
+public class Student {
+	public NameGenerator ng;
 	public String name;
 	public String course;
 	public String [] modules;
@@ -18,6 +20,7 @@ public abstract class Student {
 	public ArrayList<Integer> conceptScore = new ArrayList();
 
 	public Student(String n, String c, String [] m, ArrayList<String> con, int i, ArrayList<Integer> cs) {
+		this.ng = new NameGenerator();
 		this.course = c;
 		this.modules = m;
 		this.concepts = con;
@@ -26,7 +29,8 @@ public abstract class Student {
 	}
 
 	public Student() {
-		name = "";
+		ng = new NameGenerator();
+		name = ng.GenerateName();
 		course = "";
 		modules = new String[9];
 		id = 0;

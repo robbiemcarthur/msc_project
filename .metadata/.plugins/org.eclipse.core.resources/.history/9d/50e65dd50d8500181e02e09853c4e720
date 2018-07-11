@@ -1,0 +1,58 @@
+package StudentGraph;
+
+public class Lesson {
+	private String teacher, course, concept;
+	private Student student;
+	
+    //////////// Constructors ////////////
+	
+	public Lesson(String t, String c, String con, Student s) {
+		this.teacher = t;
+		this.course = c;
+		this.concept = con;
+		this.student = s;
+	}
+	
+	public Lesson() {
+		teacher = "";
+		course  = "";
+		concept = "";
+		student = new Student();
+	}
+	
+    //////////// Accessors ////////////
+
+    public String getTeacher () {
+        return this.teacher;
+    }
+    
+    public String getCourse () {
+        return this.course;
+    }
+    
+    public String getConcept () {
+        return this.concept;
+    }
+    
+    public Student getStudent () {
+        return this.student;
+    }
+
+    //////////// Transformers ////////////
+
+    public void setTeacher (String t) {
+        this.teacher = t;
+    }
+    
+    public void setCourse (String c) {
+        this.course = c;
+    }
+    
+    public void setConcept (String con) {
+        this.concept = con;
+    }
+    
+    public void setTeacher (Student s) {
+        this.student = s;
+    }
+}

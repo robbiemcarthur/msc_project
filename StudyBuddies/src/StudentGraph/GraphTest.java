@@ -5,8 +5,9 @@ import java.util.Iterator;
 public class GraphTest {
 	public static void main(String[] args) {
 		Digraph graph = new KnowledgeGraph();
+		Lesson math = new Lesson();
 
-		Graph.Node nodeA = graph.addNode("Math 1");
+		Graph.Node nodeA = graph.addNode(math);
 		Graph.Node nodeB = graph.addNode("Revision 1");
 		Graph.Node nodeC = graph.addNode("Math 2");
 		Graph.Node nodeD = graph.addNode("Revision 2");
@@ -16,8 +17,8 @@ public class GraphTest {
 		Graph.Node nodeH = graph.addNode("H");
 		Graph.Node nodeI = graph.addNode("I");
 
-		graph.addEdge(nodeA, nodeB, "Addition");
-		graph.addEdge(nodeA, nodeE, "Subtraction");
+		graph.addEdge(nodeA, nodeB);
+		graph.addEdge(nodeA, nodeE);
 		graph.addEdge(nodeB, nodeC);
 		graph.addEdge(nodeB, nodeD);
 		graph.addEdge(nodeC, nodeG);
@@ -33,7 +34,7 @@ public class GraphTest {
 		Iterator iter;
 
 		iter = graph.nodes();
-		System.out.println("Visiting all nodes in graph:");
+		System.out.println("Visiting all nodes in graph: ");
 		while (iter.hasNext()) {
 			Graph.Node node = (Graph.Node) iter.next();
 			System.out.print(node.getElement() + " ");
@@ -46,7 +47,7 @@ public class GraphTest {
 			System.out.print(node.getElement() + " ");
 		}
 		System.out.println("");
-		iter = graph.successors(nodeG);
+		iter = graph.successors(nodeA);
 		System.out.println("Visiting all successors of node in graph:");
 		while (iter.hasNext()) {
 			Graph.Node node = (Graph.Node) iter.next();

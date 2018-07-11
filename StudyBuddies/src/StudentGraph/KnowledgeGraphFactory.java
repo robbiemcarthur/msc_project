@@ -1,9 +1,32 @@
 package StudentGraph;
 
+import java.util.ArrayList;
+
 public class KnowledgeGraphFactory implements GraphFactory {
-	KnowledgeGraph g;
-	Graph.Node a,b,c,d,e,f;
-	Student s;
+	private KnowledgeGraph g;
+	private ArrayList<Lesson> LessonList;
+	private Graph.Node n;
+	private Lesson l;
+	private Student s;
+	
+	public KnowledgeGraphFactory() {
+		createGraph();
+		LessonList = new ArrayList();
+		n = new Graph.Node() {
+			
+			@Override
+			public void setElement(Object elem) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public Object getElement() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+	}
 
 	@Override
 	public Graph createGraph() {
@@ -13,18 +36,6 @@ public class KnowledgeGraphFactory implements GraphFactory {
 
 	public KnowledgeGraph createStudentGraph() {
 		g = new KnowledgeGraph();
-		a = g.addNode("A");
-		b = g.addNode("B");
-		c = g.addNode("Revision A");
-		d = g.addNode("C");
-		e = g.addNode("Revision B");
-		f = g.addNode("D");
-		g.addEdge(a, b);
-		g.addEdge(b, c);
-		g.addEdge(c, a);
-		g.addEdge(b, d);
-		g.addEdge(d, f);
-		g.addEdge(f, e);
 		return g;
 	}
 
