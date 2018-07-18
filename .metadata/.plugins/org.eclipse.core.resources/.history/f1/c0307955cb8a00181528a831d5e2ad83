@@ -1,0 +1,21 @@
+package Factories;
+
+import StudentGraph.Lesson;
+
+/**
+ * 
+ * @author Robbie McArthur - 2098323m
+ * 
+ * 
+ * Factory class to produce Lessons
+ */
+public class LessonFactory {
+	
+	public LessonFactory() {
+
+	}
+	
+	public Lesson createLesson () {
+		return new Lesson();
+	}
+}

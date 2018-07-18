@@ -2,6 +2,8 @@ package StudentGraph;
 
 import java.util.Iterator;
 
+import Factories.KnowledgeGraphFactory;
+
 public class GraphTest {
 	public static void main(String[] args) {
 		Digraph graph = new KnowledgeGraph();
@@ -60,7 +62,7 @@ public class GraphTest {
 			System.out.print(e.getAttribute());
 		}
 	KnowledgeGraphFactory g = new KnowledgeGraphFactory();
-	graph =  g.createStudentGraph();
+//	graph =  g.createStudentGraph();
 	iter = graph.nodes();
 	System.out.println("Visiting all nodes in graph:");
 	while (iter.hasNext()) {

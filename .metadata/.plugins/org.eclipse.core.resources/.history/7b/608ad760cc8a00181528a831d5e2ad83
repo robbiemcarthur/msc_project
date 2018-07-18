@@ -1,0 +1,39 @@
+package Factories;
+
+import java.util.ArrayList;
+
+import StudentGraph.Lesson;
+
+/**
+ * 
+ * @author Robbie McArthur - 2098323m
+ * 
+ * 
+ * Factory class to produce Lessons
+ */
+public class LessonFactory {
+	private ArrayList<Lesson> lessons;
+	
+	public LessonFactory() {
+		lessons = new ArrayList();
+	}
+	
+	public Lesson createEmptyLesson () {
+		return new Lesson();
+	}
+	
+	public ArrayList<Lesson> createEmptyLessons(int n) {
+		for(int i = 0; i<=n; i++) {
+			lessons.add(new Lesson());
+		}
+		return this.lessons;
+	}
+	
+	public Lesson createDummyLesson() {
+		return new Lesson("Mr. X", "math", "algebra", 0, );	
+	}
+	
+	public ArrayList<Lesson> getLessons() {
+		return this.lessons;
+	}
+}

@@ -174,7 +174,7 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Inner classes ////////////
 
-    static class Node implements Graph.Node {
+    public static class Node implements Graph.Node {
 
         // Each KnowledgeGraph.Node object is a directed graph node, and contains a
         // single element.
@@ -186,7 +186,7 @@ public class KnowledgeGraph implements Digraph {
 
         //////////// Constructor ////////////
 
-        private Node (Object element) {
+        public Node (Object element) {
             this.lesson = (Lesson) element;
             this.concept = lesson.getConcept();
             this.grade = lesson.getGrade();
@@ -210,7 +210,7 @@ public class KnowledgeGraph implements Digraph {
 
     //////////////////////////////////////////////////////////////////////////
 
-    private static class Edge implements Graph.Edge {
+    public static class Edge implements Graph.Edge {
 
         // Each ESDigraph.Edge object is a directed graph edge, and optionally
         // contains an attribute.
