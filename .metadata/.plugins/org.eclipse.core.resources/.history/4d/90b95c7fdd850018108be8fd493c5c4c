@@ -1,0 +1,27 @@
+package StudentGraph;
+
+import java.util.ArrayList;
+
+public class KnowledgeGraphFactory implements GraphFactory {
+	private KnowledgeGraph g;
+	private ArrayList<Lesson> LessonList;
+	private Graph.Node n;
+	private Lesson l;
+	private Student s;
+	
+	public KnowledgeGraphFactory() {
+		g = new KnowledgeGraph();
+	}
+
+	@Override
+	public Graph createGraph() {
+		g = new KnowledgeGraph();
+		return g;
+	}
+
+	public KnowledgeGraph createStudentGraph() {
+		g = new KnowledgeGraph();
+		return g;
+	}
+
+}

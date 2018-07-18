@@ -174,22 +174,19 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Inner classes ////////////
 
-    static class Node implements Graph.Node {
+    private static class Node implements Graph.Node {
 
         // Each KnowledgeGraph.Node object is a directed graph node, and contains a
         // single element.
 
-        private Lesson lesson;
-        private String concept;
-        private int outDegree, grade;
+        private Object element;
+        private int outDegree;
         private KnowledgeGraph.Node prevNode, nextNode;
 
         //////////// Constructor ////////////
 
         private Node (Object element) {
-            this.lesson = (Lesson) element;
-            this.concept = lesson.getConcept();
-            this.grade = lesson.getGrade();
+            this.element = element;
             this.outDegree = 0;
             this.prevNode = null;
             this.nextNode = null;
@@ -198,13 +195,13 @@ public class KnowledgeGraph implements Digraph {
         //////////// Accessor ////////////
 
         public Object getElement () {
-            return this.lesson;
+            return this.element;
         }
 
         //////////// Transformer ////////////
 
         public void setElement (Object element) {
-            this.lesson = (Lesson) element;
+            this.element = element;
         }
     }
 
@@ -218,8 +215,6 @@ public class KnowledgeGraph implements Digraph {
         private Object attribute;
         private KnowledgeGraph.Node source, dest;
         private KnowledgeGraph.Edge prevEdge, nextEdge;
-        private int visits;
-        private final int MAX_VISITS = 10;
 
         //////////// Constructor ////////////
 
@@ -229,7 +224,6 @@ public class KnowledgeGraph implements Digraph {
             this.attribute = attr;
             this.prevEdge = null;
             this.nextEdge = null;
-            this.visits = 1;
         }
 
         public Graph.Node[] getNodes () {
@@ -248,21 +242,6 @@ public class KnowledgeGraph implements Digraph {
         public void setAttribute (Object attr) {
         // Change the attribute contained in this edge to attr.
             this.attribute = attr;
-        }
-        
-        public int getVisits() {
-        	return this.visits;
-        }
-        
-        public boolean incrementVisits() {
-        	if(visits<MAX_VISITS) {
-        		visits++;
-        		return true;
-        	}
-        	else
-        	{
-        		return false;
-        	}
         }
     }
 

@@ -174,7 +174,7 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Inner classes ////////////
 
-    static class Node implements Graph.Node {
+    private static class Node implements Graph.Node {
 
         // Each KnowledgeGraph.Node object is a directed graph node, and contains a
         // single element.
