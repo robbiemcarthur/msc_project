@@ -1,0 +1,51 @@
+package main.Factories;
+
+import java.util.ArrayList;
+
+import main.StudentGraph.Graph;
+import main.StudentGraph.KnowledgeGraph;
+import main.StudentGraph.Lesson;
+import main.StudentGraph.KnowledgeGraph.Node;
+
+public class KnowledgeGraphFactory implements GraphFactory {
+	private KnowledgeGraph g;
+	private Lesson lesson;
+	private ArrayList<Lesson> LessonList;
+	private KnowledgeGraph.Node n;
+
+	public KnowledgeGraphFactory() {
+		g = new KnowledgeGraph();
+		lesson = new Lesson();
+	}
+
+	@Override
+	public KnowledgeGraph createGraph() {
+		return new KnowledgeGraph();
+	}
+	
+	public KnowledgeGraph requestGraph(String type) {
+		switch (type.toLowerCase()){
+		case "math":
+			g = createMathGraph();
+		case "programming":
+			createProgrammingGraph();
+		case "history":
+			createHistoryGraph();
+			default:
+				createGraph();
+		}
+		return g;
+	}
+	
+	public KnowledgeGraph createMathGraph() {
+		return new KnowledgeGraph();
+	}
+	
+	public KnowledgeGraph createProgrammingGraph() {
+		return new KnowledgeGraph();
+	}
+	
+	public KnowledgeGraph createHistoryGraph() {
+		return new KnowledgeGraph();
+	}
+}
