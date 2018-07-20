@@ -19,8 +19,6 @@ public class ApplicationController {
 	private ArrayList<KnowledgeGraph> graphs;
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph.Edge> edges;
-	private String type;
-	private int quantity;
 	private boolean finished;
 	
 	public ApplicationController() {
@@ -34,8 +32,6 @@ public class ApplicationController {
 		graphs = new ArrayList();
 		nodes = new ArrayList();
 		edges = new ArrayList();
-		type = "";
-		quantity = 0;
 		finished = false;
 	}
 	
@@ -46,10 +42,7 @@ public class ApplicationController {
 	
 	public void runApplication() {
 		while(!finished) {
-			appView.printMenu();
-			appView.askGraphType();
-			String course = appView.getUserInput();
-			lesson.setCourse(course);
+			
 		}
 		if(finished) {
 			quitApplication();

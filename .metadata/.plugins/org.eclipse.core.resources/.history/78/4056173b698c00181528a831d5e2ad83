@@ -23,14 +23,6 @@ public class ApplicationView {
 				+ "\nQuit (N)");
 	}
 	
-	public void askGraphType() {
-		System.out.println("\n\nEnter a graph type (math, programming, history, random: ");
-	}
-	
-	public void askGraphQuantity() {
-		System.out.println("\n\nEnter graph quantity: ");
-	}
-	
 	public String getUserInput() {
 		input = scanner.next();
 		scanner.nextLine();

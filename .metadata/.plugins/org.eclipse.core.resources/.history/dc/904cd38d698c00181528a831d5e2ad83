@@ -47,9 +47,7 @@ public class ApplicationController {
 	public void runApplication() {
 		while(!finished) {
 			appView.printMenu();
-			appView.askGraphType();
-			String course = appView.getUserInput();
-			lesson.setCourse(course);
+			
 		}
 		if(finished) {
 			quitApplication();
