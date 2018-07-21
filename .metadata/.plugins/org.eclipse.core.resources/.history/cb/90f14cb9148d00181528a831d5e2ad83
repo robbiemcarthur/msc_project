@@ -20,7 +20,7 @@ public class ApplicationController {
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph.Edge> edges;
 	private String type;
-	private int quantity, graphID, lessonID;
+	private int quantity;
 	private boolean finished;
 	
 	public ApplicationController() {
@@ -36,8 +36,6 @@ public class ApplicationController {
 		edges = new ArrayList();
 		type = "";
 		quantity = 0;
-		graphID = 0;
-		lessonID = 0;
 		finished = false;
 	}
 	
@@ -50,10 +48,8 @@ public class ApplicationController {
 		while(!finished) {
 			appView.printMenu();
 			appView.askGraphType();
-			type = appView.getUserInput();
-			lesson.setCourse(type);
-			quantity = Integer.parseInt(appView.getUserInput());
-			createGraphs(quantity);
+			String course = appView.getUserInput();
+			lesson.setCourse(course);
 		}
 		if(finished) {
 			quitApplication();
@@ -61,25 +57,7 @@ public class ApplicationController {
 	}
 	
 	public void createGraphs(int quantity) {
-		for(int i = 0; i <= quantity; i++) {
-			
-		}
-	}
-	
-	public void increment(String type) {
-		switch (type.toLowerCase()) {
-		case "graph":
-			graphID++;
-		case "lesson":
-			lessonID++;
-			default:
-				break;
-		}
-	}
-	
-	public void resetIDs() {
-		graphID = 0;
-		lessonID = 0;
+		
 	}
 	
 	public void quitApplication() {
