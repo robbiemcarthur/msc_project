@@ -35,7 +35,7 @@ public class KnowledgeGraphFactory implements GraphFactory {
 //				g = createGraph();
 //		}
 //		return g;
-//	
+//	}
 //	
 //	public KnowledgeGraph createMathGraph() {
 //		KnowledgeGraph graph = new KnowledgeGraph();

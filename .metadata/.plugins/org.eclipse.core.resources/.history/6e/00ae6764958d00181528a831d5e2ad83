@@ -12,8 +12,6 @@ public class ApplicationController {
 	private ApplicationView appView;
 	private NameGenerator ng;
 	private KnowledgeGraph graph;
-	private KnowledgeGraph.Node curr, prev, succ;
-	private KnowledgeGraph.Edge edge;
 	private KnowledgeGraphFactory graphF;
 	private Lesson lesson;
 	private LessonFactory lessonF;
@@ -21,9 +19,8 @@ public class ApplicationController {
 	private ArrayList<KnowledgeGraph> graphs;
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph.Edge> edges;
-	private ArrayList<String> concepts;
-	private String course, teacher, student;
-	private int grade, quantity, graphID, lessonID;
+	private String type;
+	private int quantity, graphID, lessonID;
 	private boolean finished;
 
 	public ApplicationController() {
@@ -35,11 +32,9 @@ public class ApplicationController {
 		lesson = new Lesson();
 		lessons = new ArrayList();
 		graphs = new ArrayList();
-		concepts = new ArrayList();
-		course = "";
-		teacher = "";
-		student = "";
-		grade = 0;
+		nodes = new ArrayList();
+		edges = new ArrayList();
+		type = "";
 		quantity = 0;
 		graphID = 0;
 		lessonID = 0;
@@ -53,29 +48,18 @@ public class ApplicationController {
 
 	public void runApplication() {
 		while(!finished) {
-			initialiseConcepts();
 			appView.printMenu();
 			appView.askGraphType();
-			course = appView.getUserInput();
-			if(course.equalsIgnoreCase("n")) {
+			type = appView.getUserInput();
+			if(type.equalsIgnoreCase("n")) {
 				finished = true;
 				break;
 			}
 			else {
-				//				lesson.setCourse(course);
-				switch(course.toLowerCase()) {
-				case "math":
-					teacher = "Mr. X";
-				case "computing":
-					teacher = "Mr. Y";
-				case "history":
-					teacher = "Mr. Z";
-				default:
-					teacher = "Mr. A";
-				}
+				lesson.setCourse(type);
 				appView.askGraphQuantity();
 				quantity = Integer.parseInt(appView.getUserInput());
-				createGraph(quantity);
+				createGraphs(quantity);
 			}
 		}
 		if(finished) {
@@ -83,56 +67,14 @@ public class ApplicationController {
 		}
 	}
 
-	public void createGraph(int quantity) {
-		initialiseLessons(quantity);
+	public void createGraphs(int quantity) {
 		for(int i = 0; i <= quantity; i++) {
-			student = ng.GenerateName();
 			increment("graph");
-			graph = graphF.createGraph();
-			boolean passed = false;
-			while(!passed) {
-				
-			}
 		}
 	}
-
+	
 	public void initialiseNodes() {
-		for(Lesson lesson: lessons) {
-			curr = new KnowledgeGraph.Node(lesson);
-			nodes.add(curr);
-		}
-	}
-
-	public void initialiseEdges() {
-		for(int i = 0; i < nodes.size(); i+=3) {
-			edge = new KnowledgeGraph.Edge(nodes.get(i), nodes.get(i++), 0);
-			edges.add(edge);
-			edge = new KnowledgeGraph.Edge(nodes.get(i++), nodes.get(i+2), 0);
-			edges.add(edge);
-			edge = new KnowledgeGraph.Edge(nodes.get(i+2), nodes.get(i), 0);
-			edges.add(edge);
-		}
-	}
-
-	public void initialiseLessons(int quantity) {
-		for(String con : concepts) {
-			lessonID++;
-			lesson = lessonF.getLesson(teacher, course, con, 0, lessonID, student);
-			lessons.add(lesson);
-		}
-	}
-
-	public void initialiseConcepts() {
-		concepts.add("A");
-		concepts.add("B");
-		concepts.add("C");
-		concepts.add("D");
-		concepts.add("E");
-		concepts.add("F");
-		concepts.add("G");
-		concepts.add("H");
-		concepts.add("I");
-		concepts.add("J");
+		
 	}
 
 	public void increment(String type) {

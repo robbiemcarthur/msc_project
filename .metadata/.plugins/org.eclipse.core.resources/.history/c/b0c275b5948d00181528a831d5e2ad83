@@ -40,10 +40,6 @@ public class LessonFactory {
 		return new Lesson();
 	}
 	
-	public Lesson getLesson (String t, String c, String con, int grade, int id, String s) {
-		return new Lesson(s,c,con,grade,id,s);
-	}
-	
 	public ArrayList<Lesson> createEmptyLessons(int n) {
 		for(int i = 0; i<=n; i++) {
 			lessons.add(new Lesson());

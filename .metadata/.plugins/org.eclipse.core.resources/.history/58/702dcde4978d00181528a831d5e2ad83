@@ -12,8 +12,6 @@ public class ApplicationController {
 	private ApplicationView appView;
 	private NameGenerator ng;
 	private KnowledgeGraph graph;
-	private KnowledgeGraph.Node curr, prev, succ;
-	private KnowledgeGraph.Edge edge;
 	private KnowledgeGraphFactory graphF;
 	private Lesson lesson;
 	private LessonFactory lessonF;
@@ -35,6 +33,8 @@ public class ApplicationController {
 		lesson = new Lesson();
 		lessons = new ArrayList();
 		graphs = new ArrayList();
+		nodes = new ArrayList();
+		edges = new ArrayList();
 		concepts = new ArrayList();
 		course = "";
 		teacher = "";
@@ -62,7 +62,7 @@ public class ApplicationController {
 				break;
 			}
 			else {
-				//				lesson.setCourse(course);
+//				lesson.setCourse(course);
 				switch(course.toLowerCase()) {
 				case "math":
 					teacher = "Mr. X";
@@ -70,8 +70,8 @@ public class ApplicationController {
 					teacher = "Mr. Y";
 				case "history":
 					teacher = "Mr. Z";
-				default:
-					teacher = "Mr. A";
+					default:
+						teacher = "Mr. A";
 				}
 				appView.askGraphQuantity();
 				quantity = Integer.parseInt(appView.getUserInput());
@@ -84,44 +84,17 @@ public class ApplicationController {
 	}
 
 	public void createGraph(int quantity) {
-		initialiseLessons(quantity);
 		for(int i = 0; i <= quantity; i++) {
-			student = ng.GenerateName();
 			increment("graph");
-			graph = graphF.createGraph();
-			boolean passed = false;
-			while(!passed) {
-				
-			}
 		}
 	}
-
-	public void initialiseNodes() {
-		for(Lesson lesson: lessons) {
-			curr = new KnowledgeGraph.Node(lesson);
-			nodes.add(curr);
-		}
-	}
-
-	public void initialiseEdges() {
-		for(int i = 0; i < nodes.size(); i+=3) {
-			edge = new KnowledgeGraph.Edge(nodes.get(i), nodes.get(i++), 0);
-			edges.add(edge);
-			edge = new KnowledgeGraph.Edge(nodes.get(i++), nodes.get(i+2), 0);
-			edges.add(edge);
-			edge = new KnowledgeGraph.Edge(nodes.get(i+2), nodes.get(i), 0);
-			edges.add(edge);
-		}
-	}
-
-	public void initialiseLessons(int quantity) {
+	
+	public void initialiseLessons() {
 		for(String con : concepts) {
-			lessonID++;
 			lesson = lessonF.getLesson(teacher, course, con, 0, lessonID, student);
-			lessons.add(lesson);
 		}
 	}
-
+	
 	public void initialiseConcepts() {
 		concepts.add("A");
 		concepts.add("B");

@@ -223,7 +223,7 @@ public class KnowledgeGraph implements Digraph {
 
         //////////// Constructor ////////////
 
-        public Edge (KnowledgeGraph.Node source, KnowledgeGraph.Node dest, Object attr) {
+        private Edge (KnowledgeGraph.Node source, KnowledgeGraph.Node dest, Object attr) {
             this.source = source;
             this.dest = dest;
             this.attribute = attr;
