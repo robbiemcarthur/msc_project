@@ -2,7 +2,6 @@ package main.Application;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Iterator;
 
 import main.Factories.KnowledgeGraphFactory;
 import main.Factories.LessonFactory;

@@ -1,8 +1,6 @@
 package main.Application;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Iterator;
 
 import main.Factories.KnowledgeGraphFactory;
 import main.Factories.LessonFactory;
@@ -19,7 +17,6 @@ public class ApplicationController {
 	private KnowledgeGraphFactory graphF;
 	private Lesson lesson;
 	private LessonFactory lessonF;
-	private Random rand;
 	private ArrayList<Lesson> lessons;
 	private ArrayList<KnowledgeGraph> graphs;
 	private ArrayList<KnowledgeGraph.Node> nodes;
@@ -27,7 +24,6 @@ public class ApplicationController {
 	private ArrayList<String> concepts;
 	private String course, teacher, student;
 	private int grade, quantity, graphID, lessonID;
-	private final int MAX_ATTEMPTS = 10;
 	private boolean finished;
 
 	public ApplicationController() {
@@ -37,10 +33,6 @@ public class ApplicationController {
 		graph = new KnowledgeGraph();
 		graphF = new KnowledgeGraphFactory();
 		lesson = new Lesson();
-		lessonF = new LessonFactory();
-		rand = new Random();
-		nodes = new ArrayList();
-		edges = new ArrayList();
 		lessons = new ArrayList();
 		graphs = new ArrayList();
 		concepts = new ArrayList();
@@ -56,10 +48,6 @@ public class ApplicationController {
 
 	public void StartApplication() {
 		appView.startUpMessage();
-		initialiseConcepts();
-		initialiseLessons(10);
-		initialiseNodes();
-		initialiseEdges();
 		runApplication();
 	}
 
@@ -103,7 +91,7 @@ public class ApplicationController {
 			graph = graphF.createGraph();
 			boolean passed = false;
 			while(!passed) {
-				int attempts = 0;
+				
 			}
 		}
 	}
@@ -113,7 +101,6 @@ public class ApplicationController {
 			curr = new KnowledgeGraph.Node(lesson);
 			nodes.add(curr);
 		}
-		System.out.println(nodes.toString());
 	}
 
 	public void initialiseEdges() {
@@ -130,8 +117,7 @@ public class ApplicationController {
 	public void initialiseLessons(int quantity) {
 		for(String con : concepts) {
 			lessonID++;
-			grade = rand.nextInt(100);
-			lesson = lessonF.getLesson(teacher, course, con, grade, lessonID, student);
+			lesson = lessonF.getLesson(teacher, course, con, 0, lessonID, student);
 			lessons.add(lesson);
 		}
 	}

@@ -2,7 +2,6 @@ package main.Application;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Iterator;
 
 import main.Factories.KnowledgeGraphFactory;
 import main.Factories.LessonFactory;
@@ -37,10 +36,7 @@ public class ApplicationController {
 		graph = new KnowledgeGraph();
 		graphF = new KnowledgeGraphFactory();
 		lesson = new Lesson();
-		lessonF = new LessonFactory();
 		rand = new Random();
-		nodes = new ArrayList();
-		edges = new ArrayList();
 		lessons = new ArrayList();
 		graphs = new ArrayList();
 		concepts = new ArrayList();
