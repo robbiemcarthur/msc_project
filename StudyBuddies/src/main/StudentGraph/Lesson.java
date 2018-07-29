@@ -3,21 +3,20 @@ package main.StudentGraph;
 import java.util.Random;
 
 public class Lesson {
-	private String teacher, course, concept, student;
-	private int id = 0, grade;
+	private String teacher, course, concept;
+	private int id, grade;
 	private Random rand;
 	private boolean passed;
 	
     //////////// Constructors ////////////
 	
-	public Lesson(String t, String c, String con, int grade, int id, String s) {
+	public Lesson(String t, String c, String con, int grade, int id) {
 		this.teacher = t;
 		this.course = c;
 		this.concept = con;
 		this.grade = grade;
 		this.id = id;
 		rand = new Random();
-		this.student = s;
 		passed = false;
 	}
 	
@@ -27,8 +26,7 @@ public class Lesson {
 		concept = "";
 		grade = 0;
 		rand = new Random();
-		id++;
-		student = "";
+		id = 0;
 		passed = false;
 	}
 	
@@ -50,8 +48,8 @@ public class Lesson {
     	return this.grade;
     }
     
-    public String getStudent () {
-        return this.student;
+    public int getID() {
+    	return this.id;
     }
 
     //////////// Transformers ////////////
@@ -72,8 +70,9 @@ public class Lesson {
     	this.grade = grade;
     }
     
-    public void setStudent (String s) {
-        this.student = s;
+    
+    public void setID (int id) {
+    	this.id = id;
     }
     
     public void setRandomGrade() {
@@ -90,13 +89,8 @@ public class Lesson {
 		return passed;
 	}
     
-	public int resitGrade() {
-		if(grade<=40) {
-			grade += rand.nextInt(60);
-		}
-		else {
-			grade = rand.nextInt(100);
-		}
+	public int resitGrade(int g) {
+		grade = rand.nextInt(100-g);
 		return grade;
 	}
 }

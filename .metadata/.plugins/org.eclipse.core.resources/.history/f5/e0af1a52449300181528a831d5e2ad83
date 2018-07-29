@@ -1,0 +1,8 @@
+package main.Application;
+
+import main.StudentGraph.KnowledgeGraph;
+
+public class RouteController {
+	private KnowledgeGraph.Node source, dest;
+	private KnowledgeGraph.Edge edge;
+}

@@ -1,0 +1,16 @@
+package main.Factories;
+
+import main.StudentGraph.KnowledgeGraph;
+
+
+public class KnowledgeGraphFactory implements GraphFactory {
+	private int id;
+	public KnowledgeGraphFactory() {
+		id = 0;
+	}
+
+	@Override
+	public KnowledgeGraph createGraph() {
+		return new KnowledgeGraph(id++);
+	}
+}

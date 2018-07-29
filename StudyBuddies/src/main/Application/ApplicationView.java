@@ -20,6 +20,7 @@ public class ApplicationView {
 	public void printMenu() {
 		System.out.println("\t\tMENU\t\t"
 				+ "\nGenerate Graphs (Y)"
+				+ "\nPrint Graphs (P)"
 				+ "\nQuit (N)");
 	}
 	

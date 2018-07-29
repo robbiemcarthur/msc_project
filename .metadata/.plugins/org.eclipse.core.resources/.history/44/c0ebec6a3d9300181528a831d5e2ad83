@@ -1,0 +1,17 @@
+package main.Application;
+
+public class KnowledgeGraphController {
+	private String course, teacher, student;
+	private int grade, id, quantity;
+	
+	public KnowledgeGraphController() {
+		
+	}
+	
+	/**
+	 * Add a knowledge graph
+	 */
+	public void addKnowledgeGraph() {
+		
+	}
+}

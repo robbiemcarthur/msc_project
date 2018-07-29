@@ -18,15 +18,17 @@ public class KnowledgeGraph implements Digraph {
     private KnowledgeGraph.Node firstNode;
     private KnowledgeGraph.Edge firstEdge;
     private int size, id;
-    private String course;
+    private Student student;
 
     //////////// Constructor ////////////
 
-    public KnowledgeGraph () {
+    public KnowledgeGraph (int id, Student s) {
     // Construct a directed graph, initially empty.
         firstNode = null;
         firstEdge = null;
         size = 0;
+        this.id = id;
+        this.student = s;
     }
 
     //////////// Accessors ////////////
@@ -34,6 +36,10 @@ public class KnowledgeGraph implements Digraph {
     public int size () {
     // Return the number of nodes in this graph.
         return this.size;
+    }
+    
+    public int id() {
+    	return this.id;
     }
 
     public int degree (Graph.Node node) {
@@ -64,6 +70,9 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Transformers ////////////
 
+    public void setID(int id) {
+    	this.id = id;
+    }
     public void clear () {
     // Make this graph empty.
         this.firstNode = null;
@@ -219,7 +228,6 @@ public class KnowledgeGraph implements Digraph {
         private KnowledgeGraph.Node source, dest;
         private KnowledgeGraph.Edge prevEdge, nextEdge;
         private int visits;
-        private final int MAX_VISITS = 10;
 
         //////////// Constructor ////////////
 
@@ -229,7 +237,7 @@ public class KnowledgeGraph implements Digraph {
             this.attribute = attr;
             this.prevEdge = null;
             this.nextEdge = null;
-            this.visits = 1;
+            this.visits = (int) attr;
         }
 
         public Graph.Node[] getNodes () {
@@ -252,17 +260,6 @@ public class KnowledgeGraph implements Digraph {
         
         public int getVisits() {
         	return this.visits;
-        }
-        
-        public boolean incrementVisits() {
-        	if(visits<MAX_VISITS) {
-        		visits++;
-        		return true;
-        	}
-        	else
-        	{
-        		return false;
-        	}
         }
     }
 

@@ -1,0 +1,46 @@
+package main.Application;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import main.StudentGraph.KnowledgeGraph;
+import main.StudentGraph.Lesson;
+
+public class RouteController {
+	private KnowledgeGraph.Node curr, pred, succ;
+	private KnowledgeGraph.Edge edge;
+	private KnowledgeGraph graph;
+	private Lesson lesson;
+	private boolean passed;
+	private int visits;
+	private final int MAX_VISITS = 3;
+
+	public RouteController(Lesson l, KnowledgeGraph g) {
+		this.lesson = l;
+		visits = 0;
+		passed = false;
+		graph = g;
+	}
+
+	public KnowledgeGraph getRoute(ArrayList<KnowledgeGraph.Node> nodes) {
+		for(int i = 0; i < nodes.size(); i = i+2)
+		{
+			int attempts = 0;
+			while (!passed && attempts<MAX_VISITS)
+			{
+				lesson = (Lesson) nodes.get(i).getElement();
+				lesson.setRandomGrade();
+				if(lesson.getGrade()>40) {
+					graph.addNode(lesson);
+					graph.addEdge(nodes.get(i), nodes.get(i+2));
+				}
+				else {
+					lesson.resitGrade(lesson.getGrade());
+					graph.addNode(nodes.get(i++));
+					graph.addEdge(nodes.get(i), nodes.get(i++));
+				}
+			}
+		}
+		return graph;
+	}
+}

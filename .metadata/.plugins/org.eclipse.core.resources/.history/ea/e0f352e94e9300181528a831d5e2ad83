@@ -1,0 +1,24 @@
+package main.Application;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import main.StudentGraph.KnowledgeGraph;
+import main.StudentGraph.Lesson;
+
+public class RouteController {
+	private KnowledgeGraph.Node curr, pred, succ;
+	private KnowledgeGraph.Edge edge;
+	private Lesson lesson;
+	
+	public RouteController(Lesson l) {
+		this.lesson = l;
+		curr = new KnowledgeGraph.Node(lesson);
+		pred = new KnowledgeGraph.Node(lesson);
+		pred = new KnowledgeGraph.Node(lesson);
+	}
+	
+	public void getRoute(ArrayList<KnowledgeGraph.Node> nodes) {
+		
+	}
+}
