@@ -1,0 +1,14 @@
+package main.Logger;
+
+public interface ILogger {
+	// Logger object will write contents of each graph to file
+	
+	public void writeToFile(String contents);
+	// write contents to file
+	
+	public void openFile();
+	// open new file
+	
+	public void saveFile();
+	// save file
+}

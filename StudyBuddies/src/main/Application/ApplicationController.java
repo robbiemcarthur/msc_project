@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import main.Factories.KnowledgeGraphFactory;
 import main.Factories.LessonFactory;
+import main.Logger.Logger;
 import main.NameGenerator.NameGenerator;
 import main.StudentGraph.KnowledgeGraph;
 import main.StudentGraph.KnowledgeGraph.Node;
@@ -24,11 +25,12 @@ public class ApplicationController {
 	private ArrayList<KnowledgeGraph> graphs;
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<String> concepts;
-	private String course, teacher;
+	private String course, teacher, filename;
 	private int grade, quantity, lessonID,studentID;
 	private boolean finished;
 	private Iterator iter;
 	private Student s;
+	private Logger logger;
 
 	public ApplicationController() {
 		appView = new ApplicationView(this);
@@ -49,10 +51,13 @@ public class ApplicationController {
 		lessonID = 0;
 		studentID = 0;
 		finished = false;
+		filename = "graphs.csv";
+		logger = new Logger();
 	}
 
 	public void StartApplication() {
 		appView.startUpMessage();
+		logger.initialise(filename);
 		runApplication();
 	}
 
@@ -68,6 +73,10 @@ public class ApplicationController {
 			else if(input.equalsIgnoreCase("p"))
 			{
 				printGraphs();
+			}
+			else if(input.equalsIgnoreCase("w"))
+			{
+				writeToFile();
 			}
 			else {
 				course = input;
@@ -103,8 +112,30 @@ public class ApplicationController {
 		}
 	}
 
+	
+	public void writeToFile() {
+		for(KnowledgeGraph g: graphs) {
+			iter = g.nodes();
+			Student s = new Student();
+			ArrayList<String> contents = new ArrayList();
+			String gid = "Graph "+ g.id();
+			logger.writeLine(gid);
+			while(iter.hasNext()) {
+				KnowledgeGraph.Node n = (KnowledgeGraph.Node) iter.next();
+				Lesson les = (Lesson) n.getElement();
+				contents.add(Integer.toString(les.getID()));
+				contents.add(les.getCourse());
+				contents.add(les.getConcept());
+				contents.add(les.getTeacher());
+				contents.add(Integer.toString(les.getGrade()));
+				contents.add(Integer.toString(les.getID()));
+				contents.add(Integer.toString(s.getID()));
+				logger.writeToFile(contents);
+			}
+		}
+	}
+	
 	public void printGraphs() {
-
 		for(KnowledgeGraph g: graphs) {
 			iter = g.nodes();
 			Student s = new Student();

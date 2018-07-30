@@ -1,0 +1,5 @@
+package main.Logger;
+
+public interface ILogger {
+
+}

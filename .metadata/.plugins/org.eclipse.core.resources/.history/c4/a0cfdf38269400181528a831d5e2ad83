@@ -1,0 +1,24 @@
+package main.Logger;
+
+public class Logger implements ILogger {
+	private static final String FILE_HEADER = "CourseID,CourseName,Concept,Teacher,Grade,Student";
+	
+	@Override
+	public void writeToFile(String contents) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void openFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

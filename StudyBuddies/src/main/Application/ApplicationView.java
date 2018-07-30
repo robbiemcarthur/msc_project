@@ -21,6 +21,7 @@ public class ApplicationView {
 		System.out.println("\t\tMENU\t\t"
 				+ "\nGenerate Graphs (Y)"
 				+ "\nPrint Graphs (P)"
+				+ "\nWrite Graph File (W)"
 				+ "\nQuit (N)");
 	}
 	

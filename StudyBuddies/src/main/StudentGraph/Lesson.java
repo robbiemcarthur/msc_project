@@ -90,7 +90,7 @@ public class Lesson {
 	}
     
 	public int resitGrade(int g) {
-		grade = rand.nextInt(100-g);
+		grade += rand.nextInt(100-g);
 		return grade;
 	}
 }
