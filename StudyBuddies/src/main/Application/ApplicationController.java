@@ -102,13 +102,19 @@ public class ApplicationController {
 			quitApplication();
 		}
 	}
-
+	public void reInitialise() {
+		nodes.clear();
+		lessons.clear();
+		initialiseLessons();
+		initialiseNodes();
+	}
 	public void createGraphs(int quantity) {
 		for(int i = 0; i < quantity; i++)
 		{
 		graph = graphF.getGraph();
 		graph = router.getRoute(nodes, graph);
 		graphs.add(graph);
+		reInitialise();
 		}
 	}
 
@@ -163,6 +169,7 @@ public class ApplicationController {
 	}
 
 	public void initialiseLessons() {
+		lessonID = 0;
 		for(String con : concepts) {
 			lessonID++;
 			grade = 0;

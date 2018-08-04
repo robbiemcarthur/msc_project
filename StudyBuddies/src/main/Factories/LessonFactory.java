@@ -16,7 +16,6 @@ public class LessonFactory {
 	private int id;
 	
 	public LessonFactory() {
-		lessons = new ArrayList(); 
 		id = 0;
 	}
 	
