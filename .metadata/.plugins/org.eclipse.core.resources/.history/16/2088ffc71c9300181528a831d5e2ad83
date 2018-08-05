@@ -1,6 +1,0 @@
-package main.Application;
-
-public class KnowledgegraphController {
-	private String course, teacher, student;
-	private int grade, id, quantity;
-}

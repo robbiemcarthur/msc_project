@@ -26,4 +26,5 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="NameGenerator.NameGenerator"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="main.StudentGraph.KnowledgeGraph.Node"/>
 </qualifiedTypeNameHistroy>
