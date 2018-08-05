@@ -28,29 +28,26 @@ public class ApplicationController {
 	private String course, teacher, filename;
 	private int grade, quantity, lessonID,studentID;
 	private boolean finished;
-	private Iterator iter;
-	private Student s;
+	private Iterator<KnowledgeGraph.Node> iter;
 	private Logger logger;
-	private Random rand;
 
 	public ApplicationController() {
 		appView = new ApplicationView(this);
 		router = new RouteController();
-		s = new Student();
-		graph = new KnowledgeGraph(0, s);
+		graph = new KnowledgeGraph(0);
 		graphF = new KnowledgeGraphFactory();
 		lesson = new Lesson();
 		lessonF = new LessonFactory();
-		nodes = new ArrayList();
-		lessons = new ArrayList();
-		graphs = new ArrayList();
-		concepts = new ArrayList();
+		nodes = new ArrayList<KnowledgeGraph.Node>();
+		lessons = new ArrayList<Lesson>();
+		graphs = new ArrayList<KnowledgeGraph>();
+		concepts = new ArrayList<String>();
 		course = "";
 		teacher = "";
 		grade = 0;
 		quantity = 0;
 		lessonID = 0;
-		studentID = 0;
+		studentID = 1;
 		finished = false;
 		filename = "graphs.csv";
 		logger = new Logger();
@@ -115,30 +112,31 @@ public class ApplicationController {
 			graph = graphF.getGraph();
 			graph = router.route(nodes, graph);
 			graphs.add(graph);
-//			removeDuplicates();
 			reInitialise();
 		}
 	}
 
 
 	public void writeToFile() {
+		logger.appendHeader();
 		for(KnowledgeGraph g: graphs) {
+			logger.writeLine("Graph " + g.id());
 			iter = g.nodes();
 			Student s = new Student();
-			ArrayList<String> contents = new ArrayList();
-			String gid = "Graph "+ g.id();
-			logger.writeLine(gid);
+			ArrayList<String> contents = new ArrayList<String>();
 			while(iter.hasNext()) {
-				KnowledgeGraph.Node n = (KnowledgeGraph.Node) iter.next();
+				KnowledgeGraph.Node n = iter.next();
 				Lesson les = (Lesson) n.getElement();
+				contents.add("\n");
 				contents.add(Integer.toString(les.getID()));
 				contents.add(les.getCourse());
 				contents.add(les.getConcept());
 				contents.add(les.getTeacher());
 				contents.add(Integer.toString(les.getGrade()));
 				contents.add(Integer.toString(les.getID()));
-				contents.add(Integer.toString(s.getID()));
+				contents.add(Integer.toString(les.getStudent()));
 				logger.writeToFile(contents);
+				contents.clear();
 			}
 		}
 	}
@@ -146,16 +144,16 @@ public class ApplicationController {
 	public void printGraphs() {
 		for(KnowledgeGraph g: graphs) {
 			iter = g.nodes();
-			Student s = new Student();
 			System.out.println("Graph "+ g.id());
 			while(iter.hasNext()) {
-				s = graphF.getStudent();
-				KnowledgeGraph.Node n = (KnowledgeGraph.Node) iter.next();
+				KnowledgeGraph.Node n = iter.next();
 				Lesson les = (Lesson) n.getElement();
+				les.setStudent(studentID);
 				System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
 				+ " Concept: " + les.getConcept() + " Teacher: " 
-				+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + s.getID());
+				+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
 			}
+			studentID++;
 		}
 	}
 
@@ -164,10 +162,6 @@ public class ApplicationController {
 			curr = new KnowledgeGraph.Node(lesson);
 			nodes.add(curr);
 		}
-		for (KnowledgeGraph.Node node: nodes)
-		{
-			Lesson l = (Lesson) (node.getElement());
-		}
 	}
 
 	public void initialiseLessons() {
@@ -175,46 +169,13 @@ public class ApplicationController {
 		for(String con : concepts) {
 			lessonID++;
 			grade = 0;
-			lesson = lessonF.getLesson(teacher, course, con, grade, lessonID);
+			lesson = lessonF.getLesson(teacher, course, con, grade, lessonID, 0);
 			lessons.add(lesson);
 			lessonID++;
-			lesson = lessonF.getLesson(teacher, course, con, grade, lessonID);
+			lesson = lessonF.getLesson(teacher, course, con, grade, lessonID, 0);
 			lessons.add(lesson);
 		}
-//		for(Lesson l: lessons) {
-//			l.setgrade(rand.nextInt(60)+40);
-//			int visits = rand.nextInt(5);
-//			if(visits==4 || visits==5) {
-//				visits = 0;
-//			}
-//			if(visits==0) {
-//				//add standard lesson to next standard lesson
-//			}
-//			else {
-//				// add standard lesson to next standard lesson, and revision lesson
-//			}
-//		}
 	}
-
-//	public void removeDuplicates() {
-//		for(int i = 0; i < graphs.size(); i++) {
-//			for(KnowledgeGraph graph: graphs) {
-//				iter = graph.nodes();
-//				while(iter.hasNext()) {
-//					KnowledgeGraph.Node curr = (Node) iter.next();
-//					if(iter.hasNext())
-//					{
-//						KnowledgeGraph.Node succ = (Node) iter.next();
-//						Lesson currLesson = (Lesson) (curr.getElement());
-//						Lesson succLesson = (Lesson) (succ.getElement());
-//						if(succLesson.getID()==currLesson.getID()) {
-//							iter.remove();
-//						}
-//					}
-//				}
-//			}	
-//		}
-//	}
 
 	public void initialiseConcepts() {
 		concepts.add("A");

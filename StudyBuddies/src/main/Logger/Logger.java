@@ -9,24 +9,23 @@ import main.StudentGraph.KnowledgeGraph;
 import main.StudentGraph.Student;
 
 public class Logger implements ILogger {
-	
+
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
-	
+
 	private static final String FILE_HEADER = "CourseID,CourseName,Concept,Teacher,Grade,Student";
-	
+
 	private String filename;
 	private FileWriter writer;
-	private BufferedWriter bw;
-	
+
 	public Logger() {
 		filename = "";
 	}
-	
+
 	public Logger(String filename) {
 		this.filename = filename;
 	}
-	
+
 	public void initialise(String filename) {
 		this.filename = filename;
 		try {
@@ -35,48 +34,68 @@ public class Logger implements ILogger {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bw = new BufferedWriter(writer);
 	}
-	
+
 	@Override
 	public void writeToFile(ArrayList<String> contents) {
-		for(String c: contents) {
-			try {
+		try {
+			for(String c: contents) {
 				writer.append(c);
-			} catch (IOException e) {
-				e.printStackTrace();
+				writer.append(COMMA_DELIMITER);
 			}
 		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
-			bw.append(NEW_LINE_SEPARATOR);
+			writer.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void writeToFile(ArrayList<KnowledgeGraph> graphs, Student s) {
-		
-	}
-	
-	public void writeLine(String line) {
+
+	public void appendHeader() {
 		try {
-			bw.append(line);
+			writer.append(COMMA_DELIMITER);
+			writer.append(FILE_HEADER);
+			writer.flush();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	public void writeLine(String line) {
+		try {
+			writer.append(NEW_LINE_SEPARATOR);
+			writer.append(line);
+			writer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+	public void writeToFile(ArrayList<KnowledgeGraph> graphs, Student s) {
+
+	}
+
+
 	@Override
 	public void openFile() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveFile() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -91,7 +110,7 @@ public class Logger implements ILogger {
 	@Override
 	public void writeToFile(String contents) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

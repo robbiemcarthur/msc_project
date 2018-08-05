@@ -12,11 +12,9 @@ import main.StudentGraph.Lesson;
  * Factory class to produce Lessons
  */
 public class LessonFactory {
-	private ArrayList<Lesson> lessons;
-	private int id;
 	
 	public LessonFactory() {
-		id = 0;
+		
 	}
 	
 	
@@ -24,23 +22,7 @@ public class LessonFactory {
 		return new Lesson();
 	}
 	
-	public Lesson getLesson (String t, String c, String con, int grade, int id) {
-		return new Lesson(t,c,con,grade,id);
-	}
-	
-	public ArrayList<Lesson> createEmptyLessons(int n) {
-		for(int i = 0; i<=n; i++) {
-			lessons.add(new Lesson());
-		}
-		return this.lessons;
-	}
-	
-	public Lesson getDummyLesson() {
-		return new Lesson("Mr. X", "Math", "Algebra", 0, id++);	
-	}
-	
-	
-	public ArrayList<Lesson> getLessons() {
-		return this.lessons;
+	public Lesson getLesson (String t, String c, String con, int grade, int id, int s) {
+		return new Lesson(t,c,con,grade,id, s);
 	}
 }

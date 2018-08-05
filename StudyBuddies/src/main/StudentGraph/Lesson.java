@@ -4,18 +4,19 @@ import java.util.Random;
 
 public class Lesson {
 	private String teacher, course, concept;
-	private int id, grade;
+	private int id, grade, student;
 	private Random rand;
 	private boolean passed;
 	
     //////////// Constructors ////////////
 	
-	public Lesson(String t, String c, String con, int grade, int id) {
+	public Lesson(String t, String c, String con, int grade, int id, int s) {
 		this.teacher = t;
 		this.course = c;
 		this.concept = con;
 		this.grade = grade;
 		this.id = id;
+		this.student = s;
 		rand = new Random();
 		passed = false;
 	}
@@ -51,6 +52,10 @@ public class Lesson {
     public int getID() {
     	return this.id;
     }
+    
+    public int getStudent() {
+    	return this.student;
+    }
 
     //////////// Transformers ////////////
 
@@ -73,6 +78,10 @@ public class Lesson {
     
     public void setID (int id) {
     	this.id = id;
+    }
+    
+    public void setStudent (int s) {
+    	this.student = s;
     }
     
     public void setRandomGrade() {

@@ -27,7 +27,7 @@ public class RouteController {
 		next= new Lesson();
 		nodes = new ArrayList();
 		lessons = new ArrayList();
-		graph = new KnowledgeGraph(0, s);
+		graph = new KnowledgeGraph(0);
 		passed = false;
 		rand = new Random();
 	}
@@ -49,7 +49,7 @@ public class RouteController {
 					if(visits>4)
 					{
 						curr = (Lesson) nodes.get(i + 1).getElement();
-						curr.setgrade(rand.nextInt(60)+40);
+						curr.setgrade(rand.nextInt(40)-1);
 						graph.addNode(curr);
 						graph.addEdge(nodes.get(i), nodes.get(i + 1), visits);
 					}
@@ -85,7 +85,7 @@ public class RouteController {
 							prev = (Lesson) nodes.get(i + 2).getElement();
 							next.setgrade(rand.nextInt(60)+40);
 							graph.addNode(curr);
-							//						graph.addNode(next);
+							graph.addNode(next);
 							//						graph.addNode(prev);
 							graph.addEdge(nodes.get(i), nodes.get(i + 2), visits);
 							graph.addEdge(nodes.get(i + 2), nodes.get(i + 1), visits);

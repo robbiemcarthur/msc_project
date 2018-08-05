@@ -22,13 +22,12 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Constructor ////////////
 
-    public KnowledgeGraph (int id, Student s) {
+    public KnowledgeGraph (int id) {
     // Construct a directed graph, initially empty.
         firstNode = null;
         firstEdge = null;
         size = 0;
         this.id = id;
-        this.student = s;
     }
 
     //////////// Accessors ////////////
