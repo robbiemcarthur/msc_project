@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Random;
 
 import main.StudentGraph.KnowledgeGraph;
-import main.StudentGraph.KnowledgeGraph.Node;
 import main.StudentGraph.Lesson;
 import main.StudentGraph.Student;
 
@@ -80,15 +79,14 @@ public class GraphController {
 				if(i==8) {
 					curr = (Lesson) nodes.get(i).getElement();
 					curr.setgrade(rand.nextInt(60)+40);
-					KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
+					graph.addNode(curr);
 					finished = true;
-					// if high amount of visits, add revision lesson
 					if(visits>4)
 					{
 						curr = (Lesson) nodes.get(i + 1).getElement();
 						curr.setgrade(rand.nextInt(40)-1);
-						KnowledgeGraph.Node succ = (Node) graph.addNode(curr);
-						graph.addEdge(_curr, succ, visits);
+						graph.addNode(curr);
+						graph.addEdge(nodes.get(i), nodes.get(i + 1), visits);
 					}
 				}
 				else {
@@ -109,9 +107,9 @@ public class GraphController {
 					}
 					if(visits==0) {
 						//add standard lesson to next standard lesson
-						KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
-						KnowledgeGraph.Node succ = (Node) graph.addNode(next);
-						graph.addEdge(_curr, succ, visits);
+						graph.addNode(curr);
+						graph.addNode(next);
+						graph.addEdge(nodes.get(i), nodes.get(i + 1), visits);
 					}
 					else {
 						// add standard lesson to next standard lesson, and revision lesson
@@ -121,12 +119,12 @@ public class GraphController {
 						else {
 							prev = (Lesson) nodes.get(i + 2).getElement();
 							next.setgrade(rand.nextInt(60)+40);
-							KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
-							KnowledgeGraph.Node succ = (Node) graph.addNode(next);
-							KnowledgeGraph.Node pred = (Node) graph.addNode(prev);
-							graph.addEdge(_curr, pred, visits);
-							graph.addEdge(pred, succ, visits);
-							graph.addEdge(succ, _curr, visits);
+							graph.addNode(curr);
+							graph.addNode(next);
+							//						graph.addNode(prev);
+							graph.addEdge(nodes.get(i), nodes.get(i + 2), visits);
+							graph.addEdge(nodes.get(i + 2), nodes.get(i + 1), visits);
+							graph.addEdge(nodes.get(i + 1), nodes.get(i), visits);
 						}
 					}
 				}
