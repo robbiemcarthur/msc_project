@@ -76,9 +76,6 @@ public class ApplicationController {
 			{
 				writeToFile();
 			}
-			else if(input.equalsIgnoreCase("d")) {
-				getGraphDegrees();
-			}
 			else {
 				course = input;
 				switch(course.toLowerCase()) {
@@ -103,7 +100,12 @@ public class ApplicationController {
 			quitApplication();
 		}
 	}
-
+	public void reInitialise() {
+		nodes.clear();
+		lessons.clear();
+		initialiseLessons();
+		initialiseNodes();
+	}
 	public void createGraphs(int quantity) {
 		for(int i = 0; i < quantity; i++)
 		{
@@ -113,16 +115,8 @@ public class ApplicationController {
 			reInitialise();
 		}
 	}
-	
-	public void getGraphDegrees() {
-		System.out.println("\nWhich graph would you like to get degrees for?" );
-		int input = Integer.parseInt(appView.getUserInput());
-		System.out.println(gController.getDegrees(graphs.get(input)));
-	}
 
 
-	//////////FILE METHODS ///////////
-	
 	public void writeToFile() {
 		logger.appendHeader();
 		for(KnowledgeGraph g: graphs) {
@@ -165,23 +159,13 @@ public class ApplicationController {
 		}
 	}
 
-	
-	////////// INITIALISATION METHODS ///////////
-	
-	public void reInitialise() {
-		nodes.clear();
-		lessons.clear();
-		initialiseLessons();
-		initialiseNodes();
-	}
-	
 	public void initialiseNodes() {
 		for(Lesson lesson: lessons) {
 			curr = new KnowledgeGraph.Node(lesson);
 			nodes.add(curr);
 		}
 	}
-	
+
 	public void initialiseLessons() {
 		lessonID = 0;
 		for(String con : concepts) {

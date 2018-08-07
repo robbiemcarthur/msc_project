@@ -117,7 +117,7 @@ public class ApplicationController {
 	public void getGraphDegrees() {
 		System.out.println("\nWhich graph would you like to get degrees for?" );
 		int input = Integer.parseInt(appView.getUserInput());
-		System.out.println(gController.getDegrees(graphs.get(input)));
+		gController.getDegrees(graphs.get(input));
 	}
 
 

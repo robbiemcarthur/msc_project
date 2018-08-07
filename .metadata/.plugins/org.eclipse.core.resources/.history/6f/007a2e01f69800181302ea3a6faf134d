@@ -15,7 +15,7 @@ import main.StudentGraph.Student;
 
 public class ApplicationController {
 	private ApplicationView appView;
-	private GraphController gController;
+	private RouteController router;
 	private KnowledgeGraph graph;
 	private KnowledgeGraph.Node curr;
 	private KnowledgeGraphFactory graphF;
@@ -33,7 +33,7 @@ public class ApplicationController {
 
 	public ApplicationController() {
 		appView = new ApplicationView(this);
-		gController = new GraphController();
+		router = new RouteController();
 		graph = new KnowledgeGraph(0);
 		graphF = new KnowledgeGraphFactory();
 		lesson = new Lesson();
@@ -76,9 +76,6 @@ public class ApplicationController {
 			{
 				writeToFile();
 			}
-			else if(input.equalsIgnoreCase("d")) {
-				getGraphDegrees();
-			}
 			else {
 				course = input;
 				switch(course.toLowerCase()) {
@@ -103,26 +100,23 @@ public class ApplicationController {
 			quitApplication();
 		}
 	}
-
+	public void reInitialise() {
+		nodes.clear();
+		lessons.clear();
+		initialiseLessons();
+		initialiseNodes();
+	}
 	public void createGraphs(int quantity) {
 		for(int i = 0; i < quantity; i++)
 		{
 			graph = graphF.getGraph();
-			graph = gController.route(nodes, graph);
+			graph = router.route(nodes, graph);
 			graphs.add(graph);
 			reInitialise();
 		}
 	}
-	
-	public void getGraphDegrees() {
-		System.out.println("\nWhich graph would you like to get degrees for?" );
-		int input = Integer.parseInt(appView.getUserInput());
-		System.out.println(gController.getDegrees(graphs.get(input)));
-	}
 
 
-	//////////FILE METHODS ///////////
-	
 	public void writeToFile() {
 		logger.appendHeader();
 		for(KnowledgeGraph g: graphs) {
@@ -133,7 +127,6 @@ public class ApplicationController {
 			while(iter.hasNext()) {
 				KnowledgeGraph.Node n = iter.next();
 				Lesson les = (Lesson) n.getElement();
-				les.setStudent(studentID);
 				contents.add("\n");
 				contents.add(Integer.toString(les.getID()));
 				contents.add(les.getCourse());
@@ -145,7 +138,6 @@ public class ApplicationController {
 				logger.writeToFile(contents);
 				contents.clear();
 			}
-			studentID++;
 		}
 	}
 
@@ -165,23 +157,13 @@ public class ApplicationController {
 		}
 	}
 
-	
-	////////// INITIALISATION METHODS ///////////
-	
-	public void reInitialise() {
-		nodes.clear();
-		lessons.clear();
-		initialiseLessons();
-		initialiseNodes();
-	}
-	
 	public void initialiseNodes() {
 		for(Lesson lesson: lessons) {
 			curr = new KnowledgeGraph.Node(lesson);
 			nodes.add(curr);
 		}
 	}
-	
+
 	public void initialiseLessons() {
 		lessonID = 0;
 		for(String con : concepts) {
