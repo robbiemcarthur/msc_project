@@ -2,7 +2,7 @@ package main.Factories;
 
 import java.util.ArrayList;
 
-import main.StudentGraph.Lesson;
+import main.Application.models.Lesson;
 
 /**
  * 

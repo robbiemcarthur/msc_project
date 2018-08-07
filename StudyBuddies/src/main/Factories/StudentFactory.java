@@ -1,6 +1,6 @@
 package main.Factories;
 
-import main.StudentGraph.Student;
+import main.Application.models.Student;
 
 public class StudentFactory {
 	private Student s;

@@ -1,5 +1,7 @@
 package main.Application;
 
+import main.Application.controllers.ApplicationController;
+
 public class ApplicationMain {
 
 	public static void main(String[] args) {

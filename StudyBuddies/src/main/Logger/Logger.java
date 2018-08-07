@@ -5,8 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import main.StudentGraph.KnowledgeGraph;
-import main.StudentGraph.Student;
+import main.Application.models.KnowledgeGraph;
+import main.Application.models.Student;
 
 public class Logger implements ILogger {
 

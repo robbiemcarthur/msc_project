@@ -1,6 +1,6 @@
 package main.Factories;
 
-import main.StudentGraph.Graph;
+import main.Application.models.Graph;
 
 public interface GraphFactory {
 	public Graph getGraph();
