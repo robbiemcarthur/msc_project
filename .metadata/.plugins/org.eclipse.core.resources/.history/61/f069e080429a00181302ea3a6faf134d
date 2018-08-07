@@ -62,6 +62,7 @@ public class ApplicationController {
 	public void runApplication() {
 		while(!finished) {
 			appView.printMenu();
+			appView.askGraphType();
 			String input = appView.getUserInput();
 			if(input.equalsIgnoreCase("n")) {
 				finished = true;
@@ -78,9 +79,8 @@ public class ApplicationController {
 			else if(input.equalsIgnoreCase("d")) {
 				getGraphDegrees();
 			}
-			else if(input.equalsIgnoreCase("y")) {
-				appView.askGraphType();
-				course = appView.getUserInput();
+			else {
+				course = input;
 				switch(course.toLowerCase()) {
 				case "math":
 					teacher = "Mr. X";

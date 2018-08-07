@@ -42,7 +42,7 @@ public class GraphController {
 		int in = 0;
 		int out = 0;
 		String degrees = "";
-		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
+		Iterator<KnowledgeGraph.Node> iter = this.graph.nodes();
 		while(iter.hasNext()) {
 			KnowledgeGraph.Node n = iter.next();
 			in += this.graph.degree(n);
@@ -58,8 +58,9 @@ public class GraphController {
 		for(KnowledgeGraph g: graphs) {
 			Iterator<KnowledgeGraph.Node> iter = g.nodes();
 			while(iter.hasNext()) {
-				in += this.graph.degree(iter.next());
-				out += this.graph.outDegree(iter.next());
+				KnowledgeGraph.Node n = iter.next();
+				in += this.graph.degree(n);
+				out += this.graph.outDegree(n);
 				System.out.println(in);
 				System.out.println(out);
 			}

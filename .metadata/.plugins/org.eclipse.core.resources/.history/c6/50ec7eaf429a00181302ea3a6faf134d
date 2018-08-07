@@ -78,9 +78,9 @@ public class ApplicationController {
 			else if(input.equalsIgnoreCase("d")) {
 				getGraphDegrees();
 			}
-			else if(input.equalsIgnoreCase("y")) {
+			else {
 				appView.askGraphType();
-				course = appView.getUserInput();
+				course = input;
 				switch(course.toLowerCase()) {
 				case "math":
 					teacher = "Mr. X";
@@ -91,13 +91,13 @@ public class ApplicationController {
 				default:
 					teacher = "Mr. A";
 				}
-				appView.askGraphQuantity();
-				quantity = Integer.parseInt(appView.getUserInput());
-				initialiseConcepts();
-				initialiseLessons();
-				initialiseNodes();
-				createGraphs(quantity);
 			}
+			appView.askGraphQuantity();
+			quantity = Integer.parseInt(appView.getUserInput());
+			initialiseConcepts();
+			initialiseLessons();
+			initialiseNodes();
+			createGraphs(quantity);
 		}
 		if(finished) {
 			quitApplication();
