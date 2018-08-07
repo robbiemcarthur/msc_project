@@ -1,12 +1,8 @@
 package main.Application.views;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 import main.Application.controllers.StudyBuddyController;
-import main.Application.models.KnowledgeGraph;
-import main.Application.models.Lesson;
-import main.Application.models.KnowledgeGraph.Node;
 /**
  * 
  * @author Robbie McArthur - 2098323m
@@ -54,11 +50,6 @@ public class StudyBuddyView {
 	
 	public void coverKnowledgeGap() {
 		System.out.println("\n\nFinding you a user to cover knowledge gap... ");
-	}
-	
-	public void buddyMatch(KnowledgeGraph graph) {
-		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
-		c.showBuddyDetails(graph);
 	}
 	
 	public String getUserInput() {

@@ -33,23 +33,10 @@ public class StudyBuddyController {
 		found = false; 
 	}
 
-	/**
-	 * Method enables users to add their profiles, it will prompt for a username
-	 * and therefore assign space in userMap for their credentials. 
-	 * 
-	 * Map will be used to link to their KnowledgeGraph in studentGraph list.
-	 * If user already exists, program will prompt user to select alternative username.
-	 */
 	public void addProfile() {
 		
 	}
 
-	/**
-	 * Method prints the details of the Knowledge Graph of recommended
-	 * study buddy for user. 
-	 *  
-	 * @param graph - graph of recommended study buddy
-	 */
 	public void showBuddyDetails(KnowledgeGraph graph) {
 		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
 		Iterator iter = graph.nodes();
@@ -62,15 +49,7 @@ public class StudyBuddyController {
 		}
 	}
 
-	/**
-	 * Method uses simple feature extraction, accumulating in/out degrees
-	 * of input graph to compare with graph set and returning 
-	 * suitable KnowledgeGraph.
-	 * 
-	 * @param graph - KnowledgeGraph used to find buddy
-	 * @return graph - n x 2 matrix representation of graph
-	 */
-	public KnowledgeGraph SFE(KnowledgeGraph graph) {
+	public KnowledgeGraph simpleFeatureExtraction(KnowledgeGraph graph) {
 
 		return null;
 	}

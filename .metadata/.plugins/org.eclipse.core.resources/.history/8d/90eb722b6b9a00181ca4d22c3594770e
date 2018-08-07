@@ -33,13 +33,6 @@ public class StudyBuddyController {
 		found = false; 
 	}
 
-	/**
-	 * Method enables users to add their profiles, it will prompt for a username
-	 * and therefore assign space in userMap for their credentials. 
-	 * 
-	 * Map will be used to link to their KnowledgeGraph in studentGraph list.
-	 * If user already exists, program will prompt user to select alternative username.
-	 */
 	public void addProfile() {
 		
 	}

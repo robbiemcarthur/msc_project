@@ -58,7 +58,14 @@ public class StudyBuddyView {
 	
 	public void buddyMatch(KnowledgeGraph graph) {
 		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
-		c.showBuddyDetails(graph);
+		Iterator iter = graph.nodes();
+		while(iter.hasNext()) {
+			KnowledgeGraph.Node n = (Node) iter.next();
+			Lesson les = (Lesson) n.getElement();
+			System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
+			+ " Concept: " + les.getConcept() + " Teacher: " 
+			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
+		}
 	}
 	
 	public String getUserInput() {

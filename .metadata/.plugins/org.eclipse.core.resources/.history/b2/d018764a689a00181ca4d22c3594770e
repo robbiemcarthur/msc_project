@@ -1,12 +1,8 @@
 package main.Application.views;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 import main.Application.controllers.StudyBuddyController;
-import main.Application.models.KnowledgeGraph;
-import main.Application.models.Lesson;
-import main.Application.models.KnowledgeGraph.Node;
 /**
  * 
  * @author Robbie McArthur - 2098323m
@@ -20,7 +16,7 @@ import main.Application.models.KnowledgeGraph.Node;
 public class StudyBuddyView {
 	private StudyBuddyController c;
 	private Scanner scanner;
-	private String input, userID;
+	private String input;
 	
 	public StudyBuddyView(StudyBuddyController c) {
 		this.c = c;
@@ -28,8 +24,12 @@ public class StudyBuddyView {
 		input = "";
 	}
 	
-	public void SBMenu() {
-		System.out.println("/////////// Study Buddy Mode ///////////"
+	public void startUpMessage() {
+		System.out.println("Welcome to Study Buddies!\n\n");
+	}
+	
+	public void printMenu() {
+		System.out.println("/////////// MENU ///////////"
 				+ "\nPlease select from the following options...."
 				+ "\nUpload your Knowledge Graph (1)"
 				+ "\nRetrieve your existing Knowledge Graph (2)"
@@ -40,25 +40,12 @@ public class StudyBuddyView {
 	}
 	
 	
-	public void getUser() {
-		System.out.println("\n\nWhat is your user id? ");
+	public void askUser() {
+		System.out.println("\n\nEnter a graph type (math, programming, history, random): ");
 	}
 	
-	public void addUser() {
-		System.out.println("\n\nPlease input a user ID to create an account ");
-	}
-	
-	public void similarLearningAbility() {
-		System.out.println("\n\nFinding you a user with similar learning ability... ");
-	}
-	
-	public void coverKnowledgeGap() {
-		System.out.println("\n\nFinding you a user to cover knowledge gap... ");
-	}
-	
-	public void buddyMatch(KnowledgeGraph graph) {
-		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
-		c.showBuddyDetails(graph);
+	public void askGraphQuantity() {
+		System.out.println("\n\nEnter graph quantity: ");
 	}
 	
 	public String getUserInput() {
