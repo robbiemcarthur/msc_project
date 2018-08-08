@@ -15,6 +15,7 @@ public class GraphController {
 	private final int MAX_VISITS = 2;
 	private Student s;
 	private Lesson curr, prev, next;
+	private KnowledgeGraph.Node _curr, succ, pred;
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph> graphs;
 	private ArrayList<Lesson> lessons;
@@ -50,7 +51,7 @@ public class GraphController {
 		degrees = "Graph: \nIn degree: " + in + "\nOut degree: " + out;
 		return degrees;
 	}
-
+	
 	public void degreeTest() {
 		int in = 0;
 		int out = 0;
@@ -65,72 +66,8 @@ public class GraphController {
 			System.out.println("Graph: \nIn degree: " + in + "\nOut degree: " + out);
 		}
 	}
-
-	public KnowledgeGraph getKnowledgeGraph(ArrayList<Lesson> lessons, KnowledgeGraph g, int num) {
-		this.lessons = lessons;
-		this.graph = g;
-		int count = 0;
-		for(Lesson l: lessons) {
-			while(count<num) {
-				l.setgrade(rand.nextInt(60)+40);
-				KnowledgeGraph.Node n = (Node) graph.addNode(l);
-				count++;
-			}
-			count = 0;
-		}
-		randomizeEdges();
-		return graph;
-	}
 	
-	public void randomizeEdges() {
-		Lesson l = new Lesson();
-		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
-		int randomizer = 0;
-		KnowledgeGraph.Node pred = new KnowledgeGraph.Node(l);
-		KnowledgeGraph.Node revision = new KnowledgeGraph.Node(l);
-		while(iter.hasNext()) {
-			randomizer = rand.nextInt(7);
-			visits = rand.nextInt(2);
-			KnowledgeGraph.Node succ = iter.next();
-			if(iter.hasNext()) {
-			revision = iter.next();
-			}
-			if(iter.hasNext()) {
-			pred = iter.next();
-			}
-			switch(randomizer){
-			case 0:
-				graph.addEdge(pred, succ, visits);
-			case 1:
-				graph.addEdge(succ, pred, visits);
-				graph.addEdge(pred, succ, visits);
-				graph.addEdge(revision, pred, visits);
-				graph.addEdge(pred, revision, visits);
-			case 2:
-				graph.addEdge(succ, revision,visits);
-				graph.addEdge(revision,pred,visits);
-				graph.addEdge(pred,succ,visits);
-			case 3:
-				graph.addEdge(succ, pred, visits);
-				graph.addEdge(pred, succ, visits);
-			case 4:
-				graph.addEdge(pred, revision, visits);
-				graph.addEdge(revision, succ, visits);
-			case 5:
-				continue;
-			case 6:
-				graph.addEdge(pred, revision, visits);
-				graph.addEdge(revision, succ, visits);
-				graph.addEdge(succ, revision, visits);
-			case 7:
-				graph.addEdge(pred, revision, visits);
-				graph.addEdge(revision, revision, visits);
-				graph.addEdge(revision, succ, visits);
-			}
-		}
-	}
-
-	public KnowledgeGraph projectRoute(ArrayList<KnowledgeGraph.Node> nodes, KnowledgeGraph g) {
+	public KnowledgeGraph route(ArrayList<KnowledgeGraph.Node> nodes, KnowledgeGraph g) {
 		this.nodes = nodes;
 		this.graph = g;
 		int count = 0;
@@ -139,7 +76,7 @@ public class GraphController {
 		{
 			for(int i = 0; i < nodes.size(); i++) {
 				visits = rand.nextInt(6);
-				if(i==nodes.size()-1) {
+				if(i==8) {
 					curr = (Lesson) nodes.get(i).getElement();
 					curr.setgrade(rand.nextInt(60)+40);
 					KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
@@ -165,8 +102,8 @@ public class GraphController {
 					if(visits > 3) {
 						count++;
 						if(count>1) {
-							finished = true;
-							break;
+						finished = true;
+						break;
 						}
 					}
 					if(visits==0) {
@@ -177,7 +114,7 @@ public class GraphController {
 					}
 					else {
 						// add standard lesson to next standard lesson, and revision lesson
-						if(i>nodes.size()-2) {
+						if(i>7) {
 							continue;
 						}
 						else {
@@ -197,10 +134,10 @@ public class GraphController {
 			finished = true;
 		}
 		graphs.add(graph);
-		//		degreeTest();
+//		degreeTest();
 		return this.graph;
 	}
-
+	
 	public void reset() {
 		graph.clear();
 	}

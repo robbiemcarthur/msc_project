@@ -79,7 +79,7 @@ public class ApplicationController {
 			else if(input.equalsIgnoreCase("d")) {
 				getGraphDegrees();
 			}
-			else if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("k")) {
+			else if(input.equalsIgnoreCase("y")) {
 				appView.askGraphType();
 				course = appView.getUserInput();
 				switch(course.toLowerCase()) {
@@ -97,12 +97,7 @@ public class ApplicationController {
 				initialiseConcepts();
 				initialiseLessons();
 				initialiseNodes();
-				if(input.equalsIgnoreCase("y")) {
-				projectGraphs(quantity);
-				}
-				else {
-					knowledgeGraphs(quantity);
-				}
+				createGraphs(quantity);
 			}
 		}
 		if(finished) {
@@ -110,21 +105,11 @@ public class ApplicationController {
 		}
 	}
 
-	public void projectGraphs(int quantity) {
+	public void createGraphs(int quantity) {
 		for(int i = 0; i < quantity; i++)
 		{
 			graph = graphF.getGraph();
-			graph = gController.projectRoute(nodes, graph);
-			graphs.add(graph);
-			reInitialise();
-		}
-	}
-	
-	public void knowledgeGraphs(int quantity) {
-		for(int i = 0; i < quantity; i++)
-		{
-			graph = graphF.getGraph();
-			graph = gController.getKnowledgeGraph(lessons, graph, 1);
+			graph = gController.route(nodes, graph);
 			graphs.add(graph);
 			reInitialise();
 		}

@@ -76,18 +76,16 @@ public class GraphController {
 				KnowledgeGraph.Node n = (Node) graph.addNode(l);
 				count++;
 			}
-			count = 0;
 		}
 		randomizeEdges();
 		return graph;
 	}
 	
 	public void randomizeEdges() {
-		Lesson l = new Lesson();
 		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
 		int randomizer = 0;
-		KnowledgeGraph.Node pred = new KnowledgeGraph.Node(l);
-		KnowledgeGraph.Node revision = new KnowledgeGraph.Node(l);
+		KnowledgeGraph.Node pred = new KnowledgeGraph.Node(null);
+		KnowledgeGraph.Node revision = new KnowledgeGraph.Node(null);
 		while(iter.hasNext()) {
 			randomizer = rand.nextInt(7);
 			visits = rand.nextInt(2);

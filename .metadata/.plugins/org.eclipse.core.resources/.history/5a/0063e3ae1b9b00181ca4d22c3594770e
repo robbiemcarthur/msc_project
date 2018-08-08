@@ -21,8 +21,7 @@ public class ApplicationView {
 	
 	public void printMenu() {
 		System.out.println("/////////// MENU ///////////"
-				+ "\nGenerate Projected Graphs (Y)"
-				+ "\nGenerate Knowledge Graphs (K)"
+				+ "\nGenerate Graphs (Y)"
 				+ "\nPrint Graphs (P)"
 				+ "\nWrite Graph File (W)"
 				+ "\nGet Degrees (D)"
