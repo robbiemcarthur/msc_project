@@ -20,7 +20,7 @@ import main.Application.models.KnowledgeGraph.Node;
 public class StudyBuddyView {
 	private StudyBuddyController c;
 	private Scanner scanner;
-	private String input, userID;
+	private String input;
 	
 	public StudyBuddyView(StudyBuddyController c) {
 		this.c = c;
@@ -29,13 +29,14 @@ public class StudyBuddyView {
 	}
 	
 	public void SBMenu() {
-		System.out.println("/////////// Study Buddy Mode ///////////"
-				+ "\nPlease select from the following options...."
-				+ "\nUpload your Knowledge Graph (1)"
-				+ "\nRetrieve your existing Knowledge Graph (2)"
-				+ "\nFind buddy to cover a Knowledge Gap (3)"
-				+ "\nFind buddy with similar learning ability (4)"
-				+ "\nExit (5)"
+		System.out.println("/////////// Study Buddy Mode ///////////\n"
+				+ "\nPlease select from the following options....\n"
+				+ "\nCreate profile (1)"
+				+ "\nUpload your Knowledge Graph (2)"
+				+ "\nRetrieve your existing Knowledge Graph (3)"
+				+ "\nFind buddy to cover a Knowledge Gap (4)"
+				+ "\nFind buddy with similar learning ability (5)"
+				+ "\nReturn to Main Menu (6)"
 				);
 	}
 	
@@ -45,7 +46,7 @@ public class StudyBuddyView {
 	}
 	
 	public void addUser() {
-		System.out.println("\n\nPlease input a user ID to create an account ");
+		System.out.println("\n\nPlease input a user ID number to create an account ");
 	}
 	
 	public void similarLearningAbility() {

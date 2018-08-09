@@ -1,0 +1,5 @@
+package main.Application.controllers;
+
+public class MainController {
+
+}

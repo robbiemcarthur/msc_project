@@ -20,13 +20,14 @@ public class ApplicationView {
 	}
 	
 	public void printMenu() {
-		System.out.println("/////////// MENU ///////////"
-				+ "\nGenerate Projected Graphs (Y)"
-				+ "\nGenerate Knowledge Graphs (K)"
-				+ "\nPrint Graphs (P)"
-				+ "\nWrite Graph File (W)"
-				+ "\nGet Degrees (D)"
-				+ "\nQuit (N)");
+		System.out.println("/////////// MAIN MENU ///////////\n"
+				+ "\nGenerate Projected Graphs (1)"
+				+ "\nGenerate Knowledge Graphs (2)"
+				+ "\nFind a Study Buddy (3)"
+				+ "\nPrint Graphs (4)"
+				+ "\nWrite Graph File (5)"
+				+ "\nGet Degrees (6)"
+				+ "\nQuit (7)");
 	}
 	
 	public void askGraphType() {

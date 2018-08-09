@@ -28,14 +28,17 @@ public class GraphController {
 		curr = new Lesson();
 		prev = new Lesson();
 		next= new Lesson();
-		nodes = new ArrayList();
-		lessons = new ArrayList();
+		nodes = new ArrayList<KnowledgeGraph.Node>();
+		lessons = new ArrayList<Lesson>();
 		graphs = new ArrayList<KnowledgeGraph>();
 		graph = new KnowledgeGraph(0);
 		passed = false;
 		rand = new Random();
 	}
 
+	public int [][] computeDistance() {
+		return null;
+	}
 	public String getDegrees(KnowledgeGraph graph) {
 		this.graph = graph;
 		int in = 0;

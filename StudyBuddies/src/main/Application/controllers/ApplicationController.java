@@ -17,6 +17,7 @@ import main.NameGenerator.NameGenerator;
 public class ApplicationController {
 	private ApplicationView appView;
 	private GraphController gController;
+	private StudyBuddyController sbController;
 	private KnowledgeGraph graph;
 	private KnowledgeGraph.Node curr;
 	private KnowledgeGraphFactory graphF;
@@ -27,7 +28,7 @@ public class ApplicationController {
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<String> concepts;
 	private String course, teacher, filename;
-	private int grade, quantity, lessonID,studentID;
+	private int grade, quantity, lessonID, studentID, userID;
 	private boolean finished;
 	private Iterator<KnowledgeGraph.Node> iter;
 	private Logger logger;
@@ -49,6 +50,7 @@ public class ApplicationController {
 		quantity = 0;
 		lessonID = 0;
 		studentID = 1;
+		userID = 0;
 		finished = false;
 		filename = "graphs.csv";
 		logger = new Logger();
@@ -63,23 +65,23 @@ public class ApplicationController {
 	public void runApplication() {
 		while(!finished) {
 			appView.printMenu();
-			String input = appView.getUserInput();
-			if(input.equalsIgnoreCase("n")) {
+			int input = Integer.parseInt(appView.getUserInput());
+			if(input == 7) {
 				finished = true;
 				break;
 			}
-			else if(input.equalsIgnoreCase("p"))
+			else if(input == 4)
 			{
 				printGraphs();
 			}
-			else if(input.equalsIgnoreCase("w"))
+			else if(input == 5)
 			{
 				writeToFile();
 			}
-			else if(input.equalsIgnoreCase("d")) {
+			else if(input == 6) {
 				getGraphDegrees();
 			}
-			else if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("k")) {
+			else if(input == 1 || input == 2) {
 				appView.askGraphType();
 				course = appView.getUserInput();
 				switch(course.toLowerCase()) {
@@ -97,12 +99,20 @@ public class ApplicationController {
 				initialiseConcepts();
 				initialiseLessons();
 				initialiseNodes();
-				if(input.equalsIgnoreCase("y")) {
+				if(input == 1) {
 				projectGraphs(quantity);
 				}
 				else {
 					knowledgeGraphs(quantity);
 				}
+			}
+			else if (input == 3) {
+				System.out.println("Entering study buddy recommender....\n");	
+				sbController = new StudyBuddyController(graph, graphs, userID);
+				sbController.start(this);
+			}
+			else {
+				System.out.println("Please enter a valid choice.");
 			}
 		}
 		if(finished) {
@@ -110,6 +120,9 @@ public class ApplicationController {
 		}
 	}
 
+	public void returnToMainMenu() {
+		runApplication();
+	}
 	public void projectGraphs(int quantity) {
 		for(int i = 0; i < quantity; i++)
 		{
