@@ -260,8 +260,8 @@ public class StudyBuddyController {
 			distance = Math.sqrt(distance);
 			overall += distance;
 		}
-		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
-		return overall;
+		System.out.println("Distance between graph 1 and graph 2 is: " + distance);
+		return distance;
 	}
 	
 	public void returnKNN(int k) {
