@@ -265,16 +265,12 @@ public class StudyBuddyController {
 	}
 	
 	public int median(ArrayList<KnowledgeGraph> list) {
-		Double minDistance = Double.MAX_VALUE;
+		double minDistance = 0.0;
 		int minIndex = 0;
 		for(int i = 0; i<list.size(); i++) {
 			double d = 0.0;
 			for(int j = 0; j<list.size(); j++) {
 				d += computeGraphDistance(list.get(i), list.get(j));
-			}
-			if(d<minDistance) {
-				minDistance = d;
-				minIndex = i;
 			}
 		}
 		return minIndex;
