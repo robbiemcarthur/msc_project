@@ -1,0 +1,63 @@
+package main.Application.models;
+import java.util.ArrayList;
+import main.NameGenerator.NameGenerator;
+
+/**
+ * @author Robbie McArthur - 2098323m
+ *
+ * Base class for 'Students' to be recommended as study buddies
+ * Will act as template for students of all disciplines
+ * 
+ */
+
+public class Student {
+	private NameGenerator ng;
+	private String name;
+	private int id;
+	private double distance; 
+	private KnowledgeGraph graph;
+
+
+	public Student(int i, KnowledgeGraph graph) {
+		this.ng = new NameGenerator();
+		ng.loadNames(1000);
+		name = ng.GenerateName();
+		this.id = i;
+		this.graph = graph;
+		distance = 0.0;
+	}
+
+	public Student(KnowledgeGraph graph) {
+		ng = new NameGenerator();
+		ng.loadNames(1000);
+		name = ng.GenerateName();
+		id = 0;
+		distance = 0.0;
+		this.graph = graph;
+	}
+
+	// SETTERS
+	public void setName(String n) {
+		this.name = n;
+	}
+
+	public void setID(int i) {
+		this.id = i;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	// GETTERS
+	public String getName() {
+		return this.name;
+	}
+	public int getID() {
+		return this.id;
+	}
+	
+	public double getDistance() {
+		return distance;
+	}
+}

@@ -10,10 +10,8 @@ import main.Application.models.Student;
 import main.Application.models.KnowledgeGraph.Node;
 
 public class GraphController {
-	private boolean passed;
 	private int visits;
-	private final int MAX_VISITS = 2;
-	private Student s;
+	private boolean finished;
 	private Lesson curr, prev, next;
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph> graphs;
@@ -24,7 +22,7 @@ public class GraphController {
 
 	public GraphController() {
 		visits = 0;
-		s = new Student();
+		finished = false;
 		curr = new Lesson();
 		prev = new Lesson();
 		next= new Lesson();
@@ -32,13 +30,13 @@ public class GraphController {
 		lessons = new ArrayList<Lesson>();
 		graphs = new ArrayList<KnowledgeGraph>();
 		graph = new KnowledgeGraph(0);
-		passed = false;
 		rand = new Random();
 	}
 
 	public int [][] computeDistance() {
 		return null;
 	}
+	
 	public String getDegrees(KnowledgeGraph graph) {
 		this.graph = graph;
 		int in = 0;
@@ -86,13 +84,20 @@ public class GraphController {
 	}
 	
 	public void randomizeEdges() {
+		int count = 0;
+		int e = rand.nextInt(4);
 		Lesson l = new Lesson();
 		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
 		int randomizer = 0;
 		KnowledgeGraph.Node pred = new KnowledgeGraph.Node(l);
 		KnowledgeGraph.Node revision = new KnowledgeGraph.Node(l);
+		finished = false;
 		while(iter.hasNext()) {
-			randomizer = rand.nextInt(7);
+			count++;
+			randomizer = rand.nextInt(6);
+			if(count<e) {
+				randomizer = 7;
+			}
 			visits = rand.nextInt(2);
 			KnowledgeGraph.Node succ = iter.next();
 			if(iter.hasNext()) {
@@ -104,31 +109,43 @@ public class GraphController {
 			switch(randomizer){
 			case 0:
 				graph.addEdge(pred, succ, visits);
+				break;
 			case 1:
 				graph.addEdge(succ, pred, visits);
 				graph.addEdge(pred, succ, visits);
 				graph.addEdge(revision, pred, visits);
 				graph.addEdge(pred, revision, visits);
+				break;
 			case 2:
 				graph.addEdge(succ, revision,visits);
 				graph.addEdge(revision,pred,visits);
 				graph.addEdge(pred,succ,visits);
+				break;
 			case 3:
 				graph.addEdge(succ, pred, visits);
 				graph.addEdge(pred, succ, visits);
+				break;
 			case 4:
 				graph.addEdge(pred, revision, visits);
 				graph.addEdge(revision, succ, visits);
+				break;
 			case 5:
-				continue;
+				graph.addEdge(pred, revision, visits);
+				graph.addEdge(revision, revision, visits);
+				graph.addEdge(revision, succ, visits);
+				break;
 			case 6:
 				graph.addEdge(pred, revision, visits);
 				graph.addEdge(revision, succ, visits);
 				graph.addEdge(succ, revision, visits);
 			case 7:
-				graph.addEdge(pred, revision, visits);
-				graph.addEdge(revision, revision, visits);
-				graph.addEdge(revision, succ, visits);
+				l = (Lesson) pred.getElement();
+				l.setgrade(rand.nextInt(40));
+				l = (Lesson) succ.getElement();
+				l.setgrade(rand.nextInt(40));
+				l = (Lesson) revision.getElement();
+				l.setgrade(rand.nextInt(40));
+				continue;
 			}
 		}
 	}
@@ -202,6 +219,10 @@ public class GraphController {
 		graphs.add(graph);
 		//		degreeTest();
 		return this.graph;
+	}
+	
+	public void reverseIterator() {
+		
 	}
 
 	public void reset() {

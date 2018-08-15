@@ -1,0 +1,17 @@
+package main.Application.controllers;
+
+import java.util.Comparator;
+
+import main.Application.models.Student;
+
+//public class StudentComparator implements Comparator<Student>{
+
+//	@Override
+//	public int compare(Student s1, Student s2) {
+//		return s1.getDistance().compareTo((s2.getDistance()));
+//	}
+//
+//	public int compareTo(Student other) {
+//		
+//	}
+//}

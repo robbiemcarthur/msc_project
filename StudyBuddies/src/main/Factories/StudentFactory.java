@@ -11,6 +11,7 @@ public class StudentFactory {
 	}
 	
 	public Student getStudent() {
-		return new Student(id++);
+		return s;
+//		return new Student(id++);
 	}
 }

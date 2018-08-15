@@ -1,11 +1,14 @@
 package main.Application.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.math.*;
 
 import main.Application.models.KnowledgeGraph;
 import main.Application.models.Lesson;
+import main.Application.models.Student;
 import main.Application.views.StudyBuddyView;
 import main.Factories.KnowledgeGraphFactory;
 import main.Application.models.KnowledgeGraph.Node;
@@ -25,9 +28,14 @@ import main.Application.models.KnowledgeGraph.Node;
 public class StudyBuddyController {
 	private StudyBuddyView v;
 	private String input;
+	private Student user;
 	private int choice, userID;
 	private boolean found, finished;
 	private ArrayList<KnowledgeGraph> studentGraphs;
+	private ArrayList<KnowledgeGraph> recommendedGraphs;
+	private ArrayList<Student> students;
+	private ArrayList<int[][]> vectors;
+	private int[][] query, matrix;
 	private HashMap<String, Integer> userMap;
 	private HashMap<Integer, KnowledgeGraph> graphMap;
 	private HashMap<Integer, int[][]> vectorMap;
@@ -39,6 +47,11 @@ public class StudyBuddyController {
 		this.graph = graph;
 		this.studentGraphs = graphs;
 		this.userID = u;
+		user = new Student(graph);
+		students = new ArrayList<Student>();
+		recommendedGraphs = new ArrayList<KnowledgeGraph>();
+		vectors = new ArrayList<int[][]>();
+		matrix = new int[2][graph.size()];
 		found = false; 
 		finished = false;
 		input = "";
@@ -156,6 +169,18 @@ public class StudyBuddyController {
 			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
 		}
 	}
+	
+	public void showBuddyDetails(Student s) {
+		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
+		Iterator iter = graph.nodes();
+		while(iter.hasNext()) {
+			KnowledgeGraph.Node n = (Node) iter.next();
+			Lesson les = (Lesson) n.getElement();
+			System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
+			+ " Concept: " + les.getConcept() + " Teacher: " 
+			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
+		}
+	}
 
 	/**
 	 * Method uses simple feature extraction, computing the distance between
@@ -167,16 +192,70 @@ public class StudyBuddyController {
 	 * @return graph - n x 2 matrix representation of graph
 	 */
 	public KnowledgeGraph SFE(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
-		int[][] query = new int[2][graphs.size()];
 		for(KnowledgeGraph g: graphs ) {
-			query = generateVector(query, graph);
+			int[][] query = new int[2][graph.size()];
+			query = generateVector(query, g);
+			vectors.add(query);
 		}
+//		vectorTest();
+		computeDistance();
+		System.out.println("How many neighbours do you wish to return?");
+		choice = Integer.parseInt(v.getUserInput());
+		returnKNN(choice);
 		return graph;
 	}
 
 	public void computeDistance() {
-
+		System.out.println("Which graph number is yours?");
+		choice = Integer.parseInt(v.getUserInput());
+		query = vectors.get(choice);
+		vectors.remove(query);
+		for(int[][] arr: vectors) {
+			double distance = 0.0;
+			double overall = 0.0;
+			for(int i = 0; i < 2; i ++) {
+				for(int j = 0; j < graph.size(); j++) {
+					distance = distance + Math.pow(query[i][j]-arr[i][j], 2.0);
+					distance = Math.sqrt(distance);
+					overall += distance;
+					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
+				}
+			}
+			System.out.println("Overall distance is: " + overall);
+			Student s = new Student(graph);
+			s.setDistance(distance);
+			students.add(s);
+		}
 	}
+	
+	public void returnKNN(int k) {
+		Collections.sort(students);
+//		System.out.println("Student sort test: ");
+		int num = 1;
+//		for(Student s: students) {
+//			System.out.println("Student " + num + " distance: " + s.getDistance());
+//			num++;
+//		}
+		System.out.println("Recommended students are: ");
+		for(int i = 0; i < k; i++) {
+			System.out.println("Student: " + students.get(i).getName() + " ID: " + students.get(i).getID() + " distance: " + students.get(i).getDistance());
+		}
+		showBuddyDetails(students.get(0));
+	}
+	
+	public void vectorTest() {
+		for(int[][] arr: vectors) {
+			int nodeNum = 1;
+			for(int i = 0; i < 2; i ++) {
+				for(int j = 0; j < graph.size()-1; j++) {
+					System.out.println("node " + nodeNum++);
+					System.out.println("in degree " + arr[i][j]);
+					System.out.println("out degree " + arr[i][j+1]);
+				}
+			}
+		}
+	}
+	
 	public int[][] generateVector(int[][] query, KnowledgeGraph graph) {
 		Iterator iter = graph.nodes();
 		int column = 0; int row = 0;
@@ -186,8 +265,10 @@ public class StudyBuddyController {
 			KnowledgeGraph.Node n = (Node) iter.next();
 			System.out.println("Adding to vector " + graph.degree(n));
 			query[column][row] = graph.degree(n);
+			System.out.println("Added: " + query[column][row]);
 			System.out.println("Adding to vector " + graph.outDegree(n));
 			query[column+1][row] = graph.outDegree(n);
+			System.out.println("Added: " + query[column+1][row]);
 			row++;
 		}
 		return query;

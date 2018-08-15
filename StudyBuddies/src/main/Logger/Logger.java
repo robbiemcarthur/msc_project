@@ -13,7 +13,7 @@ public class Logger implements ILogger {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
-	private static final String FILE_HEADER = "CourseID,CourseName,Concept,Teacher,Grade,Student";
+	private static final String FILE_HEADER = "CourseID,CourseName,Concept,In Degree,Out Degree,Teacher,Grade,Student";
 
 	private String filename;
 	private FileWriter writer;

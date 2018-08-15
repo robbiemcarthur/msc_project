@@ -72,10 +72,12 @@ public class ApplicationController {
 			}
 			else if(input == 4)
 			{
+				System.out.println("Printing graph data to console....\n");	
 				printGraphs();
 			}
 			else if(input == 5)
 			{
+				System.out.println("Writing graph data to CSV output....\n");	
 				writeToFile();
 			}
 			else if(input == 6) {
@@ -107,7 +109,7 @@ public class ApplicationController {
 				}
 			}
 			else if (input == 3) {
-				System.out.println("Entering study buddy recommender....\n");	
+				System.out.println("Entering study buddy recommender system....\n");	
 				sbController = new StudyBuddyController(graph, graphs, userID);
 				sbController.start(this);
 			}
@@ -157,7 +159,7 @@ public class ApplicationController {
 		for(KnowledgeGraph g: graphs) {
 			logger.writeLine("Graph " + g.id());
 			iter = g.nodes();
-			Student s = new Student();
+			Student s = new Student(graph);
 			ArrayList<String> contents = new ArrayList<String>();
 			while(iter.hasNext()) {
 				KnowledgeGraph.Node n = iter.next();
@@ -167,9 +169,10 @@ public class ApplicationController {
 				contents.add(Integer.toString(les.getID()));
 				contents.add(les.getCourse());
 				contents.add(les.getConcept());
+				contents.add(Integer.toString(g.degree(n)));
+				contents.add(Integer.toString(g.outDegree(n)));
 				contents.add(les.getTeacher());
 				contents.add(Integer.toString(les.getGrade()));
-				contents.add(Integer.toString(les.getID()));
 				contents.add(Integer.toString(les.getStudent()));
 				logger.writeToFile(contents);
 				contents.clear();
@@ -233,7 +236,7 @@ public class ApplicationController {
 	}
 
 	public void quitApplication() {
-		System.out.println("\n\nFinished using Graph Generator. Exiting program. ");
+		System.out.println("\n\nFinished using Study Buddies. Exiting program. ");
 		System.exit(0);
 	}
 }
