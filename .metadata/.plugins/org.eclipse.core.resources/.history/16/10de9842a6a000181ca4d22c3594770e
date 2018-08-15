@@ -35,7 +35,7 @@ public class StudyBuddyController {
 	private ArrayList<KnowledgeGraph> recommendedGraphs;
 	private ArrayList<Student> students;
 	private ArrayList<int[][]> vectors;
-	private int[][] query;
+	private int[][] query, matrix;
 	private HashMap<String, Integer> userMap;
 	private HashMap<Integer, KnowledgeGraph> graphMap;
 	private HashMap<Integer, int[][]> vectorMap;
@@ -50,6 +50,7 @@ public class StudyBuddyController {
 		students = new ArrayList<Student>();
 		recommendedGraphs = new ArrayList<KnowledgeGraph>();
 		vectors = new ArrayList<int[][]>();
+		matrix = new int[2][graph.size()];
 		found = false; 
 		finished = false;
 		input = "";
@@ -57,7 +58,7 @@ public class StudyBuddyController {
 	}
 
 
-	public void start(GraphGeneratorController c) {
+	public void start(ApplicationController c) {
 		while(!finished) {
 			v.SBMenu();
 			choice = Integer.parseInt(v.getUserInput());

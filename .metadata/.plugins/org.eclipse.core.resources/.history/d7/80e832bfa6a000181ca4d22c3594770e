@@ -57,7 +57,7 @@ public class StudyBuddyController {
 	}
 
 
-	public void start(GraphGeneratorController c) {
+	public void start(ApplicationController c) {
 		while(!finished) {
 			v.SBMenu();
 			choice = Integer.parseInt(v.getUserInput());
