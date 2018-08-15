@@ -40,6 +40,7 @@ public class StudyBuddyController {
 	private HashMap<Integer, KnowledgeGraph> graphMap;
 	private HashMap<Integer, int[][]> vectorMap;
 	private KnowledgeGraph graph, userGraph;;
+	// use hashmap or something to have user/keys with graph positions in g list
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs, int u) {
 		v = new StudyBuddyView(this);
@@ -226,34 +227,6 @@ public class StudyBuddyController {
 			s.setDistance(overall);
 			students.add(s);
 		}
-	}
-	
-	/**
-	 * Function takes two KnowledgeGraph objects and computes the distance
-	 * between them. 
-	 * 
-	 * @param query - query graph
-	 * @param target - target graph
-	 * @return distance - double, measure of distance between query and target
-	 */
-	public double computeGraphDistance(KnowledgeGraph query, KnowledgeGraph target) {
-		double distance = 0.0;
-		double overall = 0.0;
-		int[][] q = new int[2][query.size()];
-		int[][] t = new int[2][target.size()];
-		q = generateVector(q, query);
-		t = generateVector(t, target);
-		for(int j = 0; j < graph.size(); j++) {
-			distance = 0.0;
-			for(int i = 0; i < 2; i ++) {
-				distance += Math.pow(q[i][j]-t[i][j], 2.0);
-				System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
-			}
-			distance = Math.sqrt(distance);
-			overall += distance;
-		}
-		System.out.println("Distance between graph 1 and graph 2 is: " + distance);
-		return distance;
 	}
 	
 	public void returnKNN(int k) {

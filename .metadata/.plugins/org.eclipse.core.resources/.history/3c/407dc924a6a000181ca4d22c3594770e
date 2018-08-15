@@ -40,6 +40,7 @@ public class StudyBuddyController {
 	private HashMap<Integer, KnowledgeGraph> graphMap;
 	private HashMap<Integer, int[][]> vectorMap;
 	private KnowledgeGraph graph, userGraph;;
+	// use hashmap or something to have user/keys with graph positions in g list
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs, int u) {
 		v = new StudyBuddyView(this);
