@@ -36,8 +36,7 @@ public class StudyBuddyView {
 				+ "\nRetrieve your existing Knowledge Graph (3)"
 				+ "\nFind buddy to cover a Knowledge Gap (4)"
 				+ "\nFind buddy with similar learning ability (5)"
-				+ "\nCheck buddy compatibility (6)"
-				+ "\nReturn to Main Menu (7)"
+				+ "\nReturn to Main Menu (6)"
 				);
 	}
 	

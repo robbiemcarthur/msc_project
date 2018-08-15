@@ -20,12 +20,21 @@
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="NameGenerator.NameGenerator"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
-<fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="main.StudentGraph.KnowledgeGraph.Node"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.Iterator"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="main.Application.views.StudyBuddyView"/>
+<fullyQualifiedTypeName name="main.Application.models.KnowledgeGraph.Node"/>
+<fullyQualifiedTypeName name="main.Application.models.KnowledgeGraph"/>
+<fullyQualifiedTypeName name="main.Factories.KnowledgeGraphFactory"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="main.Application.models.Student"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="main.Application.views.GraphGeneratorView"/>
+<fullyQualifiedTypeName name="main.Application.controllers.GraphGeneratorController"/>
 </qualifiedTypeNameHistroy>

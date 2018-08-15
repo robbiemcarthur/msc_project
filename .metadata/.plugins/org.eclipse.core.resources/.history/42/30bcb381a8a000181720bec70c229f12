@@ -224,7 +224,7 @@ public class StudyBuddyController {
 				distance = 0.0;
 				for(int i = 0; i < 2; i ++) {
 					distance += Math.pow(query[i][j]-arr[i][j], 2.0);
-//					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
+					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
 				}
 				distance = Math.sqrt(distance);
 				overall += distance;
@@ -255,7 +255,7 @@ public class StudyBuddyController {
 			distance = 0.0;
 			for(int i = 0; i < 2; i ++) {
 				distance += Math.pow(q[i][j]-t[i][j], 2.0);
-//				System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
+				System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
 			}
 			distance = Math.sqrt(distance);
 			overall += distance;
@@ -299,12 +299,12 @@ public class StudyBuddyController {
 		// then out degree in column 2
 		while(iter.hasNext()) {
 			KnowledgeGraph.Node n = (Node) iter.next();
-//			System.out.println("Adding to vector " + graph.degree(n));
+			System.out.println("Adding to vector " + graph.degree(n));
 			query[column][row] = graph.degree(n);
-//			System.out.println("Added: " + query[column][row]);
-//			System.out.println("Adding to vector " + graph.outDegree(n));
+			System.out.println("Added: " + query[column][row]);
+			System.out.println("Adding to vector " + graph.outDegree(n));
 			query[column+1][row] = graph.outDegree(n);
-//			System.out.println("Added: " + query[column+1][row]);
+			System.out.println("Added: " + query[column+1][row]);
 			row++;
 		}
 		return query;

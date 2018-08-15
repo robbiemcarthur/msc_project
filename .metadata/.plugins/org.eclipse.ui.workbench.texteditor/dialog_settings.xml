@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="static"/>
 			<item value="degreetest"/>
 			<item value="C:\prog\StudyBuddies\src\org\ajbrown\namemachine"/>
 			<item value="synchronized"/>
