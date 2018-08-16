@@ -266,7 +266,7 @@ public class StudyBuddyController {
 			distance = Math.sqrt(distance);
 			overall += distance;
 		}
-//		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
+		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
 		return overall;
 	}
 
@@ -337,8 +337,8 @@ public class StudyBuddyController {
 			for(int i = 0; i < k; i++) {
 				int y = rand.nextInt(list.size());
 				for(int x: clusterheads) {
-					if(clusterheads[i]==y) {
-//						i--;
+					if(x==y) {
+						if(!(i==0)){i--;}
 						break;
 					}
 					else {
@@ -360,7 +360,7 @@ public class StudyBuddyController {
 						min = current;
 					}
 				}
-				pickedCH.add(list.get(i));
+				pickedCH.add(list.get(clusterheads[i]));
 			}
 			for(int i = 0; i < k; i++) {
 				if(clusterheads[i] == median(pickedCH))

@@ -43,7 +43,7 @@ public class StudyBuddyController {
 	private KnowledgeGraph graph, userGraph;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 20;
+	private final int MAX_ITERATIONS = 1000;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs, int u) {
 		v = new StudyBuddyView(this);
@@ -83,9 +83,8 @@ public class StudyBuddyController {
 				break;
 			case 4:
 				v.similarLearningAbility();
-				System.out.println("How many neighbours do you wish to return?");
-				choice = Integer.parseInt(v.getUserInput());
-				cluster(choice,studentGraphs);
+				cluster();
+				v.buddyMatch(graph);
 				break;
 			case 5:
 				v.coverKnowledgeGap();
@@ -266,7 +265,7 @@ public class StudyBuddyController {
 			distance = Math.sqrt(distance);
 			overall += distance;
 		}
-//		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
+		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
 		return overall;
 	}
 
@@ -331,25 +330,20 @@ public class StudyBuddyController {
 	public void cluster(int k, ArrayList<KnowledgeGraph> list) {
 		int counter = 0;
 		boolean done = false;
-		while(counter<MAX_ITERATIONS || !done) {
+		while(counter<MAX_ITERATIONS && !done) {
 			ArrayList<KnowledgeGraph> pickedCH = new ArrayList<KnowledgeGraph>();
 			int[] clusterheads = new int[k];
 			for(int i = 0; i < k; i++) {
 				int y = rand.nextInt(list.size());
 				for(int x: clusterheads) {
-					if(clusterheads[i]==y) {
-//						i--;
+					if(x==y) {
+						if(!(i==0)){i--;}
 						break;
 					}
 					else {
 						clusterheads[i] = y;
 					}
 				}
-			}
-			System.out.println("Starting clusterheads.....");
-			int c = 1;
-			for(int x: clusterheads) {
-				System.out.println("Clusterhead " + c + " = " + x);
 			}
 			for(int i = 0; i < list.size(); i++) {
 				Double min = Double.MAX_VALUE;
@@ -360,7 +354,7 @@ public class StudyBuddyController {
 						min = current;
 					}
 				}
-				pickedCH.add(list.get(i));
+				pickedCH.add(list.get(clusterheads[i]));
 			}
 			for(int i = 0; i < k; i++) {
 				if(clusterheads[i] == median(pickedCH))
@@ -368,11 +362,6 @@ public class StudyBuddyController {
 					done = true;
 				}
 				clusterheads[i] = median(pickedCH);
-			}
-			int count = 1;
-			System.out.println("Changed clusterheads.....");
-			for(int x: clusterheads) {
-				System.out.println("Clusterhead " + count + " = " + x);
 			}
 			counter++;
 		}

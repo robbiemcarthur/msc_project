@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
 import java.math.*;
 
 import main.Application.models.KnowledgeGraph;
@@ -40,10 +39,7 @@ public class StudyBuddyController {
 	private HashMap<String, Integer> userMap;
 	private HashMap<Integer, KnowledgeGraph> graphMap;
 	private HashMap<Integer, int[][]> vectorMap;
-	private KnowledgeGraph graph, userGraph;
-	private Random rand;
-
-	private final int MAX_ITERATIONS = 20;
+	private KnowledgeGraph graph, userGraph;;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs, int u) {
 		v = new StudyBuddyView(this);
@@ -58,7 +54,6 @@ public class StudyBuddyController {
 		finished = false;
 		input = "";
 		choice = 0;
-		rand = new Random();
 	}
 
 
@@ -83,9 +78,8 @@ public class StudyBuddyController {
 				break;
 			case 4:
 				v.similarLearningAbility();
-				System.out.println("How many neighbours do you wish to return?");
-				choice = Integer.parseInt(v.getUserInput());
-				cluster(choice,studentGraphs);
+				cluster();
+				v.buddyMatch(graph);
 				break;
 			case 5:
 				v.coverKnowledgeGap();
@@ -148,7 +142,7 @@ public class StudyBuddyController {
 		userGraph = studentGraphs.get(choice);
 		System.out.println("User graph successfully uploaded from graph set");
 	}
-
+	
 	/**
 	 * This version will enable users to input their own knowledgegraph, 
 	 * although edges will still be randomized.
@@ -157,7 +151,7 @@ public class StudyBuddyController {
 	 */
 	public void uploadGraph(KnowledgeGraphFactory g) {
 		graph = g.getGraph();
-
+		
 	}
 
 	public void getProfile() {
@@ -182,7 +176,7 @@ public class StudyBuddyController {
 			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
 		}
 	}
-
+	
 	public void showBuddyDetails(Student s) {
 		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
 		Iterator iter = graph.nodes();
@@ -210,7 +204,7 @@ public class StudyBuddyController {
 			query = generateVector(query, g);
 			vectors.add(query);
 		}
-		//		vectorTest();
+//		vectorTest();
 		computeDistance();
 		System.out.println("How many neighbours do you wish to return?");
 		choice = Integer.parseInt(v.getUserInput());
@@ -230,7 +224,7 @@ public class StudyBuddyController {
 				distance = 0.0;
 				for(int i = 0; i < 2; i ++) {
 					distance += Math.pow(query[i][j]-arr[i][j], 2.0);
-					//					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
+//					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
 				}
 				distance = Math.sqrt(distance);
 				overall += distance;
@@ -241,7 +235,7 @@ public class StudyBuddyController {
 			students.add(s);
 		}
 	}
-
+	
 	/**
 	 * Function takes two KnowledgeGraph objects and computes euclidian distance
 	 * between them. 
@@ -261,15 +255,15 @@ public class StudyBuddyController {
 			distance = 0.0;
 			for(int i = 0; i < 2; i ++) {
 				distance += Math.pow(q[i][j]-t[i][j], 2.0);
-				//				System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
+//				System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
 			}
 			distance = Math.sqrt(distance);
 			overall += distance;
 		}
-//		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
+		System.out.println("Distance between graph 1 and graph 2 is: " + overall);
 		return overall;
 	}
-
+	
 	public int median(ArrayList<KnowledgeGraph> list) {
 		Double minDistance = Double.MAX_VALUE;
 		int minIndex = 0;
@@ -285,22 +279,22 @@ public class StudyBuddyController {
 		}
 		return minIndex;
 	}
-
+	
 	public void returnKNN(int k) {
 		Collections.sort(students);
-		//		System.out.println("Student sort test: ");
+//		System.out.println("Student sort test: ");
 		int num = 1;
-		//		for(Student s: students) {
-		//			System.out.println("Student " + num + " distance: " + s.getDistance());
-		//			num++;
-		//		}
+//		for(Student s: students) {
+//			System.out.println("Student " + num + " distance: " + s.getDistance());
+//			num++;
+//		}
 		System.out.println("Recommended students are: ");
 		for(int i = 0; i < k; i++) {
 			System.out.println("Student: " + students.get(i).getName() + " ID: " + students.get(i).getID() + " distance: " + students.get(i).getDistance());
 		}
 		showBuddyDetails(students.get(0));
 	}
-
+	
 	public void vectorTest() {
 		for(int[][] arr: vectors) {
 			int nodeNum = 1;
@@ -313,7 +307,7 @@ public class StudyBuddyController {
 			}
 		}
 	}
-
+	
 	public int[][] generateVector(int[][] query, KnowledgeGraph graph) {
 		Iterator iter = graph.nodes();
 		int column = 0; int row = 0;
@@ -321,60 +315,18 @@ public class StudyBuddyController {
 		// then out degree in column 2
 		while(iter.hasNext()) {
 			KnowledgeGraph.Node n = (Node) iter.next();
+//			System.out.println("Adding to vector " + graph.degree(n));
 			query[column][row] = graph.degree(n);
+//			System.out.println("Added: " + query[column][row]);
+//			System.out.println("Adding to vector " + graph.outDegree(n));
 			query[column+1][row] = graph.outDegree(n);
+//			System.out.println("Added: " + query[column+1][row]);
 			row++;
 		}
 		return query;
 	}
 
-	public void cluster(int k, ArrayList<KnowledgeGraph> list) {
-		int counter = 0;
-		boolean done = false;
-		while(counter<MAX_ITERATIONS || !done) {
-			ArrayList<KnowledgeGraph> pickedCH = new ArrayList<KnowledgeGraph>();
-			int[] clusterheads = new int[k];
-			for(int i = 0; i < k; i++) {
-				int y = rand.nextInt(list.size());
-				for(int x: clusterheads) {
-					if(clusterheads[i]==y) {
-//						i--;
-						break;
-					}
-					else {
-						clusterheads[i] = y;
-					}
-				}
-			}
-			System.out.println("Starting clusterheads.....");
-			int c = 1;
-			for(int x: clusterheads) {
-				System.out.println("Clusterhead " + c + " = " + x);
-			}
-			for(int i = 0; i < list.size(); i++) {
-				Double min = Double.MAX_VALUE;
-				double current = 0;
-				for(int x: clusterheads) {
-					current = computeGraphDistance(list.get(x), list.get(i));
-					if(current<min) {
-						min = current;
-					}
-				}
-				pickedCH.add(list.get(i));
-			}
-			for(int i = 0; i < k; i++) {
-				if(clusterheads[i] == median(pickedCH))
-				{
-					done = true;
-				}
-				clusterheads[i] = median(pickedCH);
-			}
-			int count = 1;
-			System.out.println("Changed clusterheads.....");
-			for(int x: clusterheads) {
-				System.out.println("Clusterhead " + count + " = " + x);
-			}
-			counter++;
-		}
+	public KnowledgeGraph cluster() {
+		return null;
 	}
 }

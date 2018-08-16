@@ -220,6 +220,10 @@ public class GraphController {
 		//		degreeTest();
 		return this.graph;
 	}
+	
+	public void reverseIterator() {
+		
+	}
 
 	public void reset() {
 		graph.clear();

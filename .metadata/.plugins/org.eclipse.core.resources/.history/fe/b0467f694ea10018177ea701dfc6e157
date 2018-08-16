@@ -338,7 +338,7 @@ public class StudyBuddyController {
 				int y = rand.nextInt(list.size());
 				for(int x: clusterheads) {
 					if(clusterheads[i]==y) {
-//						i--;
+						i--;
 						break;
 					}
 					else {
