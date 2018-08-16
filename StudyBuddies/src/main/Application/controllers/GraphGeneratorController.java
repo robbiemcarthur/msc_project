@@ -28,7 +28,7 @@ public class GraphGeneratorController {
 	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<String> concepts;
 	private String course, teacher, filename;
-	private int grade, quantity, lessonID, studentID, userID;
+	private int grade, quantity, lessonID, studentID;
 	private boolean finished;
 	private Iterator<KnowledgeGraph.Node> iter;
 	private Logger logger;
@@ -50,7 +50,6 @@ public class GraphGeneratorController {
 		quantity = 0;
 		lessonID = 0;
 		studentID = 1;
-		userID = 0;
 		finished = false;
 		filename = "graphs.csv";
 		logger = new Logger();
@@ -63,62 +62,68 @@ public class GraphGeneratorController {
 	}
 
 	public void runApplication() {
-		while(!finished) {
-			appView.printMenu();
-			int input = Integer.parseInt(appView.getUserInput());
-			if(input == 7) {
-				finished = true;
-				break;
-			}
-			else if(input == 4)
-			{
-				System.out.println("Printing graph data to console....\n");	
-				printGraphs();
-			}
-			else if(input == 5)
-			{
-				System.out.println("Writing graph data to CSV output....\n");	
-				writeToFile();
-			}
-			else if(input == 6) {
-				getGraphDegrees();
-			}
-			else if(input == 1 || input == 2) {
-				appView.askGraphType();
-				course = appView.getUserInput();
-				switch(course.toLowerCase()) {
-				case "math":
-					teacher = "Mr. X";
-				case "computing":
-					teacher = "Mr. Y";
-				case "history":
-					teacher = "Mr. Z";
-				default:
-					teacher = "Mr. A";
+		try {
+			while(!finished) {
+				appView.printMenu();
+				int input = Integer.parseInt(appView.getUserInput());
+				if(input == 7) {
+					finished = true;
+					break;
 				}
-				appView.askGraphQuantity();
-				quantity = Integer.parseInt(appView.getUserInput());
-				initialiseConcepts();
-				initialiseLessons();
-				initialiseNodes();
-				if(input == 1) {
-				projectGraphs(quantity);
+				else if(input == 4)
+				{
+					System.out.println("Printing graph data to console....\n");	
+					printGraphs();
+				}
+				else if(input == 5)
+				{
+					System.out.println("Writing graph data to CSV output....\n");	
+					writeToFile();
+				}
+				else if(input == 6) {
+					getGraphDegrees();
+				}
+				else if(input == 1 || input == 2) {
+					appView.askGraphType();
+					course = appView.getUserInput();
+					switch(course.toLowerCase()) {
+					case "math":
+						teacher = "Mr. X";
+					case "computing":
+						teacher = "Mr. Y";
+					case "history":
+						teacher = "Mr. Z";
+					default:
+						teacher = "Mr. A";
+					}
+					appView.askGraphQuantity();
+					quantity = Integer.parseInt(appView.getUserInput());
+					initialiseConcepts();
+					initialiseLessons();
+					initialiseNodes();
+					if(input == 1) {
+						projectGraphs(quantity);
+					}
+					else {
+						knowledgeGraphs(quantity);
+					}
+				}
+				else if (input == 3) {
+					System.out.println("Entering study buddy recommender system....\n");	
+					sbController = new StudyBuddyController(graph, graphs);
+					sbController.start(this);
 				}
 				else {
-					knowledgeGraphs(quantity);
+					System.out.println("Please enter a valid choice.");
 				}
+			} 
+			if(finished) {
+				quitApplication();
 			}
-			else if (input == 3) {
-				System.out.println("Entering study buddy recommender system....\n");	
-				sbController = new StudyBuddyController(graph, graphs, userID);
-				sbController.start(this);
-			}
-			else {
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-		if(finished) {
-			quitApplication();
+		}catch (NumberFormatException e) {
+			System.out.println("Error, invalid input. Please enter a valid number");
+		} finally {
+			System.out.println("Something has gone wrong. Please try again.");
 		}
 	}
 
@@ -126,34 +131,48 @@ public class GraphGeneratorController {
 		runApplication();
 	}
 	public void projectGraphs(int quantity) {
-		for(int i = 0; i < quantity; i++)
-		{
-			graph = graphF.getGraph();
-			graph = gController.projectRoute(nodes, graph);
-			graphs.add(graph);
-			reInitialise();
+		try {
+			for(int i = 0; i < quantity; i++)
+			{
+				graph = graphF.getGraph();
+				graph = gController.projectRoute(nodes, graph);
+				graphs.add(graph);
+				reInitialise();
+			}
+		}catch (IndexOutOfBoundsException e) {
+			System.out.println("Index out of bounds error at projectGraphs function");
 		}
 	}
-	
+
 	public void knowledgeGraphs(int quantity) {
-		for(int i = 0; i < quantity; i++)
-		{
-			graph = graphF.getGraph();
-			graph = gController.getKnowledgeGraph(lessons, graph, 1);
-			graphs.add(graph);
-			reInitialise();
+		try {
+			for(int i = 0; i < quantity; i++)
+			{
+				graph = graphF.getGraph();
+				graph = gController.getKnowledgeGraph(lessons, graph, 1);
+				graphs.add(graph);
+				reInitialise();
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Index out of bounds error at knowledgeGraphs function");
 		}
 	}
-	
+
 	public void getGraphDegrees() {
 		System.out.println("\nWhich graph would you like to get degrees for?" );
-		int input = Integer.parseInt(appView.getUserInput());
-		System.out.println(gController.getDegrees(graphs.get(input)));
+		try {
+			int input = Integer.parseInt(appView.getUserInput()); 
+			System.out.println(gController.getDegrees(graphs.get(input)));
+		} catch (NumberFormatException e) {
+			System.out.println("Error, invalid input. Please enter a valid number");
+		} finally {
+			System.out.println("Something has gone wrong. Please try again.");
+		}
 	}
 
 
 	//////////FILE METHODS ///////////
-	
+
 	public void writeToFile() {
 		logger.appendHeader();
 		for(KnowledgeGraph g: graphs) {
@@ -197,23 +216,23 @@ public class GraphGeneratorController {
 		}
 	}
 
-	
+
 	////////// INITIALISATION METHODS ///////////
-	
+
 	public void reInitialise() {
 		nodes.clear();
 		lessons.clear();
 		initialiseLessons();
 		initialiseNodes();
 	}
-	
+
 	public void initialiseNodes() {
 		for(Lesson lesson: lessons) {
 			curr = new KnowledgeGraph.Node(lesson);
 			nodes.add(curr);
 		}
 	}
-	
+
 	public void initialiseLessons() {
 		lessonID = 0;
 		for(String con : concepts) {

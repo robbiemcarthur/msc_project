@@ -36,7 +36,7 @@ public class GraphController {
 	public int [][] computeDistance() {
 		return null;
 	}
-	
+
 	public String getDegrees(KnowledgeGraph graph) {
 		this.graph = graph;
 		int in = 0;
@@ -82,7 +82,7 @@ public class GraphController {
 		randomizeEdges();
 		return graph;
 	}
-	
+
 	public void randomizeEdges() {
 		int count = 0;
 		int e = rand.nextInt(4);
@@ -101,10 +101,10 @@ public class GraphController {
 			visits = rand.nextInt(2);
 			KnowledgeGraph.Node succ = iter.next();
 			if(iter.hasNext()) {
-			revision = iter.next();
+				revision = iter.next();
 			}
 			if(iter.hasNext()) {
-			pred = iter.next();
+				pred = iter.next();
 			}
 			switch(randomizer){
 			case 0:
@@ -157,62 +157,70 @@ public class GraphController {
 		boolean finished = false;
 		while(!finished)
 		{
-			for(int i = 0; i < nodes.size(); i++) {
-				visits = rand.nextInt(6);
-				if(i==nodes.size()-1) {
-					curr = (Lesson) nodes.get(i).getElement();
-					curr.setgrade(rand.nextInt(60)+40);
-					KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
-					finished = true;
-					// if high amount of visits, add revision lesson
-					if(visits>4)
-					{
-						curr = (Lesson) nodes.get(i + 1).getElement();
-						curr.setgrade(rand.nextInt(40)-1);
-						KnowledgeGraph.Node succ = (Node) graph.addNode(curr);
-						graph.addEdge(_curr, succ, visits);
-					}
-				}
-				else {
-					curr = (Lesson) nodes.get(i).getElement();
-					curr.setgrade(rand.nextInt(60)+40);
-					next = (Lesson) nodes.get(i + 1).getElement();
-					next.setgrade(rand.nextInt(60)+40);
-					// might need to reset elements to update i.e. nodes.geti.setelement(curr)
-					if(visits==3) {
-						visits = 0;
-					}
-					if(visits > 3) {
-						count++;
-						if(count>1) {
-							finished = true;
-							break;
-						}
-					}
-					if(visits==0) {
-						//add standard lesson to next standard lesson
+			try {
+				for(int i = 0; i < nodes.size(); i++) {
+					visits = rand.nextInt(6);
+					if(i==nodes.size()-1) {
+						curr = (Lesson) nodes.get(i).getElement();
+						curr.setgrade(rand.nextInt(60)+40);
 						KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
-						KnowledgeGraph.Node succ = (Node) graph.addNode(next);
-						graph.addEdge(_curr, succ, visits);
+						finished = true;
+						// if high amount of visits, add revision lesson
+						if(visits>4)
+						{
+							curr = (Lesson) nodes.get(i + 1).getElement();
+							curr.setgrade(rand.nextInt(40)-1);
+							KnowledgeGraph.Node succ = (Node) graph.addNode(curr);
+							graph.addEdge(_curr, succ, visits);
+						}
 					}
 					else {
-						// add standard lesson to next standard lesson, and revision lesson
-						if(i>nodes.size()-2) {
-							continue;
+						curr = (Lesson) nodes.get(i).getElement();
+						curr.setgrade(rand.nextInt(60)+40);
+						next = (Lesson) nodes.get(i + 1).getElement();
+						next.setgrade(rand.nextInt(60)+40);
+						// might need to reset elements to update i.e. nodes.geti.setelement(curr)
+						if(visits==3) {
+							visits = 0;
 						}
-						else {
-							prev = (Lesson) nodes.get(i + 2).getElement();
-							next.setgrade(rand.nextInt(60)+40);
+						if(visits > 3) {
+							count++;
+							if(count>1) {
+								finished = true;
+								break;
+							}
+						}
+						if(visits==0) {
+							//add standard lesson to next standard lesson
 							KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
 							KnowledgeGraph.Node succ = (Node) graph.addNode(next);
-							KnowledgeGraph.Node pred = (Node) graph.addNode(prev);
-							graph.addEdge(_curr, pred, visits);
-							graph.addEdge(pred, succ, visits);
-							graph.addEdge(succ, _curr, visits);
+							graph.addEdge(_curr, succ, visits);
+						}
+						else {
+							// add standard lesson to next standard lesson, and revision lesson
+							if(i>nodes.size()-2) {
+								continue;
+							}
+							else {
+								prev = (Lesson) nodes.get(i + 2).getElement();
+								next.setgrade(rand.nextInt(60)+40);
+								KnowledgeGraph.Node _curr = (Node) graph.addNode(curr);
+								KnowledgeGraph.Node succ = (Node) graph.addNode(next);
+								KnowledgeGraph.Node pred = (Node) graph.addNode(prev);
+								graph.addEdge(_curr, pred, visits);
+								graph.addEdge(pred, succ, visits);
+								graph.addEdge(succ, _curr, visits);
+							}
 						}
 					}
+					i++;
 				}
-				i++;
+			}
+			catch (IndexOutOfBoundsException e) {
+				System.out.println("\nIndex out of bounds. Please try again.");
+			}
+			catch (NumberFormatException e) {
+				System.out.println("\nPlease enter a valid number.");
 			}
 			finished = true;
 		}
