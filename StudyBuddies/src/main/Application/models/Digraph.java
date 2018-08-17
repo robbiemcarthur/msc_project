@@ -14,11 +14,13 @@ public interface Digraph extends Graph {
 
     //////////// Iterators ////////////
 
-    public Iterator successors (Graph.Node node);
+    @SuppressWarnings("rawtypes")
+	public Iterator successors (Graph.Node node);
     // Return an iterator that will visit all the successors of node in this
     // directed graph, in no particular order.
 
-    public Iterator outEdges (Graph.Node node);
+    @SuppressWarnings("rawtypes")
+	public Iterator outEdges (Graph.Node node);
     // Return an iterator that will visit all the out-edges of node in this
     // directed graph, in no particular order.
 }

@@ -1,0 +1,417 @@
+package main.Application.models;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class KnowledgeGraph implements Digraph {
+
+    // Each KnowledgeGraph object is a directed graph whose elements and
+    // edge attributes are arbitrary objects.
+
+    // This directed graph is represented by a node set and edge set as follows.
+    // firstNode is a link to the first node in a DLL of KnowledgeGraph
+    // objects, each of which contains an element. firstEdge is a link to the
+    // first node in a DLL of KnowledgeGraph objects, each of which
+    // contains an attribute and is linked to the edge's source and destination
+    // nodes. size contains the graph's size.
+
+    private KnowledgeGraph.Node firstNode;
+    private KnowledgeGraph.Edge firstEdge;
+    private int size, id;
+    
+
+    //////////// Constructor ////////////
+
+    public KnowledgeGraph (int id) {
+    // Construct a directed graph, initially empty.
+        firstNode = null;
+        firstEdge = null;
+        size = 0;
+        this.id = id;
+    }
+    
+    public KnowledgeGraph () {
+        // Construct a directed graph, initially empty.
+            firstNode = null;
+            firstEdge = null;
+            size = 0;
+            id++;
+        }
+
+    //////////// Accessors ////////////
+
+    public int size () {
+    // Return the number of nodes in this graph.
+        return this.size;
+    }
+    
+    public int id() {
+    	return this.id;
+    }
+
+    public int degree (Graph.Node node) {
+    // Return the number of edges connecting node in this graph.
+        int numEdges = 0;
+        for (KnowledgeGraph.Edge e = firstEdge; e != null; e = e.nextEdge) {
+            if (e.source == node || e.dest == node)
+                numEdges++;
+        }
+        return numEdges;
+    }
+
+    public boolean containsEdge (Graph.Node node0, Graph.Node node1) {
+    // Return true if and only if there is an edge connecting node0 and
+    // node1 in this graph. (If the graph is directed, node0 is the edge's
+    // source and node1 is the destination.)
+        for (KnowledgeGraph.Edge e = firstEdge; e != null; e = e.nextEdge) {
+            if (e.source == node0 && e.dest == node1)
+                return true;
+        }
+        return false;
+    }
+
+    public int outDegree (Graph.Node node) {
+    // Return the number of out-edges of node in this directed graph.
+        return ((KnowledgeGraph.Node) node).outDegree;
+    }
+
+    //////////// Transformers ////////////
+
+    public void setID(int id) {
+    	this.id = id;
+    }
+    public void clear () {
+    // Make this graph empty.
+        this.firstNode = null;
+        this.firstEdge = null;
+        this.size = 0;
+    }
+
+    public Graph.Node addNode (Object elem) {
+    // Add to this graph a new node containing element elem, but with no
+    // connecting edges, and return the new node.
+    	KnowledgeGraph.Node node = new KnowledgeGraph.Node(elem);
+        node.prevNode = null;
+        node.nextNode = firstNode;
+        firstNode = node;
+        size++;
+        return node;
+    }
+
+    public Graph.Edge addEdge (Graph.Node node0, Graph.Node node1) {
+    // Add to this graph a new edge connecting node0 and node1, but
+    // containing no attribute, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+        return addEdge(node0, node1, null);
+    }
+
+    public Graph.Edge addEdge (Graph.Node node0, Graph.Node node1,
+            Object attr) {
+    // Add to this graph a new edge connecting node0 and node1, and
+    // containing attribute attr, and return the new edge. (If the graph is
+    // directed, node0 is the edge's source and node1 is the destination.)
+    	KnowledgeGraph.Node source = (KnowledgeGraph.Node) node0;
+    	KnowledgeGraph.Node dest = (KnowledgeGraph.Node) node1;
+    	KnowledgeGraph.Edge edge = new KnowledgeGraph.Edge(source, dest, attr);
+        edge.prevEdge = null;
+        edge.nextEdge = firstEdge;
+        firstEdge = edge;
+        source.outDegree++;
+        return edge;
+    }
+
+    public void removeNode (Graph.Node node) {
+    // Remove node from this graph, together with all connecting edges.
+    	KnowledgeGraph.Node currNode = (KnowledgeGraph.Node) node;
+        for (KnowledgeGraph.Edge e = firstEdge; e != null; e = e.nextEdge) {
+            if (e.source == currNode || e.dest == currNode) {
+            	KnowledgeGraph.Edge prevEdge = e.prevEdge;
+            	KnowledgeGraph.Edge nextEdge = e.nextEdge;
+                prevEdge.nextEdge = nextEdge;
+                if (nextEdge != null)  nextEdge.prevEdge = prevEdge;
+            }
+        }
+        KnowledgeGraph.Node prevNode = currNode.prevNode;
+        KnowledgeGraph.Node nextNode = currNode.nextNode;
+        prevNode.nextNode = nextNode;
+        if (nextNode != null)  nextNode.prevNode = prevNode;
+        size--;
+    }
+
+    public void removeEdge (Graph.Edge edge) {
+    // Remove edge from this graph.
+    	KnowledgeGraph.Edge prevEdge = ((KnowledgeGraph.Edge) edge).prevEdge;
+    	KnowledgeGraph.Edge nextEdge = ((KnowledgeGraph.Edge) edge).nextEdge;
+        if (prevEdge == null)
+            firstEdge = nextEdge;
+        else
+            prevEdge.nextEdge = nextEdge;
+        if (nextEdge != null)  nextEdge.prevEdge = prevEdge;
+        ((KnowledgeGraph.Edge) edge).source.outDegree--;
+    }
+
+    //////////// Iterators ////////////
+
+    @SuppressWarnings("rawtypes")
+	public Iterator nodes () {
+    // Return an iterator that will visit all nodes of this graph, in no
+    // particular order.
+        return new KnowledgeGraph.AllNodeIterator();
+    }
+
+    @SuppressWarnings("rawtypes")
+	public Iterator edges () {
+    // Return an iterator that will visit all edges of this graph, in no
+    // particular order.
+        return new KnowledgeGraph.AllEdgeIterator();
+    }
+
+    @SuppressWarnings("rawtypes")
+	public Iterator neighbors (Graph.Node node) {
+    // Return an iterator that will visit all the neighbors of node in this
+    // graph, in no particular order.
+        return new KnowledgeGraph.NodeIterator((KnowledgeGraph.Node) node, false);
+    }
+
+    @SuppressWarnings("rawtypes")
+	public Iterator connectingEdges (Graph.Node node) {
+    // Return an iterator that will visit all connecting edges of node in this
+    // graph, in no particular order.
+        return new KnowledgeGraph.EdgeIterator((KnowledgeGraph.Node) node, false);
+    }
+
+    @SuppressWarnings("rawtypes")
+	public Iterator successors (Graph.Node node) {
+    // Return an iterator that will visit all the successors of node in this
+    // directed graph, in no particular order.
+        return new KnowledgeGraph.NodeIterator((KnowledgeGraph.Node) node, true);
+    }
+
+    @SuppressWarnings("rawtypes")
+	public Iterator outEdges (Graph.Node node) {
+    // Return an iterator that will visit all the out-edges of node in this
+    // directed graph, in no particular order.
+        return new KnowledgeGraph.EdgeIterator((KnowledgeGraph.Node) node, true);
+    }
+
+    //////////// Inner classes ////////////
+
+    public static class Node implements Graph.Node {
+
+        // Each KnowledgeGraph.Node object is a directed graph node, and contains a
+        // single element.
+
+        private Lesson lesson;
+        private int outDegree;
+        private KnowledgeGraph.Node prevNode, nextNode;
+
+        //////////// Constructor ////////////
+
+        public Node (Object element) {
+            this.lesson = (Lesson) element;
+            this.outDegree = 0;
+            this.prevNode = null;
+            this.nextNode = null;
+        }
+
+        //////////// Accessor ////////////
+
+        public Object getElement () {
+            return this.lesson;
+        }
+
+        //////////// Transformer ////////////
+
+        public void setElement (Object element) {
+            this.lesson = (Lesson) element;
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    public static class Edge implements Graph.Edge {
+
+        // Each ESDigraph.Edge object is a directed graph edge, and optionally
+        // contains an attribute.
+
+        private Object attribute;
+        private KnowledgeGraph.Node source, dest;
+        private KnowledgeGraph.Edge prevEdge, nextEdge;
+        private int visits;
+
+        //////////// Constructor ////////////
+
+        public Edge (KnowledgeGraph.Node source, KnowledgeGraph.Node dest, Object attr) {
+            this.source = source;
+            this.dest = dest;
+            this.attribute = attr;
+            this.prevEdge = null;
+            this.nextEdge = null;
+            this.visits = (int) attr;
+        }
+
+        public Graph.Node[] getNodes () {
+        // Return an array containing the two nodes connected by this edge.
+        // (If the graph is directed, the array will contain the edge's source
+        // and destination, in that order.)
+            return new Graph.Node[] {this.source, this.dest};
+        }
+
+        public Object getAttribute () {
+        // Return the attribute contained in this edge, or null if there is
+        // none.
+            return this.attribute;
+        }
+
+        public void setAttribute (Object attr) {
+        // Change the attribute contained in this edge to attr.
+            this.attribute = attr;
+        }
+        
+        public int getVisits() {
+        	return this.visits;
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    private class AllNodeIterator implements Iterator {
+
+    	private KnowledgeGraph.Node currNode;
+
+    	private AllNodeIterator () {
+    	    currNode = firstNode;
+    	}
+
+    	public boolean hasNext () {
+            return (currNode != null);
+        }
+
+        public Object next () {
+            Object result = currNode;
+            if (result == null)  throw new NoSuchElementException();
+            currNode = currNode.nextNode;
+            return result;
+        }
+
+        public void remove () {
+            if (currNode == null)  throw new IllegalStateException();
+            removeNode(currNode);
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    private class NodeIterator implements Iterator {
+
+    	private Iterator allEdges;
+    	private KnowledgeGraph.Node currNode, targetNode;
+    	private boolean directed;
+
+   	private NodeIterator (KnowledgeGraph.Node node, boolean directed) {
+    	    this.targetNode = node;
+    	    this.directed = directed;
+    	    this.allEdges = new KnowledgeGraph.AllEdgeIterator();
+    	    this.currNode = scanNextNode();
+        }
+
+        private KnowledgeGraph.Node scanNextNode () {
+    	    while (allEdges.hasNext()) {
+    	    	KnowledgeGraph.Edge currEdge = (KnowledgeGraph.Edge) allEdges.next();
+    	        if (currEdge.source == targetNode) {
+    	            return currEdge.dest;
+    	    	} else if (! directed && currEdge.dest == targetNode) {
+    	    	    return currEdge.source;
+    	    	}
+    	    }
+    	    return null;
+        }
+
+        public boolean hasNext () {
+            return (currNode != null);
+        }
+
+        public Object next () {
+    	    Object result = currNode;
+    	    if (result == null)  throw new NoSuchElementException();
+            currNode = scanNextNode();
+    	    return result;
+    	}
+
+    	public void remove () {
+    	    if (currNode == null)  throw new IllegalStateException();
+    	    removeNode(currNode);
+    	}
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    private class AllEdgeIterator implements Iterator {
+
+    	private KnowledgeGraph.Edge currEdge;
+
+    	private AllEdgeIterator () {
+    	    currEdge = firstEdge;
+    	}
+
+    	public boolean hasNext () {
+    	    return (currEdge != null);
+    	}
+
+    	public Object next () {
+    	    Object result = currEdge;
+    	    if (result == null)  throw new NoSuchElementException();
+    	    currEdge = currEdge.nextEdge;
+    	    return result;
+    	}
+
+    	public void remove () {
+    	    if (currEdge == null)  throw new IllegalStateException();
+    	    removeEdge(currEdge);
+    	}
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+
+    private class EdgeIterator implements Iterator {
+
+    	private Iterator allEdges;
+    	private KnowledgeGraph.Edge currEdge;
+    	private KnowledgeGraph.Node targetNode;
+    	private boolean directed;
+
+    	private EdgeIterator (KnowledgeGraph.Node node, boolean directed) {
+    	    this.allEdges = new KnowledgeGraph.AllEdgeIterator();
+    	    this.targetNode = node;
+    	    this.directed = directed;
+    	    this.currEdge = scanNextEdge();
+    	}
+
+        private KnowledgeGraph.Edge scanNextEdge () {
+    	    while (allEdges.hasNext()) {
+    	    	KnowledgeGraph.Edge edge = (KnowledgeGraph.Edge) allEdges.next();
+    	    	if ((edge.source == targetNode) ||
+    	    	        (! directed && edge.dest == targetNode))
+    	    	    return edge;
+    	    }
+    	    return null;
+    	}
+
+    	public boolean hasNext () {
+    	    return (currEdge != null);
+    	}
+
+    	public Object next () {
+    	    Object result = currEdge;
+    	    if (result == null)  throw new NoSuchElementException();
+            currEdge = scanNextEdge();
+    	    return result;
+    	}
+
+    	public void remove () {
+    	    if (currEdge == null)  throw new IllegalStateException();
+    	    removeEdge(currEdge);
+    	}
+    }
+}
+

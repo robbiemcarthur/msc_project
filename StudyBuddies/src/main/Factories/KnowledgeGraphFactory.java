@@ -1,7 +1,6 @@
 package main.Factories;
 
 import main.Application.models.KnowledgeGraph;
-import main.Application.models.Student;
 
 
 public class KnowledgeGraphFactory implements GraphFactory {

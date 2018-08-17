@@ -1,7 +1,5 @@
 package main.Factories;
 
-import java.util.ArrayList;
-
 import main.Application.models.Lesson;
 
 /**
@@ -16,7 +14,6 @@ public class LessonFactory {
 	public LessonFactory() {
 		
 	}
-	
 	
 	public Lesson getLesson () {
 		return new Lesson();

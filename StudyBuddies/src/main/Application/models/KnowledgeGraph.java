@@ -18,7 +18,7 @@ public class KnowledgeGraph implements Digraph {
     private KnowledgeGraph.Node firstNode;
     private KnowledgeGraph.Edge firstEdge;
     private int size, id;
-    private Student student;
+    
 
     //////////// Constructor ////////////
 
@@ -152,37 +152,43 @@ public class KnowledgeGraph implements Digraph {
 
     //////////// Iterators ////////////
 
-    public Iterator nodes () {
+    @SuppressWarnings("rawtypes")
+	public Iterator nodes () {
     // Return an iterator that will visit all nodes of this graph, in no
     // particular order.
         return new KnowledgeGraph.AllNodeIterator();
     }
 
-    public Iterator edges () {
+    @SuppressWarnings("rawtypes")
+	public Iterator edges () {
     // Return an iterator that will visit all edges of this graph, in no
     // particular order.
         return new KnowledgeGraph.AllEdgeIterator();
     }
 
-    public Iterator neighbors (Graph.Node node) {
+    @SuppressWarnings("rawtypes")
+	public Iterator neighbors (Graph.Node node) {
     // Return an iterator that will visit all the neighbors of node in this
     // graph, in no particular order.
         return new KnowledgeGraph.NodeIterator((KnowledgeGraph.Node) node, false);
     }
 
-    public Iterator connectingEdges (Graph.Node node) {
+    @SuppressWarnings("rawtypes")
+	public Iterator connectingEdges (Graph.Node node) {
     // Return an iterator that will visit all connecting edges of node in this
     // graph, in no particular order.
         return new KnowledgeGraph.EdgeIterator((KnowledgeGraph.Node) node, false);
     }
 
-    public Iterator successors (Graph.Node node) {
+    @SuppressWarnings("rawtypes")
+	public Iterator successors (Graph.Node node) {
     // Return an iterator that will visit all the successors of node in this
     // directed graph, in no particular order.
         return new KnowledgeGraph.NodeIterator((KnowledgeGraph.Node) node, true);
     }
 
-    public Iterator outEdges (Graph.Node node) {
+    @SuppressWarnings("rawtypes")
+	public Iterator outEdges (Graph.Node node) {
     // Return an iterator that will visit all the out-edges of node in this
     // directed graph, in no particular order.
         return new KnowledgeGraph.EdgeIterator((KnowledgeGraph.Node) node, true);
@@ -196,16 +202,13 @@ public class KnowledgeGraph implements Digraph {
         // single element.
 
         private Lesson lesson;
-        private String concept;
-        private int outDegree, grade;
+        private int outDegree;
         private KnowledgeGraph.Node prevNode, nextNode;
 
         //////////// Constructor ////////////
 
         public Node (Object element) {
             this.lesson = (Lesson) element;
-            this.concept = lesson.getConcept();
-            this.grade = lesson.getGrade();
             this.outDegree = 0;
             this.prevNode = null;
             this.nextNode = null;
@@ -272,7 +275,8 @@ public class KnowledgeGraph implements Digraph {
 
     //////////////////////////////////////////////////////////////////////////
 
-    private class AllNodeIterator implements Iterator {
+    @SuppressWarnings("rawtypes")
+	private class AllNodeIterator implements Iterator {
 
     	private KnowledgeGraph.Node currNode;
 
@@ -299,7 +303,8 @@ public class KnowledgeGraph implements Digraph {
 
     //////////////////////////////////////////////////////////////////////////
 
-    private class NodeIterator implements Iterator {
+    @SuppressWarnings("rawtypes")
+	private class NodeIterator implements Iterator {
 
     	private Iterator allEdges;
     	private KnowledgeGraph.Node currNode, targetNode;
@@ -343,7 +348,8 @@ public class KnowledgeGraph implements Digraph {
 
     //////////////////////////////////////////////////////////////////////////
 
-    private class AllEdgeIterator implements Iterator {
+    @SuppressWarnings("rawtypes")
+	private class AllEdgeIterator implements Iterator {
 
     	private KnowledgeGraph.Edge currEdge;
 
@@ -370,7 +376,8 @@ public class KnowledgeGraph implements Digraph {
 
     //////////////////////////////////////////////////////////////////////////
 
-    private class EdgeIterator implements Iterator {
+    @SuppressWarnings("rawtypes")
+	private class EdgeIterator implements Iterator {
 
     	private Iterator allEdges;
     	private KnowledgeGraph.Edge currEdge;

@@ -1,5 +1,4 @@
 package main.Application.models;
-import java.util.ArrayList;
 import main.NameGenerator.NameGenerator;
 
 /**
@@ -10,14 +9,14 @@ import main.NameGenerator.NameGenerator;
  * 
  */
 
-public class Student implements Comparable<Student>{
+public class Student implements Comparable<Student> {
 	private NameGenerator ng;
 	private String name;
 	private int id;
 	private double distance; 
 	private KnowledgeGraph graph;
 
-
+	// CONSTRUCTORS
 	public Student(int i, KnowledgeGraph graph) {
 		this.ng = new NameGenerator();
 		ng.loadNames(1000);
@@ -34,6 +33,15 @@ public class Student implements Comparable<Student>{
 		id = 0;
 		distance = 0.0;
 		this.graph = graph;
+	}
+	
+	public Student() {
+		ng = new NameGenerator();
+		ng.loadNames(1000);
+		name = ng.GenerateName();
+		id = 0;
+		distance = 0.0;
+		this.graph = new KnowledgeGraph();
 	}
 
 	// SETTERS

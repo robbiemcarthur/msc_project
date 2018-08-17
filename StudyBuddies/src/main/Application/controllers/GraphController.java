@@ -6,28 +6,23 @@ import java.util.Random;
 
 import main.Application.models.KnowledgeGraph;
 import main.Application.models.Lesson;
-import main.Application.models.Student;
 import main.Application.models.KnowledgeGraph.Node;
 
 public class GraphController {
 	private int visits;
-	private boolean finished;
 	private Lesson curr, prev, next;
-	private ArrayList<KnowledgeGraph.Node> nodes;
 	private ArrayList<KnowledgeGraph> graphs;
-	private ArrayList<Lesson> lessons;
 	private KnowledgeGraph graph;
 	private Random rand;
 
 
 	public GraphController() {
 		visits = 0;
-		finished = false;
 		curr = new Lesson();
 		prev = new Lesson();
 		next= new Lesson();
-		nodes = new ArrayList<KnowledgeGraph.Node>();
-		lessons = new ArrayList<Lesson>();
+		new ArrayList<KnowledgeGraph.Node>();
+		new ArrayList<Lesson>();
 		graphs = new ArrayList<KnowledgeGraph>();
 		graph = new KnowledgeGraph(0);
 		rand = new Random();
@@ -42,6 +37,7 @@ public class GraphController {
 		int in = 0;
 		int out = 0;
 		String degrees = "";
+		@SuppressWarnings("unchecked")
 		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
 		while(iter.hasNext()) {
 			KnowledgeGraph.Node n = iter.next();
@@ -56,6 +52,7 @@ public class GraphController {
 		int in = 0;
 		int out = 0;
 		for(KnowledgeGraph g: graphs) {
+			@SuppressWarnings("unchecked")
 			Iterator<KnowledgeGraph.Node> iter = g.nodes();
 			while(iter.hasNext()) {
 				in += this.graph.degree(iter.next());
@@ -68,12 +65,12 @@ public class GraphController {
 	}
 
 	public KnowledgeGraph getKnowledgeGraph(ArrayList<Lesson> lessons, KnowledgeGraph g, int num) {
-		this.lessons = lessons;
 		this.graph = g;
 		int count = 0;
 		for(Lesson l: lessons) {
 			while(count<num) {
 				l.setgrade(rand.nextInt(60)+40);
+				@SuppressWarnings("unused")
 				KnowledgeGraph.Node n = (Node) graph.addNode(l);
 				count++;
 			}
@@ -87,11 +84,11 @@ public class GraphController {
 		int count = 0;
 		int e = rand.nextInt(4);
 		Lesson l = new Lesson();
+		@SuppressWarnings("unchecked")
 		Iterator<KnowledgeGraph.Node> iter = graph.nodes();
 		int randomizer = 0;
 		KnowledgeGraph.Node pred = new KnowledgeGraph.Node(l);
 		KnowledgeGraph.Node revision = new KnowledgeGraph.Node(l);
-		finished = false;
 		while(iter.hasNext()) {
 			count++;
 			randomizer = rand.nextInt(6);
@@ -151,7 +148,6 @@ public class GraphController {
 	}
 
 	public KnowledgeGraph projectRoute(ArrayList<KnowledgeGraph.Node> nodes, KnowledgeGraph g) {
-		this.nodes = nodes;
 		this.graph = g;
 		int count = 0;
 		boolean finished = false;

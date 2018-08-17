@@ -2,16 +2,15 @@ package main.Application.controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
-import java.math.*;
 
+import main.Application.models.Cluster;
 import main.Application.models.KnowledgeGraph;
 import main.Application.models.Lesson;
 import main.Application.models.Student;
 import main.Application.views.StudyBuddyView;
-import main.Factories.KnowledgeGraphFactory;
+import main.Factories.StudentFactory;
 import main.Application.models.KnowledgeGraph.Node;
 /**
  * 
@@ -28,19 +27,14 @@ import main.Application.models.KnowledgeGraph.Node;
 
 public class StudyBuddyController {
 	private StudyBuddyView v;
-	private String input;
-	private Student user;
-	private int choice, userID;
-	private boolean found, finished;
 	private ArrayList<KnowledgeGraph> studentGraphs;
-	private ArrayList<KnowledgeGraph> recommendedGraphs;
 	private ArrayList<Student> students;
 	private ArrayList<int[][]> vectors;
+	private ArrayList<Cluster> clusters;
+	private int choice;
 	private int[][] query;
-	private HashMap<String, Integer> userMap;
-	private HashMap<Integer, KnowledgeGraph> graphMap;
-	private HashMap<Integer, int[][]> vectorMap;
-	private KnowledgeGraph graph, userGraph;
+	private KnowledgeGraph graph;
+	private StudentFactory sf;
 	private Random rand;
 
 	private final int MAX_ITERATIONS = 20;
@@ -49,149 +43,65 @@ public class StudyBuddyController {
 		v = new StudyBuddyView(this);
 		this.graph = graph;
 		this.studentGraphs = graphs;
-		user = new Student(graph);
 		students = new ArrayList<Student>();
-		recommendedGraphs = new ArrayList<KnowledgeGraph>();
 		vectors = new ArrayList<int[][]>();
-		found = false; 
-		finished = false;
-		input = "";
+		clusters = new ArrayList<Cluster>();
 		choice = 0;
+		sf = new StudentFactory();
 		rand = new Random();
 	}
 
 
 	public void start(GraphGeneratorController c) {
-		while(!finished) {
-			v.SBMenu();
-			try {
-				choice = Integer.parseInt(v.getUserInput());
-				for(;;) {
-					switch(choice) {
-					case 1:
-						System.out.println("\nEntering add profile function....");	
-						addProfile();
-						break;
-					case 2:
-						System.out.println("\nEntering upload graph function....");	
-						System.out.println("Which graph are you uploading? ");
-						choice = Integer.parseInt(v.getUserInput());
-						uploadGraph(choice);
-						break;
-					case 3:
-						System.out.println("\nEntering get profile function....");	
-						getProfile();
-						break;
-					case 4:
-						v.similarLearningAbility();
-						System.out.println("\nHow many neighbours do you wish to return?");
-						choice = Integer.parseInt(v.getUserInput());
-						cluster(choice,studentGraphs);
-						break;
-					case 5:
-						v.coverKnowledgeGap();
-						SFE(graph, studentGraphs);
-						v.buddyMatch(graph);
-						break;
-					case 6:
-						System.out.println("\nComparing graphs to check buddy compatibility....");	
-						System.out.println("\nPlease enter your graph ID: ");
-						choice = Integer.parseInt(v.getUserInput());
-						KnowledgeGraph q = studentGraphs.get(choice);
-						System.out.println("\nPlease enter your buddies graph ID:  ");
-						choice = Integer.parseInt(v.getUserInput());
-						KnowledgeGraph t = studentGraphs.get(choice);
-						computeGraphDistance(q,t);
-						break;
-					case 7:
-						System.out.println("\nReturning to main menu....");	
-						c.returnToMainMenu();
-					default:
-						System.out.println("\nPlease enter a valid choice.");	
-					}
-				}
-			} catch (NumberFormatException e) {
-				System.out.println("\nInvalid input");
-			}catch (IndexOutOfBoundsException e) {
-				System.out.println("\nNo such graph exists. Please try again.");
-			}
-		}
-	} 
-
-
-
-	/**
-	 * Method enables users to add their profiles, it will prompt for a username
-	 * and therefore assign space in userMap for their credentials. 
-	 * 
-	 * Map will be used to link to their KnowledgeGraph in studentGraph list.
-	 * If user already exists, program will prompt user to select alternative username.
-	 */
-	public void addProfile() {
-		v.addUser();
+		v.SBMenu();
 		try {
-			input = v.getUserInput();
-			if(userMap.containsKey(input)) {
-				System.out.println("\nError. User already exists");
-			}
-			else {
-				for(;;) {
-					if(!(userMap.containsValue(userID)))
-					{
-						userMap.put(input, userID);
-						System.out.println("\nUser created: " + input + " ID: " + userMap.get(input));
-					}
-					else {
-						userID++;
-					}
+			choice = Integer.parseInt(v.getUserInput());
+				switch(choice) {
+				case 1:
+					System.out.println("\nPlease enter your graph number....");	
+					choice = Integer.parseInt(v.getUserInput());
+					System.out.println("\nShowing your Knowledge Graph....");
+					showBuddyDetails(studentGraphs.get(choice));
+					break;
+				case 2:
+					System.out.println("\nShowing your current studdy buddy matches....");	
+					System.out.println("\nSHow many would you like to view?");	
+					choice = Integer.parseInt(v.getUserInput());
+					showStudyBuddies(choice);
+					break;
+				case 3:
+					v.similarLearningAbility();
+					System.out.println("\nHow many clusters will you have?");
+					choice = Integer.parseInt(v.getUserInput());
+					cluster(choice,studentGraphs);
+					break;
+				case 4:
+					v.coverKnowledgeGap();
+					SFE(graph, studentGraphs);
+					break;
+				case 5:
+					System.out.println("\nComparing graphs to check buddy compatibility....");	
+					System.out.println("\nPlease enter your graph ID: ");
+					choice = Integer.parseInt(v.getUserInput());
+					KnowledgeGraph q = studentGraphs.get(choice);
+					System.out.println("\nPlease enter your buddies graph ID:  ");
+					choice = Integer.parseInt(v.getUserInput());
+					KnowledgeGraph t = studentGraphs.get(choice);
+					computeGraphDistance(q,t);
+					break;
+				case 6:
+					System.out.println("\nReturning to main menu....");	
+					c.returnToMainMenu();
+				default:
+					System.out.println("\nPlease enter a valid choice.");	
 				}
-			} 
-		}catch (NumberFormatException e) {
-			System.out.println("\nSomething went wrong. Please try again.");
-		}catch (NullPointerException e) {
-			System.out.println("\nSomething went wrong. Please try again.");
-		} finally {
-			System.out.println("\nUnknown error.");
-		}
-	}
-
-	/**
-	 * At this stage user chooses from set of graphs within program. 
-	 * 
-	 * Future development to implement capability to input own graph.
-	 * 
-	 * @param choice
-	 */
-	public void uploadGraph(int choice) {
-		try {
-			userGraph = studentGraphs.get(choice);
-			System.out.println("\nUser graph successfully uploaded from graph set");
-		}
-		catch (IndexOutOfBoundsException e) {
+		} catch (NumberFormatException e) {
 			System.out.println("\nInvalid input");
 		}
-	}
-
-	/**
-	 * This version will enable users to input their own knowledgegraph, 
-	 * although edges will still be randomized.
-	 * 
-	 * -- actually, allow users to input grades && dictate edges based on input.
-	 */
-	public void uploadGraph(KnowledgeGraphFactory g) {
-		graph = g.getGraph();
-	}
-
-	public void getProfile() {
-		try {
-			v.getUser();
-			input = v.getUserInput();
-		}catch (IndexOutOfBoundsException e) {
-			System.out.println("\nIndex out of bounds. Please try again.");
-		}catch (NullPointerException e) {
-			System.out.println("\nIndex out of bounds. Please try again.");
-		}
-	}
+//		catch (IndexOutOfBoundsException e) {
+//			System.out.println("\nNo such graph exists. Please try again.");
+//		}
+	} 
 
 	/**
 	 * Method prints the details of the Knowledge Graph of recommended
@@ -199,29 +109,39 @@ public class StudyBuddyController {
 	 *  
 	 * @param graph - graph of recommended study buddy
 	 */
-	public void showBuddyDetails(KnowledgeGraph graph) {
+	public void showBuddyDetails(KnowledgeGraph graph, Student s) {
 		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
+		@SuppressWarnings("rawtypes")
 		Iterator iter = graph.nodes();
 		while(iter.hasNext()) {
 			KnowledgeGraph.Node n = (Node) iter.next();
 			Lesson les = (Lesson) n.getElement();
 			System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
 			+ " Concept: " + les.getConcept() + " Teacher: " 
-			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
+			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + s.getID());
+		}
+	}
+	
+	public void showBuddyDetails(KnowledgeGraph graph) {
+		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
+		@SuppressWarnings("rawtypes")
+		Iterator iter = graph.nodes();
+		while(iter.hasNext()) {
+			KnowledgeGraph.Node n = (Node) iter.next();
+			Lesson les = (Lesson) n.getElement();
+			System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
+			+ " Concept: " + les.getConcept() + " Teacher: " 
+			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getID());
 		}
 	}
 
-	public void showBuddyDetails(Student s) {
-		System.out.println("\n\nFound study buddy with the following knowledge graph: ");
-		Iterator iter = graph.nodes();
-		while(iter.hasNext()) {
-			KnowledgeGraph.Node n = (Node) iter.next();
-			Lesson les = (Lesson) n.getElement();
-			System.out.println("ID: " + les.getID() + " Course: " + les.getCourse() 
-			+ " Concept: " + les.getConcept() + " Teacher: " 
-			+ les.getTeacher() + " Grade: " + les.getGrade() + " Student: " + les.getStudent());
+	public void showStudyBuddies(int k) {
+		System.out.println("\nRecommended students are: ");
+		for(int i = 0; i < k; i++) {
+			System.out.println("\nStudent: " + students.get(i).getName() + " ID: " + students.get(i).getID() + " distance: " + students.get(i).getDistance());
 		}
 	}
+
 
 	/**
 	 * Method uses simple feature extraction, computing the distance between
@@ -232,9 +152,7 @@ public class StudyBuddyController {
 	 * @param graph - KnowledgeGraph used to find buddy
 	 * @return graph - n x 2 matrix representation of graph
 	 */
-	public KnowledgeGraph SFE(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
-		for(;;)
-		{
+	public void SFE(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 			try {
 				for(KnowledgeGraph g: graphs ) {
 					int[][] query = new int[2][graph.size()];
@@ -246,17 +164,13 @@ public class StudyBuddyController {
 				System.out.println("\nHow many neighbours do you wish to return?");
 				choice = Integer.parseInt(v.getUserInput());
 				returnKNN(choice);
-				break;
 			} 
 			catch(NumberFormatException e) {
 				System.out.println("\nSomething went wrong. Please try again.");
 			} 
 			catch (IndexOutOfBoundsException e) {
 				System.out.println("\nIndex out of bounds. Try again.");
-				break;
 			}
-		}
-		return graph;
 	}
 
 	public void computeDistance() {
@@ -266,25 +180,50 @@ public class StudyBuddyController {
 			query = vectors.get(choice);
 			vectors.remove(query);
 			double distance = 0.0;
+			int n = 0;
+			int studID = 0;
 			for(int[][] arr: vectors) {
+				if(n==choice) {
+					n++;
+				}
 				double overall = 0.0;
 				for(int j = 0; j < graph.size(); j++) {
 					distance = 0.0;
 					for(int i = 0; i < 2; i ++) {
 						distance += Math.pow(query[i][j]-arr[i][j], 2.0);
-						//					System.out.println(String.format("Distance between query and matrix is: %.2f", distance));
 					}
 					distance = Math.sqrt(distance);
 					overall += distance;
 				}
 				System.out.println("\nOverall distance is: " + overall);
-				Student s = new Student(graph);
+				Student s = sf.getStudent();
 				s.setDistance(overall);
+				s.setGraph(studentGraphs.get(n));
+				s.setID(studID++);
 				students.add(s);
+				n++;
 			}
-		}catch (IndexOutOfBoundsException e) {
+		}
+			catch (IndexOutOfBoundsException e) {
 			System.out.println("\nIndex out of bounds. Please try again.");
 		}
+		catch (NumberFormatException e) {
+			System.out.println("\nPlease enter a valid number.");
+		}
+	}
+	
+	public void returnKNN(int k) {
+		try {
+			Collections.sort(students);
+			System.out.println("\nRecommended students are: ");
+			for(int i = 0; i < k; i++) {
+				System.out.println("\nStudent: " + students.get(i).getName() + " distance: " + students.get(i).getDistance());
+				showBuddyDetails(students.get(i).getGraph(), students.get(i));
+			}
+		}
+//		catch (IndexOutOfBoundsException e) {
+//			System.out.println("\nIndex out of bounds. Please try again.");
+//		}
 		catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 		}
@@ -351,29 +290,6 @@ public class StudyBuddyController {
 		return minIndex;
 	}
 
-	public void returnKNN(int k) {
-		try {
-		Collections.sort(students);
-		//		System.out.println("Student sort test: ");
-		int num = 1;
-		//		for(Student s: students) {
-		//			System.out.println("Student " + num + " distance: " + s.getDistance());
-		//			num++;
-		//		}
-		System.out.println("\nRecommended students are: ");
-		for(int i = 0; i < k; i++) {
-			System.out.println("\nStudent: " + students.get(i).getName() + " ID: " + students.get(i).getID() + " distance: " + students.get(i).getDistance());
-		}
-		showBuddyDetails(students.get(0));
-		}
-		catch (IndexOutOfBoundsException e) {
-			System.out.println("\nIndex out of bounds. Please try again.");
-		}
-		catch (NumberFormatException e) {
-			System.out.println("\nPlease enter a valid number.");
-		}
-	}
-
 	public void vectorTest() {
 		try {
 			for(int[][] arr: vectors) {
@@ -392,6 +308,7 @@ public class StudyBuddyController {
 	}
 
 	public int[][] generateVector(int[][] query, KnowledgeGraph graph) {
+		@SuppressWarnings("rawtypes")
 		Iterator iter = graph.nodes();
 		int column = 0; int row = 0;
 		// first, get in degree in column 1
@@ -407,52 +324,75 @@ public class StudyBuddyController {
 
 	public void cluster(int k, ArrayList<KnowledgeGraph> list) {
 		try {
+		// initialise clusterheads and ensure no duplicates
+		int[] clusterheads = new int[k];
+		for(int i = 0; i < k; i++) {
+			int check = 0;
+			int y = rand.nextInt(list.size());
+			for(int x: clusterheads) {
+				if(x==y) {
+					check++;
+					if(check>1) {
+						i--;
+						break;
+					}
+				}
+				else {
+					clusterheads[i] = y;
+				}
+			}
+		}
 			int counter = 0;
 			boolean done = false;
-			while(counter<MAX_ITERATIONS || !done) {
-				ArrayList<KnowledgeGraph> pickedCH = new ArrayList<KnowledgeGraph>();
-				int[] clusterheads = new int[k];
-				for(int i = 0; i < k; i++) {
-					int check = 0;
-					int y = rand.nextInt(list.size());
-					for(int x: clusterheads) {
-						if(x==y) {
-							check++;
-							if(check>1) {
-								i--;
-								break;
-							}
-						}
-						else {
-							clusterheads[i] = y;
-						}
-					}
+			// loop whilst < Max iterations or clusterheads have stopped changing
+			while(counter<MAX_ITERATIONS) {
+				if(done) {
+					break;
 				}
 				System.out.println("Starting clusterheads.....");
 				int c = 1;
+				// print out initial clusterhead values for test
 				for(int x: clusterheads) {
 					System.out.println("Clusterhead " + c++ + " = " + x);
+					Cluster cluster = new Cluster();
+					cluster.setHead(x);
+					cluster.addGraph(list.get(x));
+					clusters.add(cluster);
 				}
-				for(int x: clusterheads) {
+				// compute distances and assign relevant graphs to clusters
+				for(int i = 0; i < list.size(); i++) {
 					Double min = Double.MAX_VALUE;
 					double distance = 0;
 					int minIndex = 0;
-					for(int i = 0; i < list.size(); i++) {
+					int index = 0;
+					int ch = 0;
+					for(int x: clusterheads) {
 						distance = computeGraphDistance(list.get(x), list.get(i));
 						if(distance<min) {
 							min = distance;
 							minIndex = i;
+							ch = index;
+						}
+						index++;
+					}
+					clusters.get(ch).addGraph(list.get(minIndex));
+					clusters.get(ch).addDistance(min);
+				}
+				// set cluster heads to new value using median of all those distances in cluster
+				for(int i = 0; i < k; i++) {
+					int count = 0;
+					clusters.get(i).setHead(median(clusters.get(i).getGraphs()));
+					if(clusterheads[i] == clusters.get(i).getHead())
+					{
+						count++;
+						if(count==k)
+						{
+						done = true;
 						}
 					}
-					pickedCH.add(list.get(minIndex));
+					clusterheads[i] = clusters.get(i).getHead();
 				}
-				for(int i = 0; i < k; i++) {
-					if(clusterheads[i] == median(pickedCH))
-					{
-						done = true;
-					}
-					clusterheads[i] = median(pickedCH);
-				}
+				// print changed clusters for test
 				int count = 1;
 				System.out.println("Changed clusterheads.....");
 				for(int x: clusterheads) {
@@ -460,7 +400,8 @@ public class StudyBuddyController {
 				}
 				counter++;
 			}
-		}catch (IndexOutOfBoundsException e) {
+		}
+		catch (IndexOutOfBoundsException e) {
 			System.out.println("\nIndex out of bounds. Please try again.");
 		}
 	}

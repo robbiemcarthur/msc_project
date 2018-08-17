@@ -1,12 +1,9 @@
 package main.Logger;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import main.Application.models.KnowledgeGraph;
-import main.Application.models.Student;
 
 public class Logger implements ILogger {
 
@@ -15,6 +12,7 @@ public class Logger implements ILogger {
 
 	private static final String FILE_HEADER = "CourseID,CourseName,Concept,In Degree,Out Degree,Teacher,Grade,Student";
 
+	@SuppressWarnings("unused")
 	private String filename;
 	private FileWriter writer;
 
@@ -26,6 +24,7 @@ public class Logger implements ILogger {
 		this.filename = filename;
 	}
 
+	@Override
 	public void initialise(String filename) {
 		this.filename = filename;
 		try {
@@ -56,6 +55,7 @@ public class Logger implements ILogger {
 		}
 	}
 
+	@Override
 	public void appendHeader() {
 		try {
 			writer.append(COMMA_DELIMITER);
@@ -67,6 +67,7 @@ public class Logger implements ILogger {
 		}
 	}
 
+	@Override
 	public void writeLine(String line) {
 		try {
 			writer.append(NEW_LINE_SEPARATOR);
@@ -78,26 +79,6 @@ public class Logger implements ILogger {
 		}
 	}
 
-
-
-
-	public void writeToFile(ArrayList<KnowledgeGraph> graphs, Student s) {
-
-	}
-
-
-	@Override
-	public void openFile() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void saveFile() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void closeFile() {
 		try {
@@ -107,10 +88,4 @@ public class Logger implements ILogger {
 			e.printStackTrace();
 		}
 	}
-	@Override
-	public void writeToFile(String contents) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,12 +1,9 @@
 package main.Application.views;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 import main.Application.controllers.StudyBuddyController;
 import main.Application.models.KnowledgeGraph;
-import main.Application.models.Lesson;
-import main.Application.models.KnowledgeGraph.Node;
 /**
  * 
  * @author Robbie McArthur - 2098323m
@@ -31,23 +28,13 @@ public class StudyBuddyView {
 	public void SBMenu() {
 		System.out.println("/////////// Study Buddy Mode ///////////\n"
 				+ "\nPlease select from the following options....\n"
-				+ "\nCreate profile (1)"
-				+ "\nUpload your Knowledge Graph (2)"
-				+ "\nRetrieve your existing Knowledge Graph (3)"
-				+ "\nFind buddy to cover a Knowledge Gap (4)"
-				+ "\nFind buddy with similar learning ability (5)"
-				+ "\nCheck buddy compatibility (6)"
-				+ "\nReturn to Main Menu (7)"
+				+ "\nShow my Knowledge Graph (1)"
+				+ "\nShow my buddies (2)"
+				+ "\nFind buddies using Graph Clustering (3)"
+				+ "\nFind buddies using Simple Feature Extraction (4)"
+				+ "\nCheck buddy compatibility (5)"
+				+ "\nReturn to Main Menu (6)"
 				);
-	}
-	
-	
-	public void getUser() {
-		System.out.println("\n\nWhat is your user id? ");
-	}
-	
-	public void addUser() {
-		System.out.println("\n\nPlease input a user ID number to create an account ");
 	}
 	
 	public void similarLearningAbility() {

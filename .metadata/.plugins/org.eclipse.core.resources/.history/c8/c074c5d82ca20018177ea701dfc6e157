@@ -1,0 +1,5 @@
+package main.Application.models;
+
+public class Cluster {
+
+}

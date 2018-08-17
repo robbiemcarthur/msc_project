@@ -1,0 +1,14 @@
+package main.Factories;
+
+import main.Application.models.Student;
+
+public class StudentFactory {
+	
+	public StudentFactory() {
+
+	}
+	
+	public Student getStudent() {
+		return new Student();
+	}
+}

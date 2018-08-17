@@ -1,18 +1,15 @@
 package main.Application.controllers;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Iterator;
 
 import main.Application.models.KnowledgeGraph;
 import main.Application.models.Lesson;
 import main.Application.models.Student;
-import main.Application.models.KnowledgeGraph.Node;
 import main.Application.views.GraphGeneratorView;
 import main.Factories.KnowledgeGraphFactory;
 import main.Factories.LessonFactory;
 import main.Logger.Logger;
-import main.NameGenerator.NameGenerator;
 
 public class GraphGeneratorController {
 	private GraphGeneratorView appView;
@@ -173,11 +170,13 @@ public class GraphGeneratorController {
 
 	//////////FILE METHODS ///////////
 
+	@SuppressWarnings("unchecked")
 	public void writeToFile() {
 		logger.appendHeader();
 		for(KnowledgeGraph g: graphs) {
 			logger.writeLine("Graph " + g.id());
 			iter = g.nodes();
+			@SuppressWarnings("unused")
 			Student s = new Student(graph);
 			ArrayList<String> contents = new ArrayList<String>();
 			while(iter.hasNext()) {
@@ -200,6 +199,7 @@ public class GraphGeneratorController {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void printGraphs() {
 		for(KnowledgeGraph g: graphs) {
 			iter = g.nodes();

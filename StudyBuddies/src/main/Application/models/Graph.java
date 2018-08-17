@@ -47,19 +47,23 @@ public interface Graph {
 
     //////////// Iterators ////////////
 
-    public Iterator nodes ();
+    @SuppressWarnings("rawtypes")
+	public Iterator nodes ();
     // Return an iterator that will visit all nodes of this graph, in no
     // particular order.
 
-    public Iterator edges ();
+    @SuppressWarnings("rawtypes")
+	public Iterator edges ();
     // Return an iterator that will visit all edges of this graph, in no
     // particular order.
 
-    public Iterator neighbors (Graph.Node node);
+    @SuppressWarnings("rawtypes")
+	public Iterator neighbors (Graph.Node node);
     // Return an iterator that will visit all the neighbors of node in this
     // graph, in no particular order.
 
-    public Iterator connectingEdges (Graph.Node node);
+    @SuppressWarnings("rawtypes")
+	public Iterator connectingEdges (Graph.Node node);
     // Return an iterator that will visit all connecting edges of node in this
     // graph, in no particular order.
 

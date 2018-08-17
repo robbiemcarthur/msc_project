@@ -5,12 +5,10 @@ import java.util.Scanner;
 import main.Application.controllers.GraphGeneratorController;
 
 public class GraphGeneratorView {
-	private GraphGeneratorController c;
 	private Scanner scanner;
 	private String input;
 	
 	public GraphGeneratorView(GraphGeneratorController c) {
-		this.c = c;
 		scanner = new Scanner(System.in);
 		input = "";
 	}

@@ -18,9 +18,8 @@ public class NameGenerator {
 	private int index;
 	private final String femaleFirst = "C:/prog/StudyBuddies/src/dist.female.first.txt", maleFirst = "C:/prog/StudyBuddies/src/dist.male.first.txt", all = "C:/prog/StudyBuddies/src/dist.all.last.txt";
 	private final File _maleFirst, _femaleFirst, _all;
-	private ArrayList<String> firstNames = new ArrayList();
-	private ArrayList<String> lastNames = new ArrayList(); 
-	private Random rand;
+	private ArrayList<String> firstNames = new ArrayList<String>();
+	private ArrayList<String> lastNames = new ArrayList<String>(); 
 	
 	public NameGenerator() {
 		name = "";
@@ -30,7 +29,7 @@ public class NameGenerator {
 		_femaleFirst = new File(femaleFirst);
 		_all = new File(all);
 		index = 0;
-		rand = new Random();
+		new Random();
 	}
 	
 	public String GenerateName() {
