@@ -287,7 +287,6 @@ public class StudyBuddyController {
 				}
 			}
 			median = (int) (d/list.size());
-			System.out.println(median);
 		}
 		catch (IndexOutOfBoundsException e) {
 			System.out.println("\nIndex out of bounds. Please try again.");
@@ -389,15 +388,17 @@ public class StudyBuddyController {
 						}
 						index++;
 					}
-					System.out.println("graph " + i+1 + " closest to clusterhead " + check);
+					System.out.println("graph " + i + " closest to clusterhead " + check);
 					System.out.println(clusters.get(minIndex));
+					for(Cluster ch: clusters) {
+						System.out.println(ch.getHead());
+					}
 					clusters.get(minIndex).addGraph(list.get(i));
 					clusters.get(minIndex).addDistance(min);
 				}
 				// set cluster heads to new value using median of list of g in each in cluster
 				for(int i = 0; i < k; i++) {
 					int count = 0;
-					System.out.println("The median of cluster " + i+1 + " is...");
 					clusters.get(i).setHead(median(clusters.get(i).getGraphs()));
 					if(clusterheads[i] == clusters.get(i).getHead())
 					{
@@ -418,7 +419,6 @@ public class StudyBuddyController {
 					count++;
 				}
 				counter++;
-				clusters.clear();
 			}
 		}
 		catch (IndexOutOfBoundsException e) {
