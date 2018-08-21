@@ -37,7 +37,7 @@ public class StudyBuddyController {
 	private StudentFactory sf;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 100;
+	private final int MAX_ITERATIONS = 20;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 		v = new StudyBuddyView(this);

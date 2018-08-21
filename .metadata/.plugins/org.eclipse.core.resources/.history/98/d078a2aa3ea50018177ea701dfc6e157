@@ -37,7 +37,7 @@ public class StudyBuddyController {
 	private StudentFactory sf;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 100;
+	private final int MAX_ITERATIONS = 20;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 		v = new StudyBuddyView(this);
@@ -286,7 +286,7 @@ public class StudyBuddyController {
 					minIndex = i;
 				}
 			}
-			median = (int) (d/list.size());
+			median = d/list.size();
 		}
 		catch (IndexOutOfBoundsException e) {
 			System.out.println("\nIndex out of bounds. Please try again.");
@@ -294,7 +294,7 @@ public class StudyBuddyController {
 		catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 		}
-		return median;
+		return minIndex;
 	}
 
 	public void vectorTest() {

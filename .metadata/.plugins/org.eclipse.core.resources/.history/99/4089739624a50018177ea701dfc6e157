@@ -37,7 +37,7 @@ public class StudyBuddyController {
 	private StudentFactory sf;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 100;
+	private final int MAX_ITERATIONS = 20;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 		v = new StudyBuddyView(this);
@@ -212,10 +212,6 @@ public class StudyBuddyController {
 		}
 	}
 	
-	/**
-	 * change to maintaining k list - faster RT
-	 * @param k
-	 */
 	public void returnKNN(int k) {
 		try {
 			Collections.sort(students);
@@ -272,12 +268,10 @@ public class StudyBuddyController {
 
 	public int median(ArrayList<KnowledgeGraph> list) {
 		Double minDistance = Double.MAX_VALUE;
-		double d = 0.0;
 		int minIndex = 0;
-		int median = 0;
 		try {
 			for(int i = 0; i<list.size(); i++) {
-				d = 0.0;
+				double d = 0.0;
 				for(int j = 0; j<list.size(); j++) {
 					d += computeGraphDistance(list.get(i), list.get(j));
 				}
@@ -286,7 +280,6 @@ public class StudyBuddyController {
 					minIndex = i;
 				}
 			}
-			median = (int) (d/list.size());
 		}
 		catch (IndexOutOfBoundsException e) {
 			System.out.println("\nIndex out of bounds. Please try again.");
@@ -294,7 +287,7 @@ public class StudyBuddyController {
 		catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 		}
-		return median;
+		return minIndex;
 	}
 
 	public void vectorTest() {
@@ -329,11 +322,6 @@ public class StudyBuddyController {
 		return query;
 	}
 
-	/**
-	 * output num of g per ch also
-	 * @param k
-	 * @param list
-	 */
 	public void cluster(int k, ArrayList<KnowledgeGraph> list) {
 		try {
 		// initialise clusterheads and ensure no duplicates
@@ -377,18 +365,20 @@ public class StudyBuddyController {
 					double distance = 0;
 					int minIndex = 0;
 					int index = 0;
+					int ch = 0;
 					for(int x: clusterheads) {
 						distance = computeGraphDistance(list.get(x), list.get(i));
 						if(distance<min) {
 							min = distance;
-							minIndex = index;
+							minIndex = i;
+							ch = index;
 						}
 						index++;
 					}
-					clusters.get(minIndex).addGraph(list.get(i));
-					clusters.get(minIndex).addDistance(min);
+					clusters.get(ch).addGraph(list.get(minIndex));
+					clusters.get(ch).addDistance(min);
 				}
-				// set cluster heads to new value using median of list of g in each in cluster
+				// set cluster heads to new value using median of all those distances in cluster
 				for(int i = 0; i < k; i++) {
 					int count = 0;
 					clusters.get(i).setHead(median(clusters.get(i).getGraphs()));
@@ -406,9 +396,7 @@ public class StudyBuddyController {
 				int count = 1;
 				System.out.println("Changed clusterheads.....");
 				for(int x: clusterheads) {
-					System.out.println("Clusterhead " + count + " = " + x);
-					System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
-					count++;
+					System.out.println("Clusterhead " + count++ + " = " + x);
 				}
 				counter++;
 			}
