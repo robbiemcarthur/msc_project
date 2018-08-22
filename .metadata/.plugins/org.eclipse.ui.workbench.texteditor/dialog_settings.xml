@@ -2,12 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="median" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="median"/>
+			<item value="median("/>
+			<item value="no such graph"/>
+			<item value="new stude"/>
+			<item value="studentID"/>
+			<item value="clust"/>
 			<item value="static"/>
 			<item value="degreetest"/>
 			<item value="C:\prog\StudyBuddies\src\org\ajbrown\namemachine"/>
@@ -17,7 +23,6 @@
 			<item value="&#x09;&#x09;&#x09;&#x09;grid.addNS(car, NSEnd, nsStart, nsCurrent);"/>
 			<item value="synch"/>
 			<item value="synchro"/>
-			<item value="synchronize"/>
 		</list>
 		<list key="replacehistory">
 		</list>

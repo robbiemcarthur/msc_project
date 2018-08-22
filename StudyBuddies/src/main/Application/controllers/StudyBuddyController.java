@@ -269,34 +269,60 @@ public class StudyBuddyController {
 		return overall;
 	}
 
-
 	public int median(ArrayList<KnowledgeGraph> list) {
+		KnowledgeGraph g = new KnowledgeGraph();
 		Double minDistance = Double.MAX_VALUE;
-		double d = 0.0;
 		int minIndex = 0;
-		int median = 0;
 		try {
 			for(int i = 0; i<list.size(); i++) {
-				d = 0.0;
+				double d = 0.0;
 				for(int j = 0; j<list.size(); j++) {
 					d += computeGraphDistance(list.get(i), list.get(j));
 				}
 				if(d<minDistance) {
 					minDistance = d;
 					minIndex = i;
+					g = list.get(i);
+					minIndex = g.id();
 				}
 			}
-			median = (int) (d/list.size());
-			System.out.println(median);
 		}
-		catch (IndexOutOfBoundsException e) {
-			System.out.println("\nIndex out of bounds. Please try again.");
-		}
+//		catch (IndexOutOfBoundsException e) {
+//			System.out.println("\nIndex out of bounds. Please try again.");
+//		}
 		catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 		}
-		return median;
+		return minIndex;
 	}
+	
+//	public int median(ArrayList<KnowledgeGraph> list) {
+//		Double minDistance = Double.MAX_VALUE;
+//		double d = 0.0;
+//		int minIndex = 0;
+//		int median = 0;
+//		try {
+//			for(int i = 0; i<list.size(); i++) {
+//				d = 0.0;
+//				for(int j = 0; j<list.size(); j++) {
+//					d += computeGraphDistance(list.get(i), list.get(j));
+//				}
+//				if(d<minDistance) {
+//					minDistance = d;
+//					minIndex = i;
+//				}
+//			}
+//			median = (int) (d/list.size());
+//			System.out.println(median);
+//		}
+//		catch (IndexOutOfBoundsException e) {
+//			System.out.println("\nIndex out of bounds. Please try again.");
+//		}
+//		catch (NumberFormatException e) {
+//			System.out.println("\nPlease enter a valid number.");
+//		}
+//		return median;
+//	}
 
 	public void vectorTest() {
 		try {
@@ -336,12 +362,12 @@ public class StudyBuddyController {
 	 * @param list
 	 */
 	public void cluster(int k, ArrayList<KnowledgeGraph> list) {
-		try {
+//		try {
 		// initialise clusterheads and ensure no duplicates
 		int[] clusterheads = new int[k];
 		for(int i = 0; i < k; i++) {
 			int check = 0;
-			int y = rand.nextInt(list.size());
+			int y = rand.nextInt(list.size()-1);
 			for(int x: clusterheads) {
 				if(x==y) {
 					check++;
@@ -360,6 +386,7 @@ public class StudyBuddyController {
 			// loop whilst < Max iterations or clusterheads have stopped changing
 			while(counter<MAX_ITERATIONS) {
 				if(done) {
+					System.out.println("done");
 					break;
 				}
 				System.out.println("Starting clusterheads.....");
@@ -381,7 +408,7 @@ public class StudyBuddyController {
 					int index = 0;
 					for(int x: clusterheads) {
 						distance = computeGraphDistance(list.get(x), list.get(i));
-						System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
+//						System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
 						if(distance<min) {
 							min = distance;
 							minIndex = index;
@@ -389,20 +416,19 @@ public class StudyBuddyController {
 						}
 						index++;
 					}
-					System.out.println("graph " + i+1 + " closest to clusterhead " + check);
-					System.out.println(clusters.get(minIndex));
+//					System.out.println("graph " + i + " assigned to clusterhead " + check);
 					clusters.get(minIndex).addGraph(list.get(i));
 					clusters.get(minIndex).addDistance(min);
 				}
 				// set cluster heads to new value using median of list of g in each in cluster
+				int count = 0;
 				for(int i = 0; i < k; i++) {
-					int count = 0;
-					System.out.println("The median of cluster " + i+1 + " is...");
 					clusters.get(i).setHead(median(clusters.get(i).getGraphs()));
+					System.out.println("The median of cluster " + i + " is..." + clusters.get(i).getHead());
 					if(clusterheads[i] == clusters.get(i).getHead())
 					{
 						count++;
-						if(count==k)
+						if(count==k-1)
 						{
 						done = true;
 						}
@@ -410,7 +436,7 @@ public class StudyBuddyController {
 					clusterheads[i] = clusters.get(i).getHead();
 				}
 				// print changed clusters for test
-				int count = 1;
+				count = 1;
 				System.out.println("Changed clusterheads.....");
 				for(int x: clusterheads) {
 					System.out.println("Clusterhead " + count + " = " + x);
@@ -421,8 +447,8 @@ public class StudyBuddyController {
 				clusters.clear();
 			}
 		}
-		catch (IndexOutOfBoundsException e) {
-			System.out.println("\nIndex out of bounds. Please try again.");
-		}
+//		catch (IndexOutOfBoundsException e) {
+//			System.out.println("\nIndex out of bounds. Please try again.");
+//		}
 	}
-}
+//}

@@ -30,11 +30,13 @@
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="main.Application.views.StudyBuddyView"/>
 <fullyQualifiedTypeName name="main.Application.models.KnowledgeGraph.Node"/>
-<fullyQualifiedTypeName name="main.Application.models.KnowledgeGraph"/>
 <fullyQualifiedTypeName name="main.Factories.KnowledgeGraphFactory"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="main.Application.models.Student"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="main.Application.views.GraphGeneratorView"/>
 <fullyQualifiedTypeName name="main.Application.controllers.GraphGeneratorController"/>
+<fullyQualifiedTypeName name="main.Application.models.KnowledgeGraph"/>
+<fullyQualifiedTypeName name="main.Factories.StudentFactory"/>
+<fullyQualifiedTypeName name="main.Application.models.Cluster"/>
 </qualifiedTypeNameHistroy>

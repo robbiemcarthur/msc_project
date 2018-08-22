@@ -12,7 +12,6 @@ public class KnowledgeGraphFactory implements GraphFactory {
 
 	@Override
 	public KnowledgeGraph getGraph() {
-		id++;
-		return new KnowledgeGraph(id);
+		return new KnowledgeGraph(id++);
 	}
 }
