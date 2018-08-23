@@ -370,15 +370,11 @@ public class StudyBuddyController {
 				}
 				break;
 			}
-			if(counter<1) {
 			System.out.println("Starting clusterheads.....");
-			}
 			int c = 1;
 			// print out initial clusterhead values for test
 			for(int x: clusterheads) {
-				if(counter<1) {
 				System.out.println("Clusterhead " + c++ + " = " + x);
-				}
 				Cluster cluster = new Cluster();
 				cluster.setHead(x);
 //				cluster.addGraph(list.get(x));
@@ -434,15 +430,15 @@ public class StudyBuddyController {
 			System.out.println("Changed clusterheads.....");
 			for(int x: clusterheads) {
 				System.out.println("Clusterhead " + count + " = " + x);
-//				System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
+				System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
 				count++;
 			}
 			for(Cluster ch: clusters) {
 				ch.sumOfSquares();
-//				System.out.println("Sum of squares: " + ch.getWCSS());
+				System.out.println("Sum of squares: " + ch.getWCSS());
 			}
 			counter++;
-			clusters.clear();
+//			clusters.clear();
 		}
 	}
 	//		catch (IndexOutOfBoundsException e) {

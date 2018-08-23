@@ -38,7 +38,7 @@ public class StudyBuddyController {
 	private StudentFactory sf;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 20;
+	private final int MAX_ITERATIONS = 10;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 		v = new StudyBuddyView(this);
@@ -261,9 +261,9 @@ public class StudyBuddyController {
 				overall += distance;
 			}
 		}
-//		catch (IndexOutOfBoundsException e) {
-//			System.out.println("\nIndex out of bounds. Please try again.");
-//		}
+		catch (IndexOutOfBoundsException e) {
+			System.out.println("\nIndex out of bounds. Please try again.");
+		}
 		catch (NumberFormatException e) {
 			System.out.println("\nPlease enter a valid number.");
 		}
@@ -360,28 +360,17 @@ public class StudyBuddyController {
 		// loop whilst < Max iterations or clusterheads have stopped changing
 		while(counter<MAX_ITERATIONS) {
 			if(done) {
-				int count = 0;
 				System.out.println("done");
-				System.out.println("Final clusterheads.....");
-				for(int x: clusterheads) {
-					System.out.println("Clusterhead " + count + " = " + x);
-//					System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
-					count++;
-				}
 				break;
 			}
-			if(counter<1) {
 			System.out.println("Starting clusterheads.....");
-			}
 			int c = 1;
 			// print out initial clusterhead values for test
 			for(int x: clusterheads) {
-				if(counter<1) {
 				System.out.println("Clusterhead " + c++ + " = " + x);
-				}
 				Cluster cluster = new Cluster();
 				cluster.setHead(x);
-//				cluster.addGraph(list.get(x));
+				cluster.addGraph(list.get(x));
 				clusters.add(cluster);
 			}
 			// compute distances and assign relevant graphs to clusters
@@ -391,38 +380,34 @@ public class StudyBuddyController {
 				int check = 0;
 				int minIndex = 0;
 				int index = 0;
-				boolean duplicate = false;
-				for(int y: clusterheads) {
-					if(y==i) {
-						duplicate = true;
-					}
-				}
-					if(!duplicate) {
-						for(int x: clusterheads)
-						{
-							distance = computeGraphDistance(list.get(x), list.get(i));
-//							System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
-							if(distance<min) {
-								min = distance;
-								minIndex = index;
-								check = x;
-							}
-							index++;
+				for(int x: clusterheads) {
+					if(!(x==i)) {
+						distance = computeGraphDistance(list.get(x), list.get(i));
+						System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
+						if(distance<min) {
+							min = distance;
+							minIndex = index;
+							check = x;
 						}
-//						System.out.println("graph " + i + " assigned to clusterhead " + check);
+						System.out.println("graph " + i + " assigned to clusterhead " + check);
 						clusters.get(minIndex).addGraph(list.get(i));
 						clusters.get(minIndex).addDistance(min);
 					}
+					else {
+						continue;
+					}
+				}
+				index++;
 			}
 			// set cluster heads to new value using median of list of g in each in cluster
 			int count = 0;
 			for(int i = 0; i < k; i++) {
 				clusters.get(i).setHead(median(clusters.get(i).getGraphs()));
-//				System.out.println("The median of cluster " + i + " is..." + clusters.get(i).getHead());
+				System.out.println("The median of cluster " + i + " is..." + clusters.get(i).getHead());
 				if(clusterheads[i] == clusters.get(i).getHead())
 				{
 					count++;
-					if(count==k)
+					if(count==k-1)
 					{
 						done = true;
 					}
@@ -434,12 +419,12 @@ public class StudyBuddyController {
 			System.out.println("Changed clusterheads.....");
 			for(int x: clusterheads) {
 				System.out.println("Clusterhead " + count + " = " + x);
-//				System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
+				System.out.println("Items within ch: " + clusters.get(count-1).getGraphs().size());
 				count++;
 			}
 			for(Cluster ch: clusters) {
 				ch.sumOfSquares();
-//				System.out.println("Sum of squares: " + ch.getWCSS());
+				System.out.println("Sum of squares: " + ch.getWCSS());
 			}
 			counter++;
 			clusters.clear();

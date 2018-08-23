@@ -38,7 +38,7 @@ public class StudyBuddyController {
 	private StudentFactory sf;
 	private Random rand;
 
-	private final int MAX_ITERATIONS = 20;
+	private final int MAX_ITERATIONS = 1000;
 
 	public StudyBuddyController(KnowledgeGraph graph, ArrayList<KnowledgeGraph> graphs) {
 		v = new StudyBuddyView(this);
@@ -370,18 +370,14 @@ public class StudyBuddyController {
 				}
 				break;
 			}
-			if(counter<1) {
 			System.out.println("Starting clusterheads.....");
-			}
 			int c = 1;
 			// print out initial clusterhead values for test
 			for(int x: clusterheads) {
-				if(counter<1) {
 				System.out.println("Clusterhead " + c++ + " = " + x);
-				}
 				Cluster cluster = new Cluster();
 				cluster.setHead(x);
-//				cluster.addGraph(list.get(x));
+				cluster.addGraph(list.get(x));
 				clusters.add(cluster);
 			}
 			// compute distances and assign relevant graphs to clusters
@@ -422,7 +418,7 @@ public class StudyBuddyController {
 				if(clusterheads[i] == clusters.get(i).getHead())
 				{
 					count++;
-					if(count==k)
+					if(count==k-1)
 					{
 						done = true;
 					}
@@ -439,7 +435,7 @@ public class StudyBuddyController {
 			}
 			for(Cluster ch: clusters) {
 				ch.sumOfSquares();
-//				System.out.println("Sum of squares: " + ch.getWCSS());
+				System.out.println("Sum of squares: " + ch.getWCSS());
 			}
 			counter++;
 			clusters.clear();

@@ -370,15 +370,11 @@ public class StudyBuddyController {
 				}
 				break;
 			}
-			if(counter<1) {
 			System.out.println("Starting clusterheads.....");
-			}
 			int c = 1;
 			// print out initial clusterhead values for test
 			for(int x: clusterheads) {
-				if(counter<1) {
 				System.out.println("Clusterhead " + c++ + " = " + x);
-				}
 				Cluster cluster = new Cluster();
 				cluster.setHead(x);
 //				cluster.addGraph(list.get(x));
@@ -401,7 +397,7 @@ public class StudyBuddyController {
 						for(int x: clusterheads)
 						{
 							distance = computeGraphDistance(list.get(x), list.get(i));
-//							System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
+							System.out.println("Distance between clusterhead " + x + " and graph " + i + " = " + distance);
 							if(distance<min) {
 								min = distance;
 								minIndex = index;
@@ -409,7 +405,7 @@ public class StudyBuddyController {
 							}
 							index++;
 						}
-//						System.out.println("graph " + i + " assigned to clusterhead " + check);
+						System.out.println("graph " + i + " assigned to clusterhead " + check);
 						clusters.get(minIndex).addGraph(list.get(i));
 						clusters.get(minIndex).addDistance(min);
 					}
@@ -439,7 +435,7 @@ public class StudyBuddyController {
 			}
 			for(Cluster ch: clusters) {
 				ch.sumOfSquares();
-//				System.out.println("Sum of squares: " + ch.getWCSS());
+				System.out.println("Sum of squares: " + ch.getWCSS());
 			}
 			counter++;
 			clusters.clear();
